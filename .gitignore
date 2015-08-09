@@ -229,3 +229,13 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# Files, etc, that are specific to this project
+RDN*/
+Wrappers/AutoBuild/*
+Wrapper Generators/bad_headers.txt
+Wrapper Generators/*-errors.txt
+Wrapper Generators/conversion_errors.txt
+Wrapper Generators/cpp_template_project.vcxproj
+Wrapper Generators/solution_template.sln
+Wrapper Generators/FindBadRootHeadersStatus.txt
