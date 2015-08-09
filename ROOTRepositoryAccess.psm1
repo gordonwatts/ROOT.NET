@@ -56,6 +56,9 @@ filter parse-root-filename
 		{
 			$lastindex = $lastindex - 2
 			$ftype = "tar.gz"
+		} else
+		{
+			$lastindex = $lastindex - 1
 		}
 
 		$downloadType = [string]::Join(".", $mainInfo[3..$lastindex])
@@ -75,7 +78,7 @@ filter parse-root-filename
 }
 
 #
-# filter that returns an array of matches for a givin input string. Use % {$_} to flatten
+# filter that returns an array of matches for a given input string. Use % {$_} to flatten
 # the array that comes back.
 filter get-matches ([string] $regex = “”) 
 { 
