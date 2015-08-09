@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{03433C15-E459-4C8C-A7A5-3D2D63C7E655}</ProjectGuid>
+    <RootNamespace>ConverterLibrary</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\ROOT Directories.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\ROOT Directories.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ROOTSYS)\include;$(IncludePath)</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ROOTSYS)\include;$(IncludePath)</IncludePath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ROOTYSS)\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ROOTYSS)\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>
+      </MinimalRebuild>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <ForcedIncludeFiles>w32pragma.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <CallingConvention>
+      </CallingConvention>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ForcedIncludeFiles>w32pragma.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="create_project_files.cpp" />
+    <ClCompile Include="FeatureBase.cpp" />
+    <ClCompile Include="FeatureManager.cpp" />
+    <ClCompile Include="FeatureTCollectionEnumerable.cpp" />
+    <ClCompile Include="FeatureTIterEnumerable.cpp" />
+    <ClCompile Include="FeatureTreeIterator.cpp" />
+    <ClCompile Include="FieldHandlingUtils.cpp" />
+    <ClCompile Include="LibraryClassTranslator.cpp" />
+    <ClCompile Include="LibraryConverterDriver.cpp" />
+    <ClCompile Include="MethodInheritanceDriver.cpp" />
+    <ClCompile Include="ClassInterfaceRepositoryState.cpp" />
+    <ClCompile Include="CPPNetTypeMapper.cpp" />
+    <ClCompile Include="RootClassField.cpp" />
+    <ClCompile Include="RootGlobalVariable.cpp" />
+    <ClCompile Include="TArrayOfChar.cpp" />
+    <ClCompile Include="TPointerSimpleType.cpp" />
+    <ClCompile Include="translation_history.cpp" />
+    <ClCompile Include="TTCPPString.cpp" />
+    <ClCompile Include="TTROOTClass.cpp" />
+    <ClCompile Include="TTROOTClassVector.cpp" />
+    <ClCompile Include="TTROOTenum.cpp" />
+    <ClCompile Include="TTSimpleReference.cpp" />
+    <ClCompile Include="TTSimpleType.cpp" />
+    <ClCompile Include="RootClassInfo.cpp" />
+    <ClCompile Include="RootClassInfoCollection.cpp" />
+    <ClCompile Include="RootClassMethod.cpp" />
+    <ClCompile Include="RootClassMethodArg.cpp" />
+    <ClCompile Include="RootClassProperty.cpp" />
+    <ClCompile Include="RootEnum.cpp" />
+    <ClCompile Include="ROOTHelpers.cpp" />
+    <ClCompile Include="ClassTranslator.cpp" />
+    <ClCompile Include="ClassTraversal.cpp" />
+    <ClCompile Include="ConverterErrorLog.cpp" />
+    <ClCompile Include="SourceEmitter.cpp" />
+    <ClCompile Include="TVectorArray.cpp" />
+    <ClCompile Include="TVoidPointer.cpp" />
+    <ClCompile Include="WrapperConfigurationInfo.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="create_project_files.hpp" />
+    <ClInclude Include="FeatureBase.hpp" />
+    <ClInclude Include="FeatureManager.hpp" />
+    <ClInclude Include="FeatureTCollectionEnumerable.hpp" />
+    <ClInclude Include="FeatureTIterEnumerable.hpp" />
+    <ClInclude Include="FeatureTreeIterator.hpp" />
+    <ClInclude Include="FieldHandlingUtils.hpp" />
+    <ClInclude Include="LibraryClassTranslator.hpp" />
+    <ClInclude Include="LibraryConverterDriver.h" />
+    <ClInclude Include="MethodInheritanceDriver.hpp" />
+    <ClInclude Include="ClassInterfaceRepositoryState.hpp" />
+    <ClInclude Include="CPPNetTypeMapper.hpp" />
+    <ClInclude Include="RootClassField.hpp" />
+    <ClInclude Include="RootGlobalVariable.hpp" />
+    <ClInclude Include="TArrayOfChar.hpp" />
+    <ClInclude Include="TPointerSimpleType.hpp" />
+    <ClInclude Include="translation_history.hpp" />
+    <ClInclude Include="TTCPPString.hpp" />
+    <ClInclude Include="TTROOTClass.hpp" />
+    <ClInclude Include="TTROOTClassVector.hpp" />
+    <ClInclude Include="TTROOTenum.hpp" />
+    <ClInclude Include="TTSimpleReference.hpp" />
+    <ClInclude Include="TTSimpleType.hpp" />
+    <ClInclude Include="RootClassInfo.hpp" />
+    <ClInclude Include="RootClassInfoCollection.hpp" />
+    <ClInclude Include="RootClassMethod.hpp" />
+    <ClInclude Include="RootClassMethodArg.hpp" />
+    <ClInclude Include="RootClassProperty.hpp" />
+    <ClInclude Include="RootEnum.hpp" />
+    <ClInclude Include="ROOTHelpers.h" />
+    <ClInclude Include="ClassTranslator.hpp" />
+    <ClInclude Include="ClassTraversal.h" />
+    <ClInclude Include="ConverterErrorLog.hpp" />
+    <ClInclude Include="SourceEmitter.hpp" />
+    <ClInclude Include="TVectorArray.hpp" />
+    <ClInclude Include="TVoidPointer.hpp" />
+    <ClInclude Include="WrapperConfigurationInfo.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="cpp_template_project.vcxproj">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">copy "%(FullPath)" "$(OutDir)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">copy "%(FullPath)" "$(OutDir)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Copying File %(Filename)%(Extension)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Copying File %(Filename)%(Extension)</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)\%(Filename)%(Extension);%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OutDir)\%(Filename)%(Extension);%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="solution_template.sln">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">copy "%(FullPath)" "$(OutDir)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Copying File %(Filename)%(Extension)</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)\%(Filename)%(Extension);%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">copy "%(FullPath)" "$(OutDir)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Copying File %(Filename)%(Extension)</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OutDir)\%(Filename)%(Extension);%(Outputs)</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

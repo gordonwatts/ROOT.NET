@@ -1,0 +1,280 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\TypeSystem">
+      <UniqueIdentifier>{1d712be3-b1b1-4447-8dee-0bca728c9eb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ROOTClassWrappers">
+      <UniqueIdentifier>{add18dc1-1a6b-4a5f-af02-e9115d0cdb74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Driver Code">
+      <UniqueIdentifier>{6e2d5010-c242-4e29-818e-55aabbe38163}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utilities">
+      <UniqueIdentifier>{aa36437c-1d67-4ea4-86e0-44ae75586a92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files\TypeSystem">
+      <UniqueIdentifier>{19fdf8e2-ca32-44a8-8f5f-81b09019c45a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ROOTClassWrappers">
+      <UniqueIdentifier>{d7f89c17-7ad6-423b-a4f9-fd6c82c149fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Driver Code">
+      <UniqueIdentifier>{79785e74-d5c9-4e04-854e-6a802b2bf1fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utilities">
+      <UniqueIdentifier>{59ccd8ba-88a3-4124-85cf-fe55be2db372}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Templates">
+      <UniqueIdentifier>{3ca64614-c2ac-4032-be6c-0fda675fc4e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Features">
+      <UniqueIdentifier>{53c2b1f7-5cba-4965-8aa8-0ec6f3093b5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Features">
+      <UniqueIdentifier>{4c57142f-fd62-4d24-8341-1a134f849d1e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ClassInterfaceRepositoryState.cpp">
+      <Filter>Source Files\TypeSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="CPPNetTypeMapper.cpp">
+      <Filter>Source Files\TypeSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="TArrayOfChar.cpp">
+      <Filter>Source Files\TypeSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="TPointerSimpleType.cpp">
+      <Filter>Source Files\TypeSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="TTCPPString.cpp">
+      <Filter>Source Files\TypeSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="TTROOTClass.cpp">
+      <Filter>Source Files\TypeSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="TTROOTenum.cpp">
+      <Filter>Source Files\TypeSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="TTSimpleReference.cpp">
+      <Filter>Source Files\TypeSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="TTSimpleType.cpp">
+      <Filter>Source Files\TypeSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="RootClassInfo.cpp">
+      <Filter>Source Files\ROOTClassWrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="RootClassInfoCollection.cpp">
+      <Filter>Source Files\ROOTClassWrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="RootClassMethod.cpp">
+      <Filter>Source Files\ROOTClassWrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="RootClassMethodArg.cpp">
+      <Filter>Source Files\ROOTClassWrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="RootClassProperty.cpp">
+      <Filter>Source Files\ROOTClassWrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="RootEnum.cpp">
+      <Filter>Source Files\ROOTClassWrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="ROOTHelpers.cpp">
+      <Filter>Source Files\ROOTClassWrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="ClassTranslator.cpp">
+      <Filter>Source Files\Driver Code</Filter>
+    </ClCompile>
+    <ClCompile Include="ClassTraversal.cpp">
+      <Filter>Source Files\Driver Code</Filter>
+    </ClCompile>
+    <ClCompile Include="ConverterErrorLog.cpp">
+      <Filter>Source Files\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceEmitter.cpp">
+      <Filter>Source Files\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="WrapperConfigurationInfo.cpp">
+      <Filter>Source Files\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="LibraryConverterDriver.cpp">
+      <Filter>Source Files\Driver Code</Filter>
+    </ClCompile>
+    <ClCompile Include="MethodInheritanceDriver.cpp">
+      <Filter>Source Files\TypeSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="LibraryClassTranslator.cpp">
+      <Filter>Source Files\Driver Code</Filter>
+    </ClCompile>
+    <ClCompile Include="create_project_files.cpp">
+      <Filter>Source Files\Driver Code</Filter>
+    </ClCompile>
+    <ClCompile Include="translation_history.cpp">
+      <Filter>Source Files\Driver Code</Filter>
+    </ClCompile>
+    <ClCompile Include="FieldHandlingUtils.cpp">
+      <Filter>Source Files\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="TTROOTClassVector.cpp">
+      <Filter>Source Files\TypeSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="RootClassField.cpp">
+      <Filter>Source Files\ROOTClassWrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="TVoidPointer.cpp">
+      <Filter>Source Files\TypeSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="TVectorArray.cpp">
+      <Filter>Source Files\TypeSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="FeatureBase.cpp">
+      <Filter>Source Files\Features</Filter>
+    </ClCompile>
+    <ClCompile Include="FeatureTIterEnumerable.cpp">
+      <Filter>Source Files\Features</Filter>
+    </ClCompile>
+    <ClCompile Include="FeatureManager.cpp">
+      <Filter>Source Files\Features</Filter>
+    </ClCompile>
+    <ClCompile Include="FeatureTCollectionEnumerable.cpp">
+      <Filter>Source Files\Features</Filter>
+    </ClCompile>
+    <ClCompile Include="RootGlobalVariable.cpp">
+      <Filter>Source Files\ROOTClassWrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="FeatureTreeIterator.cpp">
+      <Filter>Source Files\Features</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ClassInterfaceRepositoryState.hpp">
+      <Filter>Header Files\TypeSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="CPPNetTypeMapper.hpp">
+      <Filter>Header Files\TypeSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="TArrayOfChar.hpp">
+      <Filter>Header Files\TypeSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="TPointerSimpleType.hpp">
+      <Filter>Header Files\TypeSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="TTCPPString.hpp">
+      <Filter>Header Files\TypeSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="TTROOTClass.hpp">
+      <Filter>Header Files\TypeSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="TTROOTenum.hpp">
+      <Filter>Header Files\TypeSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="TTSimpleReference.hpp">
+      <Filter>Header Files\TypeSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="TTSimpleType.hpp">
+      <Filter>Header Files\TypeSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="RootClassInfo.hpp">
+      <Filter>Header Files\ROOTClassWrappers</Filter>
+    </ClInclude>
+    <ClInclude Include="RootClassInfoCollection.hpp">
+      <Filter>Header Files\ROOTClassWrappers</Filter>
+    </ClInclude>
+    <ClInclude Include="RootClassMethod.hpp">
+      <Filter>Header Files\ROOTClassWrappers</Filter>
+    </ClInclude>
+    <ClInclude Include="RootClassMethodArg.hpp">
+      <Filter>Header Files\ROOTClassWrappers</Filter>
+    </ClInclude>
+    <ClInclude Include="RootClassProperty.hpp">
+      <Filter>Header Files\ROOTClassWrappers</Filter>
+    </ClInclude>
+    <ClInclude Include="RootEnum.hpp">
+      <Filter>Header Files\ROOTClassWrappers</Filter>
+    </ClInclude>
+    <ClInclude Include="ROOTHelpers.h">
+      <Filter>Header Files\ROOTClassWrappers</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassTranslator.hpp">
+      <Filter>Header Files\Driver Code</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassTraversal.h">
+      <Filter>Header Files\Driver Code</Filter>
+    </ClInclude>
+    <ClInclude Include="ConverterErrorLog.hpp">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceEmitter.hpp">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="WrapperConfigurationInfo.hpp">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="LibraryConverterDriver.h">
+      <Filter>Header Files\Driver Code</Filter>
+    </ClInclude>
+    <ClInclude Include="MethodInheritanceDriver.hpp">
+      <Filter>Header Files\TypeSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="LibraryClassTranslator.hpp">
+      <Filter>Header Files\Driver Code</Filter>
+    </ClInclude>
+    <ClInclude Include="create_project_files.hpp">
+      <Filter>Header Files\Driver Code</Filter>
+    </ClInclude>
+    <ClInclude Include="translation_history.hpp">
+      <Filter>Header Files\Driver Code</Filter>
+    </ClInclude>
+    <ClInclude Include="FieldHandlingUtils.hpp">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="RootClassField.hpp">
+      <Filter>Header Files\ROOTClassWrappers</Filter>
+    </ClInclude>
+    <ClInclude Include="TTROOTClassVector.hpp">
+      <Filter>Header Files\TypeSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="TVoidPointer.hpp">
+      <Filter>Header Files\TypeSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="TVectorArray.hpp">
+      <Filter>Header Files\TypeSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="FeatureBase.hpp">
+      <Filter>Header Files\Features</Filter>
+    </ClInclude>
+    <ClInclude Include="FeatureTIterEnumerable.hpp">
+      <Filter>Header Files\Features</Filter>
+    </ClInclude>
+    <ClInclude Include="FeatureManager.hpp">
+      <Filter>Header Files\Features</Filter>
+    </ClInclude>
+    <ClInclude Include="FeatureTCollectionEnumerable.hpp">
+      <Filter>Header Files\Features</Filter>
+    </ClInclude>
+    <ClInclude Include="RootGlobalVariable.hpp">
+      <Filter>Header Files\ROOTClassWrappers</Filter>
+    </ClInclude>
+    <ClInclude Include="FeatureTreeIterator.hpp">
+      <Filter>Header Files\Features</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="cpp_template_project.vcxproj">
+      <Filter>Templates</Filter>
+    </CustomBuild>
+    <CustomBuild Include="solution_template.sln">
+      <Filter>Templates</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

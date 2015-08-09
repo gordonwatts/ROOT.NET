@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WrapperPlumbingLibrary", "..\WrapperPlumbingLibrary\WrapperPlumbingLibrary.vcxproj", "{620832E1-A628-44F6-B5CE-80C0A86F20A9}"
+EndProject
+<!-- DefProjects -->
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{620832E1-A628-44F6-B5CE-80C0A86F20A9}.Debug|Win32.ActiveCfg = Debug|Win32
+		{620832E1-A628-44F6-B5CE-80C0A86F20A9}.Debug|Win32.Build.0 = Debug|Win32
+		{620832E1-A628-44F6-B5CE-80C0A86F20A9}.Release|Win32.ActiveCfg = Release|Win32
+		{620832E1-A628-44F6-B5CE-80C0A86F20A9}.Release|Win32.Build.0 = Release|Win32
+<!-- ProjectConfig -->
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
