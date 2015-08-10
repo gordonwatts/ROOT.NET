@@ -27,9 +27,9 @@ function DownloadFromWeb($url, $local)
 $SevenZipExe = "C:\Program Files\7-Zip\7z.exe"
 function Uncompress($path, $logDir)
 {
-    if (-not $path.EndsWith(".tar.gz"))
+    if ((-not $path.EndsWith(".tar.gz")) -and (-not $path.EndsWith(".zip")))
     {
-        throw "Only know how to uncompress .tar.gz files - $path"
+        throw "Only know how to uncompress .tar.gz or .zip files - $path"
     }
 
     $logFile = "$logDir/uncompress.log"
@@ -45,12 +45,18 @@ function Uncompress($path, $logDir)
         
         & "$SevenZipExe" x -y $path | out-file -filepath $logFile -append
       }
-      Write-Host $tarfileName
-      if (-not (test-path $tarfileName)) {
-        throw "Could not find the tar file $tarfile after uncompressoing $path"
-      }
 
-      & "$SevenZipExe" x -y $tarfileName | out-file -filepath $logfile -append
+	  # If this is a zip file, we are done!
+	  if ($path.EndsWith(".tar.gz")) {
+		  Write-Host $tarfileName
+		  if (-not (test-path $tarfileName)) {
+			throw "Could not find the tar file $tarfile after uncompressoing $path"
+		  }
+
+		  & "$SevenZipExe" x -y $tarfileName | out-file -filepath $logfile -append
+	  }
+
+	  # Mark it as uncompressed.
 
       $bogus = new-item $uncompressFlag -type file
     }
