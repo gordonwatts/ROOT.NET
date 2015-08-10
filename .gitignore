@@ -239,3 +239,5 @@ Wrapper Generators/conversion_errors.txt
 Wrapper Generators/cpp_template_project.vcxproj
 Wrapper Generators/solution_template.sln
 Wrapper Generators/FindBadRootHeadersStatus.txt
+nuget.exe
+nuget/*

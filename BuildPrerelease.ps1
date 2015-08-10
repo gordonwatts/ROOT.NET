@@ -1,6 +1,6 @@
 ﻿#
 # Coordinate building a pre-release version
-# The version shoudl be "5.33.02" or "5.33.02-rc1" or similar.
+# The version should be "5.33.02" or "5.33.02-rc1" or similar.
 # Wrapper version can be something like "2.2-dev" or similar.
 #
 [CmdletBinding()]
@@ -22,12 +22,12 @@ $goodRs = Get-All-ROOT-Downloads | ? {$_.VersionMajor -eq $vinfo.VersionMajor} `
 	| ? {$_.VersionMinor -eq $vinfo.VersionMinor} `
 	| ? {$_.VersionSubMinor -eq $vinfo.VersionSubMinor} `
 	| ? {$_.VersionExtraInfo -eq $vinfo.VersionExtraInfo} `
-	| ? {$_.DownloadType -eq "win32.vc10"} `
+	| ? {$_.DownloadType -eq "win32.vc11"} `
 	| ? {($_.FileType -eq "tar.gz") -or ($_.FileType -eq "zip")}
 
 if ($goodRs.length > 1)
 {
-	throw New-Object System.InvalidOperationException "There are more than one root's availible for version $rootVersion."
+	throw New-Object System.InvalidOperationException "There are more than one root's available for version $rootVersion."
 }
 $goodR = $goodRs
 
