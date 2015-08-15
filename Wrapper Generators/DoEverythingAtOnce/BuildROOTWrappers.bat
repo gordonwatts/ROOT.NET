@@ -32,7 +32,7 @@ REM
 
 set "ROOTSYS=%1"
 set "PATH=%1\bin;%PATH%"
-call "C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\Tools\vsvars32.bat"
+call "C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\Tools\vsvars32.bat"
 
 REM Build everything so we can actually run programs! :-)
 echo Building code to do the translation...
