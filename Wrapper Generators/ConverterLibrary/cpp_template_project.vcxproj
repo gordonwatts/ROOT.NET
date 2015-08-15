@@ -8,7 +8,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
 <!-- ProjectGUID -->
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <Keyword>ManagedCProj</Keyword>
 <!-- RootNameSpace -->
   </PropertyGroup>

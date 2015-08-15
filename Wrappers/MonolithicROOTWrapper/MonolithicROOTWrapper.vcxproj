@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -14,6 +14,7 @@
     <ProjectGuid>{A2BC6278-DB75-4ECB-B593-9760D94A4993}</ProjectGuid>
     <RootNamespace>MonolithicROOTWrapper</RootNamespace>
     <Keyword>ManagedCProj</Keyword>
+	<TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -21,13 +22,13 @@
     <CharacterSet>Unicode</CharacterSet>
     <CLRSupport>true</CLRSupport>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <CLRSupport>true</CLRSupport>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -116,26 +117,34 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
-    <ClCompile Include="ROOTSource\NTCollection.cpp" />
-    <ClCompile Include="ROOTSource\NTIter.cpp" />
-    <ClCompile Include="ROOTSource\NTList.cpp" />
+    <ClCompile Include="ROOTSource\NTAttFill.cpp" />
+    <ClCompile Include="ROOTSource\NTAttLine.cpp" />
+    <ClCompile Include="ROOTSource\NTAttMarker.cpp" />
+    <ClCompile Include="ROOTSource\NTDirectory.cpp" />
+    <ClCompile Include="ROOTSource\NTDirectoryFile.cpp" />
+    <ClCompile Include="ROOTSource\NTFile.cpp" />
+    <ClCompile Include="ROOTSource\NTLorentzVector.cpp" />
+    <ClCompile Include="ROOTSource\NTNamed.cpp" />
     <ClCompile Include="ROOTSource\NTObject.cpp" />
-    <ClCompile Include="ROOTSource\NTRootSnifferScanRec.cpp" />
-    <ClCompile Include="ROOTSource\NTSeqCollection.cpp" />
+    <ClCompile Include="ROOTSource\NTTree.cpp" />
     <ClCompile Include="ROOTSource\root_type_helpers.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
-    <ClInclude Include="ROOTSource\Globals.hpp" />
     <ClInclude Include="ROOTSource\libCore-make_public.hpp" />
-    <ClInclude Include="ROOTSource\libRHTTP-make_public.hpp" />
+    <ClInclude Include="ROOTSource\libPhysics-make_public.hpp" />
+    <ClInclude Include="ROOTSource\libRIO-make_public.hpp" />
     <ClInclude Include="ROOTSource\libTree-make_public.hpp" />
-    <ClInclude Include="ROOTSource\NTCollection.hpp" />
-    <ClInclude Include="ROOTSource\NTIter.hpp" />
-    <ClInclude Include="ROOTSource\NTList.hpp" />
+    <ClInclude Include="ROOTSource\NTAttFill.hpp" />
+    <ClInclude Include="ROOTSource\NTAttLine.hpp" />
+    <ClInclude Include="ROOTSource\NTAttMarker.hpp" />
+    <ClInclude Include="ROOTSource\NTDirectory.hpp" />
+    <ClInclude Include="ROOTSource\NTDirectoryFile.hpp" />
+    <ClInclude Include="ROOTSource\NTFile.hpp" />
+    <ClInclude Include="ROOTSource\NTLorentzVector.hpp" />
+    <ClInclude Include="ROOTSource\NTNamed.hpp" />
     <ClInclude Include="ROOTSource\NTObject.hpp" />
-    <ClInclude Include="ROOTSource\NTRootSnifferScanRec.hpp" />
-    <ClInclude Include="ROOTSource\NTSeqCollection.hpp" />
+    <ClInclude Include="ROOTSource\NTTree.hpp" />
     <ClInclude Include="ROOTSource\root_type_helpers.hpp" />
   </ItemGroup>
   <ItemGroup>
