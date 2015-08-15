@@ -22,7 +22,7 @@ $goodRs = Get-All-ROOT-Downloads | ? {$_.VersionMajor -eq $vinfo.VersionMajor} `
 	| ? {$_.VersionMinor -eq $vinfo.VersionMinor} `
 	| ? {$_.VersionSubMinor -eq $vinfo.VersionSubMinor} `
 	| ? {$_.VersionExtraInfo -eq $vinfo.VersionExtraInfo} `
-	| ? {$_.DownloadType -eq "win32.vc11"} `
+	| ? {$_.DownloadType -eq "win32.vc12"} `
 	| ? {($_.FileType -eq "tar.gz") -or ($_.FileType -eq "zip")}
 
 if ($goodRs.length > 1)
