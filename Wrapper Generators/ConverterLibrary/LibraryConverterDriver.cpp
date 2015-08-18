@@ -447,7 +447,6 @@ namespace {
 
 		ass.start_line() << "[assembly:ComVisible(false)];" << endl;
 		ass.start_line() << "[assembly:CLSCompliantAttribute(true)];" << endl;
-		ass.start_line() << "[assembly:SecurityPermission(SecurityAction::RequestMinimum, UnmanagedCode = true)];" << endl;
 
 		ass.start_line() << "[assembly:ROOTVersionAttribute("
 			<< gROOT->GetSvnRevision()
