@@ -1,13 +1,16 @@
 #include "SourceEmitter.hpp"
+#include "StringUtils.h"
 
 #include <iostream>
 #include <fstream>
+#include <vector>
 
 using std::endl;
 using std::string;
 using std::istringstream;
 using std::ofstream;
 using std::ifstream;
+using std::vector;
 
 ///
 /// Start by opening a file for output.
@@ -115,12 +118,36 @@ void SourceEmitter::indent_decrease(void)
 }
 
 ///
-/// Start a namespace
+/// Start a namespace. Can deal with nested namespaces.
 ///
-void SourceEmitter::start_namespace(const std::string &namespace_name)
+int SourceEmitter::start_namespace(const std::string &namespace_name, bool ignore_last_as_class_name)
 {
-	start_line() << "namespace " << namespace_name << " {" << endl;
-	indent_increase();
+	// Get the list of namespaces we want to look at.
+
+	auto all_parts(split(namespace_name, "::"));
+	if (ignore_last_as_class_name) {
+		all_parts = vector<string>(all_parts.begin(), all_parts.end() - 1);
+	}
+
+	// Now, nest them and return the number of nestings we do.
+	int count = 0;
+	for (auto n : all_parts) {
+		start_line() << "namespace " << n << " {" << endl;
+		indent_increase();
+		count++;
+	}
+	return count;
+}
+
+// Helper to do a decl in the middle of a namespace for a class (forward decl).
+void SourceEmitter::namespace_depth_decl(const std::string &full_class_name, const std::string &stub)
+{
+	auto all_parts(split(full_class_name, "::"));
+	auto extra_depth = start_namespace(full_class_name, true);
+	start_line() << stub << " " <<  *(all_parts.end()-1) << ";" << endl;
+	for (int i = 0; i < extra_depth; i++) {
+		brace_close();
+	}
 }
 
 ///
@@ -128,7 +155,7 @@ void SourceEmitter::start_namespace(const std::string &namespace_name)
 ///
 void SourceEmitter::forward_class_reference(const std::string &class_name)
 {
-	start_line() << "ref class " << class_name << ";" << endl;
+	namespace_depth_decl(class_name, "ref class");
 }
 
 ///
@@ -136,5 +163,5 @@ void SourceEmitter::forward_class_reference(const std::string &class_name)
 ///
 void SourceEmitter::forward_interface_reference(const std::string &class_name)
 {
-	start_line() << "interface class " << class_name << ";" << endl;
+	namespace_depth_decl(class_name, "interface class");
 }

@@ -14,7 +14,7 @@
     <ProjectGuid>{A2BC6278-DB75-4ECB-B593-9760D94A4993}</ProjectGuid>
     <RootNamespace>MonolithicROOTWrapper</RootNamespace>
     <Keyword>ManagedCProj</Keyword>
-	<TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -71,7 +71,7 @@
       <ForcedIncludeFiles>w32pragma.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libCore.lib;libMathCore.lib;libHist.lib;libPhysics.lib;libRooFitCore.lib;libMatrix.lib;libHtml.lib;libTree.lib;libHist.lib;libRIO.lib;libGuiBld.lib;libGui.lib</AdditionalDependencies>
+      <AdditionalDependencies>libCore.lib;libTMVA.lib;libMathCore.lib;libHist.lib;libPhysics.lib;libRooFitCore.lib;libMatrix.lib;libHtml.lib;libTree.lib;libHist.lib;libRIO.lib;libGuiBld.lib;libGui.lib</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AssemblyDebug>true</AssemblyDebug>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
@@ -93,7 +93,7 @@
       <ForcedIncludeFiles>w32pragma.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libCore.lib;libRIO.lib;libGui.lib;libTable.lib;libRGL.lib;libGpad.lib;libHist.lib;libTree.lib;libMathCore.lib;libGeom.lib;libGraf.lib;libGraf3d.lib;libMatrix.lib;libMinuit.lib</AdditionalDependencies>
+      <AdditionalDependencies>libCore.lib;libTMVA.lib;libRIO.lib;libGui.lib;libTable.lib;libRGL.lib;libGpad.lib;libHist.lib;libTree.lib;libMathCore.lib;libGeom.lib;libGraf.lib;libGraf3d.lib;libMatrix.lib;libMinuit.lib</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
@@ -117,34 +117,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
-    <ClCompile Include="ROOTSource\NTAttFill.cpp" />
-    <ClCompile Include="ROOTSource\NTAttLine.cpp" />
-    <ClCompile Include="ROOTSource\NTAttMarker.cpp" />
-    <ClCompile Include="ROOTSource\NTDirectory.cpp" />
-    <ClCompile Include="ROOTSource\NTDirectoryFile.cpp" />
-    <ClCompile Include="ROOTSource\NTFile.cpp" />
-    <ClCompile Include="ROOTSource\NTLorentzVector.cpp" />
-    <ClCompile Include="ROOTSource\NTNamed.cpp" />
+    <ClCompile Include="ROOTSource\NTMVA__NConfigurable.cpp" />
+    <ClCompile Include="ROOTSource\NTMVA__NFactory.cpp" />
     <ClCompile Include="ROOTSource\NTObject.cpp" />
-    <ClCompile Include="ROOTSource\NTTree.cpp" />
     <ClCompile Include="ROOTSource\root_type_helpers.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
     <ClInclude Include="ROOTSource\libCore-make_public.hpp" />
-    <ClInclude Include="ROOTSource\libPhysics-make_public.hpp" />
-    <ClInclude Include="ROOTSource\libRIO-make_public.hpp" />
+    <ClInclude Include="ROOTSource\libTMVA-make_public.hpp" />
     <ClInclude Include="ROOTSource\libTree-make_public.hpp" />
-    <ClInclude Include="ROOTSource\NTAttFill.hpp" />
-    <ClInclude Include="ROOTSource\NTAttLine.hpp" />
-    <ClInclude Include="ROOTSource\NTAttMarker.hpp" />
-    <ClInclude Include="ROOTSource\NTDirectory.hpp" />
-    <ClInclude Include="ROOTSource\NTDirectoryFile.hpp" />
-    <ClInclude Include="ROOTSource\NTFile.hpp" />
-    <ClInclude Include="ROOTSource\NTLorentzVector.hpp" />
-    <ClInclude Include="ROOTSource\NTNamed.hpp" />
+    <ClInclude Include="ROOTSource\NTMVA__NConfigurable.hpp" />
+    <ClInclude Include="ROOTSource\NTMVA__NFactory.hpp" />
     <ClInclude Include="ROOTSource\NTObject.hpp" />
-    <ClInclude Include="ROOTSource\NTTree.hpp" />
     <ClInclude Include="ROOTSource\root_type_helpers.hpp" />
   </ItemGroup>
   <ItemGroup>

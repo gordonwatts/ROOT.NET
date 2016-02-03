@@ -111,6 +111,105 @@ namespace t_RootClassInfo
 		}
 
 		[TestMethod]
+		void NamespaceDotNetNameGood()
+		{
+			gSystem->Load("libTMVA");
+			auto c = RootClassInfoCollection::GetRootClassInfo("TMVA::Factory");
+			Assert::IsTrue("NTMVA::NFactory" == c.NETName(), "Didn't get TMVA::NFactory");
+		}
+
+		[TestMethod]
+		void FilenameStemForNormalClass()
+		{
+			auto c = RootClassInfoCollection::GetRootClassInfo("TH1F");
+			Assert::IsTrue(c.source_filename_stem() == "NTH1F", "Improper filename stem");
+		}
+
+		[TestMethod]
+		void FilenameStemForTemplateClass()
+		{
+			gSystem->Load("libTMVA");
+			auto c = RootClassInfoCollection::GetRootClassInfo("TMVA::Factory");
+			Assert::IsTrue(c.source_filename_stem() == "NTMVA__NFactory", "Improper filename stem");
+		}
+
+		[TestMethod]
+		void InterfaceNamespaceDotNetNameGood()
+		{
+			gSystem->Load("libTMVA");
+			auto c = RootClassInfoCollection::GetRootClassInfo("TMVA::Factory");
+			Assert::IsTrue("TMVA::Factory" == c.CPPName());
+		}
+
+		[TestMethod]
+		void IncludeFileForNormalClass()
+		{
+			auto c = RootClassInfoCollection::GetRootClassInfo("TH1F");
+			auto incFile = c.include_filename();
+			Assert::IsTrue(incFile == "TH1.h", "Improper include name");
+		}
+
+		[TestMethod]
+		void ClassNameOnlyForNormalClass()
+		{
+			auto c = RootClassInfoCollection::GetRootClassInfo("TH1F");
+			auto incFile = c.NETName_ClassOnly();
+			Assert::IsTrue(incFile == "NTH1F", "Improper include name");
+		}
+
+		[TestMethod]
+		void ClassNameOnlyForNamespaceClass()
+		{
+			gSystem->Load("libTMVA");
+			auto c = RootClassInfoCollection::GetRootClassInfo("TMVA::Factory");
+			auto incFile = c.NETName_ClassOnly();
+			Assert::IsTrue(incFile == "NFactory", "Improper include name");
+		}
+
+		[TestMethod]
+		void CPPClassNameOnlyForNormalClass()
+		{
+			auto c = RootClassInfoCollection::GetRootClassInfo("TH1F");
+			auto incFile = c.CPPName_ClassOnly();
+			Assert::IsTrue(incFile == "TH1F", "Improper include name");
+		}
+
+		[TestMethod]
+		void CPPClassNameOnlyForNamespaceClass()
+		{
+			gSystem->Load("libTMVA");
+			auto c = RootClassInfoCollection::GetRootClassInfo("TMVA::Factory");
+			auto incFile = c.CPPName_ClassOnly();
+			Assert::IsTrue(incFile == "Factory", "Improper include name");
+		}
+
+		[TestMethod]
+		void IncludeFileClassInSubDirectory()
+		{
+			gSystem->Load("libTMVA");
+			auto c = RootClassInfoCollection::GetRootClassInfo("TMVA::Factory");
+			auto incFile = c.include_filename();
+			Assert::IsTrue(incFile == "TMVA/Factory.h", "Improper include name");
+		}
+
+		[TestMethod]
+		void CPPNameUnqualifiedForNormalClass()
+		{
+			auto c = RootClassInfoCollection::GetRootClassInfo("TH1F");
+			auto name = c.CPPNameUnqualified();
+			Assert::IsTrue(name == "TH1F", "Improper include name");
+		}
+
+		[TestMethod]
+		void CPPNameUnqualifiedForNamespaceClass()
+		{
+			gSystem->Load("libTMVA");
+			auto c = RootClassInfoCollection::GetRootClassInfo("TMVA::Factory");
+			auto name = c.CPPNameUnqualified();
+			Assert::IsTrue(name == "TMVA__Factory", "Improper include name");
+		}
+
+		[TestMethod]
 		void TestSamePointer()
 		{
 			RootClassInfo *c1 = RootClassInfoCollection::GetRootClassInfoPtr ("TH1F");

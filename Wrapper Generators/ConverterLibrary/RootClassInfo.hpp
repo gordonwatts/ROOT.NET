@@ -22,10 +22,21 @@ public:
 	RootClassInfo();
 	~RootClassInfo(void);
 
-	/// Return the name
+	/// Return the name. Includes namespace references.
 	const std::string &CPPName (void) const {return _name;}
 	/// Return the name in the .NET world, in case it is different.
+	/// Includes namespace references.
 	const std::string &NETName (void) const {return _netname;}
+
+	/// Returns the CPP name, but with namespace stuff replaced with __ - so it
+	/// can be used as an idetifier.
+	std::string CPPNameUnqualified(void) const;
+
+	/// Return the class name, but not qualified by the namespace.
+	std::string CPPName_ClassOnly(void) const;
+
+	/// Returns the NETName, but with no namespace references.
+	std::string NETName_ClassOnly(void) const;
 
 	/// The include file that this class resides in
 	std::string include_filename (void) const;
@@ -35,6 +46,9 @@ public:
 
 	/// The name of the include file, w/o the .h
 	std::string include_filename_stub (void) const;
+
+	/// Return the filename stem that this object will be written into.
+	std::string source_filename_stem(void) const;
 
 	/// Returns a list of ROOT classes this class inherits directly from (no deep inherritance is calculated).
 	const std::vector<std::string> &GetDirectInheritedClasses (void) const;

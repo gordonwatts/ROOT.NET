@@ -24,34 +24,13 @@
     <ClCompile Include="ROOTSource\root_type_helpers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ROOTSource\NTAttFill.cpp">
+    <ClCompile Include="ROOTSource\NTMVA__NConfigurable.cpp">
       <Filter>ROOTSource</Filter>
     </ClCompile>
-    <ClCompile Include="ROOTSource\NTAttLine.cpp">
-      <Filter>ROOTSource</Filter>
-    </ClCompile>
-    <ClCompile Include="ROOTSource\NTAttMarker.cpp">
-      <Filter>ROOTSource</Filter>
-    </ClCompile>
-    <ClCompile Include="ROOTSource\NTDirectory.cpp">
-      <Filter>ROOTSource</Filter>
-    </ClCompile>
-    <ClCompile Include="ROOTSource\NTDirectoryFile.cpp">
-      <Filter>ROOTSource</Filter>
-    </ClCompile>
-    <ClCompile Include="ROOTSource\NTFile.cpp">
-      <Filter>ROOTSource</Filter>
-    </ClCompile>
-    <ClCompile Include="ROOTSource\NTLorentzVector.cpp">
-      <Filter>ROOTSource</Filter>
-    </ClCompile>
-    <ClCompile Include="ROOTSource\NTNamed.cpp">
+    <ClCompile Include="ROOTSource\NTMVA__NFactory.cpp">
       <Filter>ROOTSource</Filter>
     </ClCompile>
     <ClCompile Include="ROOTSource\NTObject.cpp">
-      <Filter>ROOTSource</Filter>
-    </ClCompile>
-    <ClCompile Include="ROOTSource\NTTree.cpp">
       <Filter>ROOTSource</Filter>
     </ClCompile>
   </ItemGroup>
@@ -68,37 +47,13 @@
     <ClInclude Include="ROOTSource\libCore-make_public.hpp">
       <Filter>ROOTSource</Filter>
     </ClInclude>
-    <ClInclude Include="ROOTSource\libPhysics-make_public.hpp">
+    <ClInclude Include="ROOTSource\libTMVA-make_public.hpp">
       <Filter>ROOTSource</Filter>
     </ClInclude>
-    <ClInclude Include="ROOTSource\libRIO-make_public.hpp">
+    <ClInclude Include="ROOTSource\NTMVA__NConfigurable.hpp">
       <Filter>ROOTSource</Filter>
     </ClInclude>
-    <ClInclude Include="ROOTSource\NTAttFill.hpp">
-      <Filter>ROOTSource</Filter>
-    </ClInclude>
-    <ClInclude Include="ROOTSource\NTAttLine.hpp">
-      <Filter>ROOTSource</Filter>
-    </ClInclude>
-    <ClInclude Include="ROOTSource\NTAttMarker.hpp">
-      <Filter>ROOTSource</Filter>
-    </ClInclude>
-    <ClInclude Include="ROOTSource\NTDirectory.hpp">
-      <Filter>ROOTSource</Filter>
-    </ClInclude>
-    <ClInclude Include="ROOTSource\NTDirectoryFile.hpp">
-      <Filter>ROOTSource</Filter>
-    </ClInclude>
-    <ClInclude Include="ROOTSource\NTFile.hpp">
-      <Filter>ROOTSource</Filter>
-    </ClInclude>
-    <ClInclude Include="ROOTSource\NTLorentzVector.hpp">
-      <Filter>ROOTSource</Filter>
-    </ClInclude>
-    <ClInclude Include="ROOTSource\NTNamed.hpp">
-      <Filter>ROOTSource</Filter>
-    </ClInclude>
-    <ClInclude Include="ROOTSource\NTTree.hpp">
+    <ClInclude Include="ROOTSource\NTMVA__NFactory.hpp">
       <Filter>ROOTSource</Filter>
     </ClInclude>
     <ClInclude Include="ROOTSource\root_type_helpers.hpp">

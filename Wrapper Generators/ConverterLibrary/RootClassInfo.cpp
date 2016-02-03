@@ -5,6 +5,7 @@
 #include "ConverterErrorLog.hpp"
 #include "RootClassInfoCollection.hpp"
 #include "FieldHandlingUtils.hpp"
+#include "StringUtils.h"
 
 #include "TMethod.h"
 #include "TROOT.h"
@@ -43,10 +44,25 @@ using std::copy;
 using std::copy_if;
 using std::find_if;
 
+namespace {
+	// Fix up naming if a namespace is involved in the class name
+	string DetermineNetNameFromCPP(const string &cppname)
+	{
+		auto parts = split(cppname, "::");
+		string result;
+		for (auto s : parts) {
+			if (result.size() > 0)
+				result += "::";
+			result += "N" + s;
+		}
+		return result;
+	}
+}
+
 /// The normal initializer
 RootClassInfo::RootClassInfo(const std::string &name)
 : _inherited_good (false), _name(name), _methods_good (false), _methods_clean_good(false),
-_referenced_classes_good(false), _inherited_deep_good(false), _netname("N" + name),
+_referenced_classes_good(false), _inherited_deep_good(false), _netname(DetermineNetNameFromCPP(name)),
 _enum_info_valid (false), _class_properties_good(false), _methods_implemented_good(false),
 _methods_implemented_good_clean(false), _fields_good(false), _fields_clean_good(false), _fields_for_class_good(false),
 _best_class_to_inherrit_good(false)
@@ -65,6 +81,33 @@ _best_class_to_inherrit_good(false)
 
 RootClassInfo::~RootClassInfo(void)
 {
+}
+
+string RootClassInfo::CPPNameUnqualified(void) const
+{
+	string cppName(CPPName());
+	replace(cppName.begin(), cppName.end(), ':', '_');
+	return cppName;
+}
+
+/// Return the NET class name, no namespace info in it.
+string RootClassInfo::NETName_ClassOnly(void) const
+{
+	string result(NETName());
+	auto idx = result.rfind(":");
+	if (idx == string::npos)
+		return result;
+	return result.substr(idx + 1);
+}
+
+/// Return the NET class name, no namespace info in it.
+string RootClassInfo::CPPName_ClassOnly(void) const
+{
+	string result(CPPName());
+	auto idx = result.rfind(":");
+	if (idx == string::npos)
+		return result;
+	return result.substr(idx + 1);
 }
 
 void GetInheritedClassesRec (string class_name, set<string> &class_list, bool deep_list)
@@ -719,11 +762,11 @@ string RootClassInfo::include_filename() const
 {
 	TClass *c = gROOT->GetClass(_name.c_str());
 	string full_name (c->GetDeclFileName());
-	int index = full_name.find_last_of("/");
+	auto index = full_name.find("/inc/");
 	if (index == string::npos) {
-		index = -1;
+		return full_name;
 	}
-	return full_name.substr (index+1);
+	return full_name.substr (index+5);
 }
 
 ///
@@ -733,7 +776,8 @@ string RootClassInfo::include_directory() const
 {
 	TClass *c = gROOT->GetClass(_name.c_str());
 	string full_name (c->GetDeclFileName());
-	int index = full_name.find_last_of("/");
+
+	auto index = full_name.find("/include/");
 	if (index == string::npos) {
 		return ".";
 	}
@@ -751,6 +795,17 @@ string RootClassInfo::include_filename_stub() const
 		return include_filename;
 	}
 	return include_filename.substr(0, dot);
+}
+
+///
+/// Return the sanitized name for the filesystem - where we will write
+/// out this object.
+///
+string RootClassInfo::source_filename_stem(void) const
+{
+	auto r(NETName());
+	replace(r.begin(), r.end(), ':', '_');
+	return r;
 }
 
 ///

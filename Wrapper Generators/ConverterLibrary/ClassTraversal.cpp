@@ -84,9 +84,7 @@ vector<string> ClassTraversal::FindInheritedClasses(const std::string &class_nam
 	  if (protected_ok || (!protected_ok && (bobj->Property() & kIsProtected) == 0)) {
 		TClass *cl = bobj->GetClassPointer();
 		string subname (cl->GetName());
-		if (subname.find("::") == string::npos) {
-			result.push_back (subname);
-		}
+		result.push_back (subname);
 	  }
 	}
 

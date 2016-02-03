@@ -93,10 +93,11 @@ void TTROOTClass::translate_to_cpp (const std::string &net_name, const std::stri
 	// or space checking for that.
 	//
 
+	auto r = RootClassInfoCollection::GetRootClassInfoPtr(_class_name);
 	if (!isSafe) {
-		emitter() << "(" << net_name << " == nullptr ? 0 : " << net_name << "->CPP_Instance_" << _class_name << "());" << endl;
+		emitter() << "(" << net_name << " == nullptr ? 0 : " << net_name << "->CPP_Instance_" << r->CPPNameUnqualified() << "());" << endl;
 	} else {
-		emitter() << net_name << "->CPP_Instance_" << _class_name << "();" << endl;
+		emitter() << net_name << "->CPP_Instance_" << r->CPPNameUnqualified() << "();" << endl;
 	}
 }
 

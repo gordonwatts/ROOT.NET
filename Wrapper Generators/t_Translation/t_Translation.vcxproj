@@ -121,6 +121,7 @@
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
       <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
       <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <Private>false</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -137,6 +138,7 @@
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="t_SimpleClassTranslator.cpp" />
+    <ClCompile Include="t_ClassTraversal.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />

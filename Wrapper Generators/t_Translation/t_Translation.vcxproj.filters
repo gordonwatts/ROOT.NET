@@ -21,6 +21,9 @@
     <ClCompile Include="t_SimpleClassTranslator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="t_ClassTraversal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
