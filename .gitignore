@@ -242,3 +242,4 @@ Wrapper Generators/solution_template.sln
 Wrapper Generators/FindBadRootHeadersStatus.txt
 nuget.exe
 nuget/*
+*.opendb
