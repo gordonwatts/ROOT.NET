@@ -89,6 +89,7 @@ void find_bad_headers::operator ()(const std::string &inlcude_filename)
 	if (pos != include_name_stub.npos) {
 		include_name_stub = include_name_stub.substr(0, pos);
 	}
+	replace(include_name_stub.begin(), include_name_stub.end(), '/', '_');
 
 	/// Write out the input file
 	string input_source_filename (include_name_stub + "-input.cpp");
