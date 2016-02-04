@@ -229,7 +229,6 @@ void ClassTranslator::translate(RootClassInfo &class_info)
 		}
 	}
 
-
 	///
 	/// Generate the interface and the actual class
 	///
@@ -302,8 +301,11 @@ void write_out_make_public::operator ()(const std::pair<string,set<string> > &it
 	make_public_header.start_line() << "// List of the objects defined in this library, tagged with make_public" << endl;
 	vector<string> all_objects(all_objects_set.begin(), all_objects_set.end());
 	for (unsigned int i = 0; i < all_objects.size(); i++) {
-		make_public_header.namespace_depth_decl(all_objects[i], "class");
-		make_public_header.start_line() << "#pragma make_public(" << all_objects[i] << ")" << endl;
+		auto info = RootClassInfoCollection::GetRootClassInfo(all_objects[i]);
+		auto ns_depth = make_public_header.start_namespace(info, false);
+		make_public_header.start_line() << "class " << info.CPPClassName() << ";" << endl;
+		make_public_header.brace_close(ns_depth);
+		make_public_header.start_line() << "#pragma make_public(" << info.CPPQualifiedName() << ")" << endl;
 	}
 	make_public_header.close();
 }
@@ -718,6 +720,7 @@ void ClassTranslator::generate_interface_static_methods (RootClassInfo &class_in
 {
 
 	emitter.start_namespace("Interface");
+	auto ns_depth = emitter.start_namespace(class_info);
 
 	///
 	/// Work only on static methods here...
@@ -805,6 +808,7 @@ void ClassTranslator::generate_interface_static_methods (RootClassInfo &class_in
 	///
 
 	emitter.brace_close(); // End of namespace
+	emitter.brace_close(ns_depth);
 }
 
 namespace {
@@ -1427,6 +1431,8 @@ void ClassTranslator::generate_class_methods (RootClassInfo &info, SourceEmitter
 	emitter() << "#undef nullptr" << endl;
 	emitter() << "#endif" << endl;
 
+	auto ns_depth = emitter.start_namespace(info);
+
 	//
 	// If this isn't a base class then we will need to reference other guys in the c-tors.
 	//
@@ -1694,6 +1700,8 @@ void ClassTranslator::generate_class_methods (RootClassInfo &info, SourceEmitter
 		}
 	}
 
+	// And close the namespace stuff
+	emitter.brace_close(ns_depth);
 }
 
 ///

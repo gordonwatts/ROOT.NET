@@ -118,7 +118,13 @@
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="ROOTSource\NROOT__NTSchemaRule.cpp" />
-    <ClCompile Include="ROOTSource\NROOT__NTSchemaRule__NTSources.cpp" />
+    <ClCompile Include="ROOTSource\NTArray.cpp" />
+    <ClCompile Include="ROOTSource\NTArrayF.cpp" />
+    <ClCompile Include="ROOTSource\NTAttFill.cpp" />
+    <ClCompile Include="ROOTSource\NTAttLine.cpp" />
+    <ClCompile Include="ROOTSource\NTAttMarker.cpp" />
+    <ClCompile Include="ROOTSource\NTH1.cpp" />
+    <ClCompile Include="ROOTSource\NTH1F.cpp" />
     <ClCompile Include="ROOTSource\NTNamed.cpp" />
     <ClCompile Include="ROOTSource\NTObject.cpp" />
     <ClCompile Include="ROOTSource\root_type_helpers.cpp" />
@@ -126,9 +132,16 @@
   <ItemGroup>
     <ClInclude Include="resource.h" />
     <ClInclude Include="ROOTSource\libCore-make_public.hpp" />
+    <ClInclude Include="ROOTSource\libHist-make_public.hpp" />
     <ClInclude Include="ROOTSource\libTree-make_public.hpp" />
     <ClInclude Include="ROOTSource\NROOT__NTSchemaRule.hpp" />
-    <ClInclude Include="ROOTSource\NROOT__NTSchemaRule__NTSources.hpp" />
+    <ClInclude Include="ROOTSource\NTArray.hpp" />
+    <ClInclude Include="ROOTSource\NTArrayF.hpp" />
+    <ClInclude Include="ROOTSource\NTAttFill.hpp" />
+    <ClInclude Include="ROOTSource\NTAttLine.hpp" />
+    <ClInclude Include="ROOTSource\NTAttMarker.hpp" />
+    <ClInclude Include="ROOTSource\NTH1.hpp" />
+    <ClInclude Include="ROOTSource\NTH1F.hpp" />
     <ClInclude Include="ROOTSource\NTNamed.hpp" />
     <ClInclude Include="ROOTSource\NTObject.hpp" />
     <ClInclude Include="ROOTSource\root_type_helpers.hpp" />

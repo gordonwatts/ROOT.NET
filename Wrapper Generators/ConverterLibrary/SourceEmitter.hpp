@@ -31,11 +31,12 @@ public:
 	/// Open a namespace and do a bracket open too!
 	/// Properly deals with multiple namespaces
 	int start_namespace (const std::string &namespace_name);
-	int start_namespace(const RootClassInfo &for_class);
+	int start_namespace(const RootClassInfo &for_class, bool useNETNamespace = true);
 
 	/// Open/close brace. Tracks indenting too
 	void brace_open(void);
 	void brace_close(bool add_semicolon = false);
+	void brace_close(int depth);
 
 	/// Change the indent level (done automatically by some of the thigns above)
 	void indent_increase(void);
@@ -51,6 +52,7 @@ public:
 	///   full_class_name has the namespace qualifications built in.
 	///   The stub is what is put at the center before the class name (class XXX, for example).
 	void namespace_depth_decl(const RootClassInfo &info, const std::string &stub);
+	void namespace_depth_decl_cpp(const RootClassInfo &info, const std::string &stub);
 
 	/// close our file handle.
 	void close (void);

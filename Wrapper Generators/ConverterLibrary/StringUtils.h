@@ -18,7 +18,7 @@ inline std::vector<std::string> split(const std::string &source, const std::stri
 	}
 	
 	// And anything left at the end of the string.
-	if (lastDelim <= source.size())
+	if (lastDelim < source.size())
 		result.push_back(source.substr(lastDelim));
 
 	return result;

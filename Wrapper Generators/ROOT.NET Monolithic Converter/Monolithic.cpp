@@ -89,7 +89,8 @@ int main()
 	//libraries_to_load.push_back("libTree");
 	//libraries_to_load.push_back("libHist");
 	asked_for_class_list.push_back("ROOT::TSchemaRule");
-	asked_for_class_list.push_back("ROOT::TSchemaRule::TSources");
+	asked_for_class_list.push_back("TH1F");
+	//asked_for_class_list.push_back("ROOT::TSchemaRule::TSources");
 	//libraries_to_load.push_back("libRHTTP");
 #endif
 

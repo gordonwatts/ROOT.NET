@@ -24,16 +24,34 @@
     <ClCompile Include="ROOTSource\root_type_helpers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ROOTSource\NROOT__NTSchemaRule.cpp">
+    <ClCompile Include="ROOTSource\NTArray.cpp">
       <Filter>ROOTSource</Filter>
     </ClCompile>
-    <ClCompile Include="ROOTSource\NROOT__NTSchemaRule__NTSources.cpp">
+    <ClCompile Include="ROOTSource\NTArrayF.cpp">
+      <Filter>ROOTSource</Filter>
+    </ClCompile>
+    <ClCompile Include="ROOTSource\NTAttFill.cpp">
+      <Filter>ROOTSource</Filter>
+    </ClCompile>
+    <ClCompile Include="ROOTSource\NTAttLine.cpp">
+      <Filter>ROOTSource</Filter>
+    </ClCompile>
+    <ClCompile Include="ROOTSource\NTAttMarker.cpp">
+      <Filter>ROOTSource</Filter>
+    </ClCompile>
+    <ClCompile Include="ROOTSource\NTH1.cpp">
+      <Filter>ROOTSource</Filter>
+    </ClCompile>
+    <ClCompile Include="ROOTSource\NTH1F.cpp">
       <Filter>ROOTSource</Filter>
     </ClCompile>
     <ClCompile Include="ROOTSource\NTNamed.cpp">
       <Filter>ROOTSource</Filter>
     </ClCompile>
     <ClCompile Include="ROOTSource\NTObject.cpp">
+      <Filter>ROOTSource</Filter>
+    </ClCompile>
+    <ClCompile Include="ROOTSource\NROOT__NTSchemaRule.cpp">
       <Filter>ROOTSource</Filter>
     </ClCompile>
   </ItemGroup>
@@ -50,16 +68,37 @@
     <ClInclude Include="ROOTSource\libCore-make_public.hpp">
       <Filter>ROOTSource</Filter>
     </ClInclude>
-    <ClInclude Include="ROOTSource\NROOT__NTSchemaRule.hpp">
+    <ClInclude Include="ROOTSource\libHist-make_public.hpp">
       <Filter>ROOTSource</Filter>
     </ClInclude>
-    <ClInclude Include="ROOTSource\NROOT__NTSchemaRule__NTSources.hpp">
+    <ClInclude Include="ROOTSource\NTArray.hpp">
+      <Filter>ROOTSource</Filter>
+    </ClInclude>
+    <ClInclude Include="ROOTSource\NTArrayF.hpp">
+      <Filter>ROOTSource</Filter>
+    </ClInclude>
+    <ClInclude Include="ROOTSource\NTAttFill.hpp">
+      <Filter>ROOTSource</Filter>
+    </ClInclude>
+    <ClInclude Include="ROOTSource\NTAttLine.hpp">
+      <Filter>ROOTSource</Filter>
+    </ClInclude>
+    <ClInclude Include="ROOTSource\NTAttMarker.hpp">
+      <Filter>ROOTSource</Filter>
+    </ClInclude>
+    <ClInclude Include="ROOTSource\NTH1.hpp">
+      <Filter>ROOTSource</Filter>
+    </ClInclude>
+    <ClInclude Include="ROOTSource\NTH1F.hpp">
       <Filter>ROOTSource</Filter>
     </ClInclude>
     <ClInclude Include="ROOTSource\NTNamed.hpp">
       <Filter>ROOTSource</Filter>
     </ClInclude>
     <ClInclude Include="ROOTSource\root_type_helpers.hpp">
+      <Filter>ROOTSource</Filter>
+    </ClInclude>
+    <ClInclude Include="ROOTSource\NROOT__NTSchemaRule.hpp">
       <Filter>ROOTSource</Filter>
     </ClInclude>
   </ItemGroup>

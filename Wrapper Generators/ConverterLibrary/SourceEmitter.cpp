@@ -99,6 +99,13 @@ void SourceEmitter::brace_close(bool add_semicolon)
 	_file << endl;
 }
 
+void SourceEmitter::brace_close(int depth)
+{
+	for (int i = 0; i < depth; i++) {
+		brace_close();
+	}
+}
+
 ///
 /// Change the size of the indent
 ///
@@ -136,11 +143,11 @@ int SourceEmitter::start_namespace(const std::string &namespace_name)
 	return count;
 }
 
-int SourceEmitter::start_namespace(const RootClassInfo &info)
+int SourceEmitter::start_namespace(const RootClassInfo &info, bool useNETNamespace)
 {
 	// Get the list of namespaces we want to look at.
 
-	auto all_parts(split(info.NETNameSpace(), "::"));
+	auto all_parts(split(useNETNamespace ? info.NETNameSpace() : info.CPPNameSpace(), "::"));
 
 	// Now, nest them and return the number of nestings we do.
 	int count = 0;
@@ -157,6 +164,16 @@ void SourceEmitter::namespace_depth_decl(const RootClassInfo &info, const std::s
 {
 	auto extra_depth = start_namespace(info);
 	start_line() << stub << " " << info.NETClassName() << ";" << endl;
+	for (int i = 0; i < extra_depth; i++) {
+		brace_close();
+	}
+}
+
+// Helper to do a decl in the middle of a namespace for a class (forward decl).
+void SourceEmitter::namespace_depth_decl_cpp(const RootClassInfo &info, const std::string &stub)
+{
+	auto extra_depth = start_namespace(info);
+	start_line() << stub << " " << info.CPPClassName() << ";" << endl;
 	for (int i = 0; i < extra_depth; i++) {
 		brace_close();
 	}

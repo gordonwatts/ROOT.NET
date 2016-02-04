@@ -9,10 +9,14 @@ using std::endl;
 
 namespace {
 	string createNetName (const string &name)
-	{
-		if (name.find("::") == name.npos)
+	{		
+		int lastID = name.rfind("::");
+		if (lastID == string::npos) {
 			return name;
-		return "N" + name;
+		}
+
+		auto ns_and_class = DetermineNetNameFromCPP(name.substr(0, lastID));
+		return ns_and_class + name.substr(lastID);
 	}
 }
 

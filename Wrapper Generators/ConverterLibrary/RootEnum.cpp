@@ -172,7 +172,7 @@ string RootEnum::NameUnqualified() const
 	if (_name == "enum ") {
 		return "enum_";
 	} else {
-		int index = _name.find("::");
+		int index = _name.rfind("::");
 		if (index == _name.npos) {
 			return _name;
 		}
