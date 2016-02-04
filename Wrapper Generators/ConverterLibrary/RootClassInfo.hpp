@@ -22,7 +22,26 @@ public:
 	RootClassInfo();
 	~RootClassInfo(void);
 
-	/// Return the name. Includes namespace references.
+	/// Examples below use THF1 in the global namespace, TMVA::Factory, and ROOT::TSchemaRule::TSource
+	/// as their source.
+
+	/// Return just the class name (TH1F, Factory, TSource)
+	const std::string &CPPClassName(void) const { return _cpp_class_name; }
+	const std::string &NETClassName(void) const { return _net_class_name; }
+
+	/// Return the class name along with sub-class paths (TH1F, Factory, TSchemaRule::TSource)
+	const std::string &CPPQualifiedClassName(void) const { return _cpp_qualified_class_name; }
+	const std::string &NETQualifiedClassName(void) const { return _net_qualified_class_name; }
+
+	/// Return the Namespace ("", TMVA, ROOT)
+	const std::string &CPPNameSpace(void) const { return _cpp_namespace; }
+	const std::string &NETNameSpace(void) const { return _net_namespace; }
+
+	/// Return the full name (TH1F, TMVA::Factory, ROOT::TSchemaRule::TSource)
+	const std::string &CPPQualifiedName(void) const { return _cpp_qualified_name; }
+	const std::string &NETQUalifiedName(void) const { return _net_qualified_name; }
+
+	/// 
 	const std::string &CPPName (void) const {return _name;}
 	/// Return the name in the .NET world, in case it is different.
 	/// Includes namespace references.
@@ -161,6 +180,17 @@ private:
 	std::string _name;
 	std::string _netname;
 
+	/// Hang onto everything that we need setting!
+	std::string _cpp_class_name;
+	std::string _net_class_name;
+	std::string _cpp_qualified_class_name;
+	std::string _net_qualified_class_name;
+	std::string _cpp_namespace;
+	std::string _net_namespace;
+	std::string _cpp_qualified_name;
+	std::string _net_qualified_name;
+
+
 	/// TMethod::Name strings that we should never allow into our list of methods!
 	std::set<std::string> _bad_method_names;
 
@@ -168,3 +198,7 @@ private:
 	mutable bool _enum_info_valid;
 	mutable std::vector<RootEnum> _enum_info;
 };
+
+/// Help with altering names
+std::string DetermineNetNameFromCPP(const std::string &cppname);
+

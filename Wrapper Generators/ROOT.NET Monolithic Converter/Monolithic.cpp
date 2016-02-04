@@ -83,15 +83,20 @@ int main()
 	//asked_for_class_list.push_back("TList");
 	//asked_for_class_list.push_back("TRootSnifferScanRec");
 	//asked_for_class_list.push_back("TIter");
-	asked_for_class_list.push_back("TMVA::Factory");
-	libraries_to_load.push_back("libTMVA");
-	libraries_to_load.push_back("libRHTTP");
+	//asked_for_class_list.push_back("TMVA::Factory");
+	//libraries_to_load.push_back("libTMVA");
+	//libraries_to_load.push_back("libRIO");
+	//libraries_to_load.push_back("libTree");
+	//libraries_to_load.push_back("libHist");
+	asked_for_class_list.push_back("ROOT::TSchemaRule");
+	asked_for_class_list.push_back("ROOT::TSchemaRule::TSources");
+	//libraries_to_load.push_back("libRHTTP");
 #endif
 
 	/// Make sure the libraries that are going to be needed are loaded!
 	libraries_to_load.push_back ("libCore");
-	libraries_to_load.push_back ("libPhysics");
-	libraries_to_load.push_back ("libThread");
+	//libraries_to_load.push_back ("libPhysics");
+	//libraries_to_load.push_back ("libThread");
 
 	output_dir = "..\\..\\Wrappers\\MonolithicROOTWrapper\\ROOTSource";
 

@@ -79,7 +79,7 @@ string RootEnum::NETClassName() const
 		return "";
 	}
 
-	return "N" + _name.substr(0, lastID);
+	return DetermineNetNameFromCPP(_name.substr(0, lastID));
 }
 
 ///

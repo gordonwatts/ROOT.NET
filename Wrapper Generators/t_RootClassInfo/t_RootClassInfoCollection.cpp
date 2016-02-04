@@ -119,6 +119,144 @@ namespace t_RootClassInfo
 		}
 
 		[TestMethod]
+		void CPPNamespaceParsing()
+		{
+			gSystem->Load("libTMVA");
+			auto histo = RootClassInfoCollection::GetRootClassInfo("TH1F");
+			auto factory = RootClassInfoCollection::GetRootClassInfo("TMVA::Factory");
+			auto source = RootClassInfoCollection::GetRootClassInfo("ROOT::TSchemaRule::TSource");
+
+			auto nhisto = histo.CPPNameSpace();
+			auto nfactory = factory.CPPNameSpace();
+			auto nsource = source.CPPNameSpace();
+
+			Assert::IsTrue(nhisto == "");
+			Assert::IsTrue(nfactory == "TMVA");
+			Assert::IsTrue(nsource == "ROOT");
+		}
+
+		[TestMethod]
+		void NCPPNamespaceParsing()
+		{
+			gSystem->Load("libTMVA");
+			auto histo = RootClassInfoCollection::GetRootClassInfo("TH1F");
+			auto factory = RootClassInfoCollection::GetRootClassInfo("TMVA::Factory");
+			auto source = RootClassInfoCollection::GetRootClassInfo("ROOT::TSchemaRule::TSource");
+
+			auto nhisto = histo.NETNameSpace();
+			auto nfactory = factory.NETNameSpace();
+			auto nsource = source.NETNameSpace();
+
+			Assert::IsTrue(nhisto == "");
+			Assert::IsTrue(nfactory == "NTMVA");
+			Assert::IsTrue(nsource == "NROOT");
+		}
+
+		[TestMethod]
+		void CPPQualifiedName()
+		{
+			gSystem->Load("libTMVA");
+			auto histo = RootClassInfoCollection::GetRootClassInfo("TH1F");
+			auto factory = RootClassInfoCollection::GetRootClassInfo("TMVA::Factory");
+			auto source = RootClassInfoCollection::GetRootClassInfo("ROOT::TSchemaRule::TSource");
+
+			auto nhisto = histo.CPPQualifiedName();
+			auto nfactory = factory.CPPQualifiedName();
+			auto nsource = source.CPPQualifiedName();
+
+			Assert::IsTrue(nhisto == "TH1F");
+			Assert::IsTrue(nfactory == "TMVA::Factory");
+			Assert::IsTrue(nsource == "ROOT::TSchemaRule::TSource");
+		}
+
+		[TestMethod]
+		void NCPPQualifiedName()
+		{
+			gSystem->Load("libTMVA");
+			auto histo = RootClassInfoCollection::GetRootClassInfo("TH1F");
+			auto factory = RootClassInfoCollection::GetRootClassInfo("TMVA::Factory");
+			auto source = RootClassInfoCollection::GetRootClassInfo("ROOT::TSchemaRule::TSource");
+
+			auto nhisto = histo.NETQUalifiedName();
+			auto nfactory = factory.NETQUalifiedName();
+			auto nsource = source.NETQUalifiedName();
+
+			Assert::IsTrue(nhisto == "NTH1F");
+			Assert::IsTrue(nfactory == "NTMVA::NFactory");
+			Assert::IsTrue(nsource == "NROOT::NTSchemaRule::NTSource");
+		}
+
+		[TestMethod]
+		void CPPClassName()
+		{
+			gSystem->Load("libTMVA");
+			auto histo = RootClassInfoCollection::GetRootClassInfo("TH1F");
+			auto factory = RootClassInfoCollection::GetRootClassInfo("TMVA::Factory");
+			auto source = RootClassInfoCollection::GetRootClassInfo("ROOT::TSchemaRule::TSource");
+
+			auto nhisto = histo.CPPClassName();
+			auto nfactory = factory.CPPClassName();
+			auto nsource = source.CPPClassName();
+
+			Assert::IsTrue(nhisto == "TH1F");
+			Assert::IsTrue(nfactory == "Factory");
+			Assert::IsTrue(nsource == "TSource");
+		}
+
+		[TestMethod]
+		void NCPPClassName()
+		{
+			gSystem->Load("libTMVA");
+			auto histo = RootClassInfoCollection::GetRootClassInfo("TH1F");
+			auto factory = RootClassInfoCollection::GetRootClassInfo("TMVA::Factory");
+			auto source = RootClassInfoCollection::GetRootClassInfo("ROOT::TSchemaRule::TSource");
+
+			auto nhisto = histo.NETClassName();
+			auto nfactory = factory.NETClassName();
+			auto nsource = source.NETClassName();
+
+			Assert::IsTrue(nhisto == "NTH1F");
+			Assert::IsTrue(nfactory == "NFactory");
+			Assert::IsTrue(nsource == "NTSource");
+		}
+
+		[TestMethod]
+		void CPPQualifiedClassName()
+		{
+			gSystem->Load("libTMVA");
+			auto histo = RootClassInfoCollection::GetRootClassInfo("TH1F");
+			auto factory = RootClassInfoCollection::GetRootClassInfo("TMVA::Factory");
+			auto source = RootClassInfoCollection::GetRootClassInfo("ROOT::TSchemaRule::TSource");
+
+			auto nhisto = histo.CPPQualifiedClassName();
+			auto nfactory = factory.CPPQualifiedClassName();
+			auto nsource = source.CPPQualifiedClassName();
+
+			Assert::IsTrue(nhisto == "TH1F");
+			Assert::IsTrue(nfactory == "Factory");
+			Assert::IsTrue(nsource == "TSchemaRule::TSource");
+		}
+
+		[TestMethod]
+		void NCPPQualifiedClassName()
+		{
+			gSystem->Load("libTMVA");
+			auto histo = RootClassInfoCollection::GetRootClassInfo("TH1F");
+			auto factory = RootClassInfoCollection::GetRootClassInfo("TMVA::Factory");
+			auto source = RootClassInfoCollection::GetRootClassInfo("ROOT::TSchemaRule::TSource");
+
+			auto nhisto = histo.NETQualifiedClassName();
+			auto nfactory = factory.NETQualifiedClassName();
+			auto nsource = source.NETQualifiedClassName();
+
+			Assert::IsTrue(nhisto == "NTH1F");
+			Assert::IsTrue(nfactory == "NFactory");
+			Assert::IsTrue(nsource == "NTSchemaRule::NTSource");
+		}
+
+		// Split into namespace recal and class naem recal... so we can deal with namespaces and nested classes.
+
+		[TestMethod]
 		void FilenameStemForNormalClass()
 		{
 			auto c = RootClassInfoCollection::GetRootClassInfo("TH1F");

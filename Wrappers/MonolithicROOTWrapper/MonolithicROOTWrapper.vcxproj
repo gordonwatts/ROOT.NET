@@ -117,18 +117,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
-    <ClCompile Include="ROOTSource\NTMVA__NConfigurable.cpp" />
-    <ClCompile Include="ROOTSource\NTMVA__NFactory.cpp" />
+    <ClCompile Include="ROOTSource\NROOT__NTSchemaRule.cpp" />
+    <ClCompile Include="ROOTSource\NROOT__NTSchemaRule__NTSources.cpp" />
+    <ClCompile Include="ROOTSource\NTNamed.cpp" />
     <ClCompile Include="ROOTSource\NTObject.cpp" />
     <ClCompile Include="ROOTSource\root_type_helpers.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
     <ClInclude Include="ROOTSource\libCore-make_public.hpp" />
-    <ClInclude Include="ROOTSource\libTMVA-make_public.hpp" />
     <ClInclude Include="ROOTSource\libTree-make_public.hpp" />
-    <ClInclude Include="ROOTSource\NTMVA__NConfigurable.hpp" />
-    <ClInclude Include="ROOTSource\NTMVA__NFactory.hpp" />
+    <ClInclude Include="ROOTSource\NROOT__NTSchemaRule.hpp" />
+    <ClInclude Include="ROOTSource\NROOT__NTSchemaRule__NTSources.hpp" />
+    <ClInclude Include="ROOTSource\NTNamed.hpp" />
     <ClInclude Include="ROOTSource\NTObject.hpp" />
     <ClInclude Include="ROOTSource\root_type_helpers.hpp" />
   </ItemGroup>

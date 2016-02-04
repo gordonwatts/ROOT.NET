@@ -45,15 +45,17 @@ using std::copy_if;
 using std::find_if;
 
 namespace {
-	// Fix up naming if a namespace is involved in the class name
-	string DetermineNetNameFromCPP(const string &cppname)
+	/// Join a split string using the "::" as a seperator.
+	template<class T>
+	string join_with_namespace(T begin, T end)
 	{
-		auto parts = split(cppname, "::");
-		string result;
-		for (auto s : parts) {
-			if (result.size() > 0)
+		string result("");
+		while (begin != end) {
+			if (!result.empty()) {
 				result += "::";
-			result += "N" + s;
+			}
+			result += *begin;
+			begin++;
 		}
 		return result;
 	}
@@ -62,11 +64,47 @@ namespace {
 /// The normal initializer
 RootClassInfo::RootClassInfo(const std::string &name)
 : _inherited_good (false), _name(name), _methods_good (false), _methods_clean_good(false),
-_referenced_classes_good(false), _inherited_deep_good(false), _netname(DetermineNetNameFromCPP(name)),
+_referenced_classes_good(false), _inherited_deep_good(false), _netname(),
 _enum_info_valid (false), _class_properties_good(false), _methods_implemented_good(false),
 _methods_implemented_good_clean(false), _fields_good(false), _fields_clean_good(false), _fields_for_class_good(false),
 _best_class_to_inherrit_good(false)
 {
+
+	// parse all the naming.
+	auto cppparts = split(name, "::");
+	auto netparts = vector<string>(cppparts);
+	transform(netparts.begin(), netparts.end(), netparts.begin(), [](string &s) {return "N" + s; });
+
+	// The fully qualified name
+	_cpp_qualified_name = name;
+	_net_qualified_name = join_with_namespace(netparts.begin(), netparts.end());
+	_netname = _net_qualified_name;
+
+	// The class name
+	_cpp_class_name = *(cppparts.end() - 1);
+	_net_class_name = *(netparts.end() - 1);
+
+	// In order to do anything with namespaces or sub classes we have to know what parts are namespaces and
+	// what parts are class names. So we will have to look through this one at a time.
+
+	auto last_namespace = cppparts.begin();
+	if (cppparts.size() > 1) {
+		// Just see where we suddenly start getting class
+		for (auto part = cppparts.begin()+1; part != cppparts.end(); part++) {
+			auto qualified_class = join_with_namespace(cppparts.begin(), part);
+			auto c = TClass::GetClass(qualified_class.c_str());
+			if (c != nullptr && (c->Property() & kIsClass)) {
+				break;
+			}
+			last_namespace = part;
+		}
+	}
+
+	_cpp_namespace = join_with_namespace(cppparts.begin(), last_namespace);
+	_net_namespace = join_with_namespace(netparts.begin(), netparts.begin() + (last_namespace - cppparts.begin()));
+
+	_cpp_qualified_class_name = join_with_namespace(last_namespace, cppparts.end());
+	_net_qualified_class_name = join_with_namespace(netparts.begin() + (last_namespace - cppparts.begin()), netparts.end());
 }
 
 /// Default ctor -- used only for stl containers!
@@ -1270,3 +1308,15 @@ vector<RootClassMethod> RootClassInfo::methods_of_name(const std::string &method
 	return result;
 }
 
+/// Rename a full class name and namespaces correctly into the .NET world.
+std::string DetermineNetNameFromCPP(const std::string &cppname)
+{
+	auto parts = split(cppname, "::");
+	string result;
+	for (auto s : parts) {
+		if (result.size() > 0)
+			result += "::";
+		result += "N" + s;
+	}
+	return result;
+}

@@ -24,10 +24,13 @@
     <ClCompile Include="ROOTSource\root_type_helpers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ROOTSource\NTMVA__NConfigurable.cpp">
+    <ClCompile Include="ROOTSource\NROOT__NTSchemaRule.cpp">
       <Filter>ROOTSource</Filter>
     </ClCompile>
-    <ClCompile Include="ROOTSource\NTMVA__NFactory.cpp">
+    <ClCompile Include="ROOTSource\NROOT__NTSchemaRule__NTSources.cpp">
+      <Filter>ROOTSource</Filter>
+    </ClCompile>
+    <ClCompile Include="ROOTSource\NTNamed.cpp">
       <Filter>ROOTSource</Filter>
     </ClCompile>
     <ClCompile Include="ROOTSource\NTObject.cpp">
@@ -47,13 +50,13 @@
     <ClInclude Include="ROOTSource\libCore-make_public.hpp">
       <Filter>ROOTSource</Filter>
     </ClInclude>
-    <ClInclude Include="ROOTSource\libTMVA-make_public.hpp">
+    <ClInclude Include="ROOTSource\NROOT__NTSchemaRule.hpp">
       <Filter>ROOTSource</Filter>
     </ClInclude>
-    <ClInclude Include="ROOTSource\NTMVA__NConfigurable.hpp">
+    <ClInclude Include="ROOTSource\NROOT__NTSchemaRule__NTSources.hpp">
       <Filter>ROOTSource</Filter>
     </ClInclude>
-    <ClInclude Include="ROOTSource\NTMVA__NFactory.hpp">
+    <ClInclude Include="ROOTSource\NTNamed.hpp">
       <Filter>ROOTSource</Filter>
     </ClInclude>
     <ClInclude Include="ROOTSource\root_type_helpers.hpp">
