@@ -47,12 +47,12 @@ using std::find_if;
 namespace {
 	/// Join a split string using the "::" as a seperator.
 	template<class T>
-	string join_with_namespace(T begin, T end)
+	string join_with_namespace(T begin, T end, const string &joiner = "::")
 	{
 		string result("");
 		while (begin != end) {
 			if (!result.empty()) {
-				result += "::";
+				result += joiner;
 			}
 			result += *begin;
 			begin++;
@@ -63,8 +63,8 @@ namespace {
 
 /// The normal initializer
 RootClassInfo::RootClassInfo(const std::string &name)
-: _inherited_good (false), _name(name), _methods_good (false), _methods_clean_good(false),
-_referenced_classes_good(false), _inherited_deep_good(false), _netname(),
+: _inherited_good (false), _methods_good (false), _methods_clean_good(false),
+_referenced_classes_good(false), _inherited_deep_good(false),
 _enum_info_valid (false), _class_properties_good(false), _methods_implemented_good(false),
 _methods_implemented_good_clean(false), _fields_good(false), _fields_clean_good(false), _fields_for_class_good(false),
 _best_class_to_inherrit_good(false)
@@ -78,11 +78,9 @@ _best_class_to_inherrit_good(false)
 	// The fully qualified name
 	_cpp_qualified_name = name;
 	_net_qualified_name = join_with_namespace(netparts.begin(), netparts.end());
-	_netname = _net_qualified_name;
 
-	// The class name
+	// The CPP class name. We aren't supporting nested class translation in NET for now.
 	_cpp_class_name = *(cppparts.end() - 1);
-	_net_class_name = *(netparts.end() - 1);
 
 	// In order to do anything with namespaces or sub classes we have to know what parts are namespaces and
 	// what parts are class names. So we will have to look through this one at a time.
@@ -104,7 +102,8 @@ _best_class_to_inherrit_good(false)
 	_net_namespace = join_with_namespace(netparts.begin(), netparts.begin() + (last_namespace - cppparts.begin()));
 
 	_cpp_qualified_class_name = join_with_namespace(last_namespace, cppparts.end());
-	_net_qualified_class_name = join_with_namespace(netparts.begin() + (last_namespace - cppparts.begin()), netparts.end());
+	_net_qualified_class_name = join_with_namespace(netparts.begin() + (last_namespace - cppparts.begin()), netparts.end(), "__");
+	_net_class_name = _net_qualified_class_name;
 }
 
 /// Default ctor -- used only for stl containers!
@@ -119,33 +118,6 @@ _best_class_to_inherrit_good(false)
 
 RootClassInfo::~RootClassInfo(void)
 {
-}
-
-string RootClassInfo::CPPNameUnqualified(void) const
-{
-	string cppName(CPPName());
-	replace(cppName.begin(), cppName.end(), ':', '_');
-	return cppName;
-}
-
-/// Return the NET class name, no namespace info in it.
-string RootClassInfo::NETName_ClassOnly(void) const
-{
-	string result(NETName());
-	auto idx = result.rfind(":");
-	if (idx == string::npos)
-		return result;
-	return result.substr(idx + 1);
-}
-
-/// Return the NET class name, no namespace info in it.
-string RootClassInfo::CPPName_ClassOnly(void) const
-{
-	string result(CPPName());
-	auto idx = result.rfind(":");
-	if (idx == string::npos)
-		return result;
-	return result.substr(idx + 1);
 }
 
 void GetInheritedClassesRec (string class_name, set<string> &class_list, bool deep_list)
@@ -165,7 +137,7 @@ void GetInheritedClassesRec (string class_name, set<string> &class_list, bool de
 const vector<string> &RootClassInfo::GetDirectInheritedClasses(void) const
 {
 	if (!_inherited_good) {
-		_inherited_classes = ClassTraversal::FindInheritedClasses (_name);
+		_inherited_classes = ClassTraversal::FindInheritedClasses (CPPQualifiedName());
 		_inherited_good = true;
 	}
 	return _inherited_classes;
@@ -234,7 +206,7 @@ const vector<string> &RootClassInfo::GetInheritedClassesDeep(void) const
 {
   if (!_inherited_deep_good) {
 	  set<string> all_classes;
-	  GetInheritedClassesRec (_name, all_classes, true);
+	  GetInheritedClassesRec (CPPQualifiedName(), all_classes, true);
 	  _inherited_classes_deep.insert(_inherited_classes_deep.end(), all_classes.begin(), all_classes.end());
 	  _inherited_deep_good = true;
   }
@@ -319,7 +291,7 @@ namespace {
 		vector<string> bad_classes (WrapperConfigurationInfo::BadClassLibraryCrossReference(thisclass.LibraryName(), method.get_all_referenced_raw_types()));
 		if (bad_classes.size() > 0) {
 		  for (int i = 0; i < bad_classes.size(); i++) {
-			ConverterErrorLog::log_type_error(bad_classes[i], "Method " + thisclass.CPPName() + "::" + method.CPPName() + " can't be translated because it would cause an incorrect reference from this library (" + thisclass.LibraryName() + ")");
+			ConverterErrorLog::log_type_error(bad_classes[i], "Method " + thisclass.CPPQualifiedName() + "::" + method.CPPName() + " can't be translated because it would cause an incorrect reference from this library (" + thisclass.LibraryName() + ")");
 		  }
 		  continue;
 		}
@@ -342,7 +314,7 @@ const std::vector<RootClassMethod> &RootClassInfo::GetPrototypesImplementedByThi
 	/// Get all the ROOT methods for this class.
 	///
 
-	vector<RootClassMethod> methods (GetPrototypesForClass (_name, this));
+	vector<RootClassMethod> methods (GetPrototypesForClass (CPPQualifiedName(), this));
 
 	///
 	/// Now, look through them to see what class they are defined in. If ours, then keep them!
@@ -352,9 +324,9 @@ const std::vector<RootClassMethod> &RootClassInfo::GetPrototypesImplementedByThi
 	for (int i = 0; i < methods.size(); i++) {
 	  const RootClassMethod &method (methods[i]);
 	  string temp (method.ClassOfMethodDefinition());
-	  if (method.ClassOfMethodDefinition() == _name
+	  if (method.ClassOfMethodDefinition() == CPPQualifiedName()
 		&& (_bad_method_names.find(method.CPPName()) == _bad_method_names.end())
-		&& (_bad_method_names.find(_name + "::" + method.CPPName()) == _bad_method_names.end())
+		&& (_bad_method_names.find(CPPQualifiedName() + "::" + method.CPPName()) == _bad_method_names.end())
 		) {
 		_methods_implemented.push_back(method);
 	  }
@@ -628,11 +600,11 @@ const vector<RootClassField> RootClassInfo::GetFieldsImplementedByThisClass() co
 {
 	if (!_fields_for_class_good) {
 		_fields_for_class_good = true;
-		vector<RootClassField> allfields(GetFieldsForClass (_name, this));
+		vector<RootClassField> allfields(GetFieldsForClass (CPPQualifiedName(), this));
 
 		for (int i = 0; i < allfields.size(); i++) {
 			const RootClassField &f (allfields[i]);
-			if (f.ClassOfFieldDefinition() == _name) {
+			if (f.ClassOfFieldDefinition() == CPPQualifiedName()) {
 				_fields_for_class.push_back(f);
 			}
 		}
@@ -739,7 +711,7 @@ std::vector<RootClassMethod> RootClassInfo::GetAllPrototypesForThisClassImpl (bo
   /// around, of course, and mark it as hidden
   ///
 
-  vector<RootClassMethod> protected_methods (GetProtectedPrototypesForClass (CPPName(), this));
+  vector<RootClassMethod> protected_methods (GetProtectedPrototypesForClass (CPPQualifiedName(), this));
   set<string> protected_method_names;
   transform(protected_methods.begin(), protected_methods.end(), inserter(protected_method_names, protected_method_names.begin()),
 	mem_fun_ref(&RootClassMethod::NETName));
@@ -798,7 +770,7 @@ std::vector<RootClassMethod> RootClassInfo::GetAllPrototypesForThisClassImpl (bo
 ///
 string RootClassInfo::include_filename() const
 {
-	TClass *c = gROOT->GetClass(_name.c_str());
+	TClass *c = gROOT->GetClass(CPPQualifiedName().c_str());
 	string full_name (c->GetDeclFileName());
 	auto index = full_name.find("/inc/");
 	if (index == string::npos) {
@@ -812,7 +784,7 @@ string RootClassInfo::include_filename() const
 ///
 string RootClassInfo::include_directory() const
 {
-	TClass *c = gROOT->GetClass(_name.c_str());
+	TClass *c = gROOT->GetClass(CPPQualifiedName().c_str());
 	string full_name (c->GetDeclFileName());
 
 	auto index = full_name.find("/include/");
@@ -841,7 +813,7 @@ string RootClassInfo::include_filename_stub() const
 ///
 string RootClassInfo::source_filename_stem(void) const
 {
-	auto r(NETName());
+	auto r(NETQualifiedName());
 	replace(r.begin(), r.end(), ':', '_');
 	return r;
 }
@@ -927,7 +899,7 @@ bool RootClassInfo::InheritsFromTObject() const
 ///
 string RootClassInfo::LibraryName() const
 {
-	return ROOTHelpers::GetClassLibraryName (_name);
+	return ROOTHelpers::GetClassLibraryName (CPPQualifiedName());
 }
 
 ///
@@ -935,7 +907,7 @@ string RootClassInfo::LibraryName() const
 ///
 void RootClassInfo::ForceLibraryName(const std::string &libname)
 {
-	ROOTHelpers::ForceClassLibraryname(_name, libname);
+	ROOTHelpers::ForceClassLibraryname(CPPQualifiedName(), libname);
 }
 
 ///
@@ -944,7 +916,7 @@ void RootClassInfo::ForceLibraryName(const std::string &libname)
 bool RootClassInfo::CanDelete() const
 {
 	const vector<RootClassMethod> &methods (GetAllPrototypesForThisClass(true));
-	string dtor_name = "~" + CPPName();
+	string dtor_name = "~" + CPPClassName();
 	for (unsigned int i = 0; i < methods.size(); i++) {
 		const RootClassMethod &method (methods[i]);
 		if (method.IsDtor() && method.CPPName() == dtor_name) {
@@ -980,7 +952,7 @@ const vector<RootEnum> &RootClassInfo::GetClassEnums() const
 		_enum_info_valid = true;
 
 		map<string, RootEnum> info;
-		TClass *c = gROOT->GetClass(_name.c_str());
+		TClass *c = gROOT->GetClass(CPPQualifiedName().c_str());
 		TList *member_list = c->GetListOfAllPublicDataMembers();
 		for (int i = 0; i < member_list->GetEntries(); i++) {
 			TDataMember *d = static_cast<TDataMember*> (member_list->At(i));
@@ -990,7 +962,7 @@ const vector<RootEnum> &RootClassInfo::GetClassEnums() const
 				///
 
 				string enum_name = d->GetFullTypeName();
-				int class_start = enum_name.find(_name + "::");
+				int class_start = enum_name.find(CPPQualifiedName() + "::");
 				if (class_start == string::npos) {
 					break;
 				}
@@ -1253,7 +1225,10 @@ const std::vector<RootClassProperty> &RootClassInfo::GetProperties(void) const
 		///
 
 		if (method_names.find(prop.name()) != method_names.end()) {
-			throw runtime_error("An inherrited class has defined the property '" + prop.name() + "'. But in this class '" + CPPName() + "' a method by the same name is defined. This collision will lead to bad C++/CLI code - please mark this property bad in WrapperConfigInfo::CheckPropertyNameBad.");
+			throw runtime_error("An inherrited class has defined the property '" 
+				+ prop.name() 
+				+ "'. But in this class '" + CPPQualifiedName()
+				+ "' a method by the same name is defined. This collision will lead to bad C++/CLI code - please mark this property bad in WrapperConfigInfo::CheckPropertyNameBad.");
 		}
 
 	  } else {

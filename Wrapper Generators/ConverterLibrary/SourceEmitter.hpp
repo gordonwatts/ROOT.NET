@@ -5,6 +5,8 @@
 /// if the file has changed! We are so cool! :-)
 ///
 
+#include "RootClassInfo.hpp"
+
 #include <sstream>
 #include <string>
 #include <set>
@@ -28,7 +30,8 @@ public:
 
 	/// Open a namespace and do a bracket open too!
 	/// Properly deals with multiple namespaces
-	int start_namespace (const std::string &namespace_name, bool ignore_last_as_class_name = false);
+	int start_namespace (const std::string &namespace_name);
+	int start_namespace(const RootClassInfo &for_class);
 
 	/// Open/close brace. Tracks indenting too
 	void brace_open(void);
@@ -39,15 +42,15 @@ public:
 	void indent_decrease(void);
 
 	/// Insert a forward class reference
-	void forward_class_reference (const std::string &class_name);
+	void forward_class_reference(const RootClassInfo &class_info);
 
 	/// Insert a forward interface reference
-	void forward_interface_reference (const std::string &class_name);
+	void forward_interface_reference(const RootClassInfo &class_info);
 
 	/// Helper method if you have a class decl and it is surrounded by namespace stuff.
 	///   full_class_name has the namespace qualifications built in.
 	///   The stub is what is put at the center before the class name (class XXX, for example).
-	void namespace_depth_decl(const std::string &full_class_name, const std::string &stub);
+	void namespace_depth_decl(const RootClassInfo &info, const std::string &stub);
 
 	/// close our file handle.
 	void close (void);

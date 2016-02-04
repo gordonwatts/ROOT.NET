@@ -26,36 +26,20 @@ public:
 	/// as their source.
 
 	/// Return just the class name (TH1F, Factory, TSource)
-	const std::string &CPPClassName(void) const { return _cpp_class_name; }
-	const std::string &NETClassName(void) const { return _net_class_name; }
+	inline const std::string &CPPClassName(void) const { return _cpp_class_name; }
+	inline const std::string &NETClassName(void) const { return _net_class_name; }
 
 	/// Return the class name along with sub-class paths (TH1F, Factory, TSchemaRule::TSource)
-	const std::string &CPPQualifiedClassName(void) const { return _cpp_qualified_class_name; }
-	const std::string &NETQualifiedClassName(void) const { return _net_qualified_class_name; }
+	inline const std::string &CPPQualifiedClassName(void) const { return _cpp_qualified_class_name; }
+	inline const std::string &NETQualifiedClassName(void) const { return _net_qualified_class_name; }
 
 	/// Return the Namespace ("", TMVA, ROOT)
-	const std::string &CPPNameSpace(void) const { return _cpp_namespace; }
-	const std::string &NETNameSpace(void) const { return _net_namespace; }
+	inline const std::string &CPPNameSpace(void) const { return _cpp_namespace; }
+	inline const std::string &NETNameSpace(void) const { return _net_namespace; }
 
 	/// Return the full name (TH1F, TMVA::Factory, ROOT::TSchemaRule::TSource)
-	const std::string &CPPQualifiedName(void) const { return _cpp_qualified_name; }
-	const std::string &NETQUalifiedName(void) const { return _net_qualified_name; }
-
-	/// 
-	const std::string &CPPName (void) const {return _name;}
-	/// Return the name in the .NET world, in case it is different.
-	/// Includes namespace references.
-	const std::string &NETName (void) const {return _netname;}
-
-	/// Returns the CPP name, but with namespace stuff replaced with __ - so it
-	/// can be used as an idetifier.
-	std::string CPPNameUnqualified(void) const;
-
-	/// Return the class name, but not qualified by the namespace.
-	std::string CPPName_ClassOnly(void) const;
-
-	/// Returns the NETName, but with no namespace references.
-	std::string NETName_ClassOnly(void) const;
+	inline const std::string &CPPQualifiedName(void) const { return _cpp_qualified_name; }
+	inline const std::string &NETQualifiedName(void) const { return _net_qualified_name; }
 
 	/// The include file that this class resides in
 	std::string include_filename (void) const;
@@ -176,9 +160,6 @@ private:
 
 	mutable std::vector<RootClassProperty> _class_properties;
 	mutable bool _class_properties_good;
-
-	std::string _name;
-	std::string _netname;
 
 	/// Hang onto everything that we need setting!
 	std::string _cpp_class_name;

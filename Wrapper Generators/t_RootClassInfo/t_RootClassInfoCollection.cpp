@@ -49,27 +49,6 @@ namespace t_RootClassInfo
 			}
 		};
 
-#pragma region Additional test attributes
-		//
-		//You can use the following additional attributes as you write your tests:
-		//
-		//Use ClassInitialize to run code before running the first test in the class
-		//[ClassInitialize()]
-		//static void MyClassInitialize(TestContext^ testContext) {};
-		//
-		//Use ClassCleanup to run code after all tests in a class have run
-		//[ClassCleanup()]
-		//static void MyClassCleanup() {};
-		//
-		//Use TestInitialize to run code before running each test
-		//[TestInitialize()]
-		//void MyTestInitialize() {};
-		//
-		//Use TestCleanup to run code after each test has run
-		//[TestCleanup()]
-		//void MyTestCleanup() {};
-		//
-#pragma endregion 
 		[ClassInitialize]
 		static void SetupClassTest(Microsoft::VisualStudio::TestTools::UnitTesting::TestContext^ testContext)
 		{
@@ -100,22 +79,6 @@ namespace t_RootClassInfo
 				}
 			}
 			return 0;
-		}
-
-		[TestMethod]
-		void TestBasicRecall()
-		{
-			RootClassInfo *c = RootClassInfoCollection::GetRootClassInfoPtr ("TH1F");
-			Assert::IsTrue (c != 0, "Null pointer came back!");
-			Assert::IsTrue (c->NETName() == std::string("NTH1F"), "Class name wasn't right");
-		}
-
-		[TestMethod]
-		void NamespaceDotNetNameGood()
-		{
-			gSystem->Load("libTMVA");
-			auto c = RootClassInfoCollection::GetRootClassInfo("TMVA::Factory");
-			Assert::IsTrue("NTMVA::NFactory" == c.NETName(), "Didn't get TMVA::NFactory");
 		}
 
 		[TestMethod]
@@ -177,9 +140,9 @@ namespace t_RootClassInfo
 			auto factory = RootClassInfoCollection::GetRootClassInfo("TMVA::Factory");
 			auto source = RootClassInfoCollection::GetRootClassInfo("ROOT::TSchemaRule::TSource");
 
-			auto nhisto = histo.NETQUalifiedName();
-			auto nfactory = factory.NETQUalifiedName();
-			auto nsource = source.NETQUalifiedName();
+			auto nhisto = histo.NETQualifiedName();
+			auto nfactory = factory.NETQualifiedName();
+			auto nsource = source.NETQualifiedName();
 
 			Assert::IsTrue(nhisto == "NTH1F");
 			Assert::IsTrue(nfactory == "NTMVA::NFactory");
@@ -217,7 +180,7 @@ namespace t_RootClassInfo
 
 			Assert::IsTrue(nhisto == "NTH1F");
 			Assert::IsTrue(nfactory == "NFactory");
-			Assert::IsTrue(nsource == "NTSource");
+			Assert::IsTrue(nsource == "NTSchemaRule__NTSource");
 		}
 
 		[TestMethod]
@@ -251,7 +214,7 @@ namespace t_RootClassInfo
 
 			Assert::IsTrue(nhisto == "NTH1F");
 			Assert::IsTrue(nfactory == "NFactory");
-			Assert::IsTrue(nsource == "NTSchemaRule::NTSource");
+			Assert::IsTrue(nsource == "NTSchemaRule__NTSource");
 		}
 
 		// Split into namespace recal and class naem recal... so we can deal with namespaces and nested classes.
@@ -272,53 +235,11 @@ namespace t_RootClassInfo
 		}
 
 		[TestMethod]
-		void InterfaceNamespaceDotNetNameGood()
-		{
-			gSystem->Load("libTMVA");
-			auto c = RootClassInfoCollection::GetRootClassInfo("TMVA::Factory");
-			Assert::IsTrue("TMVA::Factory" == c.CPPName());
-		}
-
-		[TestMethod]
 		void IncludeFileForNormalClass()
 		{
 			auto c = RootClassInfoCollection::GetRootClassInfo("TH1F");
 			auto incFile = c.include_filename();
 			Assert::IsTrue(incFile == "TH1.h", "Improper include name");
-		}
-
-		[TestMethod]
-		void ClassNameOnlyForNormalClass()
-		{
-			auto c = RootClassInfoCollection::GetRootClassInfo("TH1F");
-			auto incFile = c.NETName_ClassOnly();
-			Assert::IsTrue(incFile == "NTH1F", "Improper include name");
-		}
-
-		[TestMethod]
-		void ClassNameOnlyForNamespaceClass()
-		{
-			gSystem->Load("libTMVA");
-			auto c = RootClassInfoCollection::GetRootClassInfo("TMVA::Factory");
-			auto incFile = c.NETName_ClassOnly();
-			Assert::IsTrue(incFile == "NFactory", "Improper include name");
-		}
-
-		[TestMethod]
-		void CPPClassNameOnlyForNormalClass()
-		{
-			auto c = RootClassInfoCollection::GetRootClassInfo("TH1F");
-			auto incFile = c.CPPName_ClassOnly();
-			Assert::IsTrue(incFile == "TH1F", "Improper include name");
-		}
-
-		[TestMethod]
-		void CPPClassNameOnlyForNamespaceClass()
-		{
-			gSystem->Load("libTMVA");
-			auto c = RootClassInfoCollection::GetRootClassInfo("TMVA::Factory");
-			auto incFile = c.CPPName_ClassOnly();
-			Assert::IsTrue(incFile == "Factory", "Improper include name");
 		}
 
 		[TestMethod]
@@ -328,23 +249,6 @@ namespace t_RootClassInfo
 			auto c = RootClassInfoCollection::GetRootClassInfo("TMVA::Factory");
 			auto incFile = c.include_filename();
 			Assert::IsTrue(incFile == "TMVA/Factory.h", "Improper include name");
-		}
-
-		[TestMethod]
-		void CPPNameUnqualifiedForNormalClass()
-		{
-			auto c = RootClassInfoCollection::GetRootClassInfo("TH1F");
-			auto name = c.CPPNameUnqualified();
-			Assert::IsTrue(name == "TH1F", "Improper include name");
-		}
-
-		[TestMethod]
-		void CPPNameUnqualifiedForNamespaceClass()
-		{
-			gSystem->Load("libTMVA");
-			auto c = RootClassInfoCollection::GetRootClassInfo("TMVA::Factory");
-			auto name = c.CPPNameUnqualified();
-			Assert::IsTrue(name == "TMVA__Factory", "Improper include name");
 		}
 
 		[TestMethod]

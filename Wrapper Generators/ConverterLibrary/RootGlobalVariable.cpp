@@ -64,8 +64,9 @@ vector<string> RootGlobalVariable::GetListOfIncludeFiles(void) const
 	if (CPPNetTypeMapper::instance()->has_mapping(Type())) {
 		auto trans = CPPNetTypeMapper::instance()->get_translator_from_cpp(Type());
 		if (trans->net_typename().substr(0, 2) == "NT") {
-			result.push_back(RootClassInfoCollection::GetRootClassInfo(trans->cpp_core_typename()).NETName() + ".hpp");
-			result.push_back(RootClassInfoCollection::GetRootClassInfo(trans->cpp_core_typename()).include_filename());
+			auto info = RootClassInfoCollection::GetRootClassInfo(trans->cpp_core_typename());
+			result.push_back(info.NETQualifiedName() + ".hpp");
+			result.push_back(info.include_filename());
 		}
 	}
 

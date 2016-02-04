@@ -2,6 +2,7 @@
 #include "SourceEmitter.hpp"
 #include "RootClassInfo.hpp"
 #include "RootClassInfoCollection.hpp"
+#include "StringUtils.h"
 
 #include <string>
 #include <sstream>
@@ -28,7 +29,7 @@ string build_lookup_typename (const string &class_name, const string modifiers, 
 TTROOTClass::TTROOTClass(const string &class_name, bool is_from_tobject, const string modifiers, bool is_const)
 : _class_name (class_name), _modifiers(modifiers),
 _inherits_from_TObject(is_from_tobject), _is_const(is_const),
-TypeTranslator (RootClassInfoCollection::GetRootClassInfo(class_name).NETName() + " ^", build_lookup_typename(class_name, modifiers, is_const))
+TypeTranslator (RootClassInfoCollection::GetRootClassInfo(class_name).NETQualifiedName() + " ^", build_lookup_typename(class_name, modifiers, is_const))
 {
 }
 
@@ -94,10 +95,11 @@ void TTROOTClass::translate_to_cpp (const std::string &net_name, const std::stri
 	//
 
 	auto r = RootClassInfoCollection::GetRootClassInfoPtr(_class_name);
+	auto nice_name(sanitized_for_cpp(r->CPPQualifiedName()));
 	if (!isSafe) {
-		emitter() << "(" << net_name << " == nullptr ? 0 : " << net_name << "->CPP_Instance_" << r->CPPNameUnqualified() << "());" << endl;
+		emitter() << "(" << net_name << " == nullptr ? 0 : " << net_name << "->CPP_Instance_" << nice_name << "());" << endl;
 	} else {
-		emitter() << net_name << "->CPP_Instance_" << r->CPPNameUnqualified() << "();" << endl;
+		emitter() << net_name << "->CPP_Instance_" << nice_name << "();" << endl;
 	}
 }
 
@@ -149,9 +151,9 @@ string TTROOTClass::cpp_core_typename() const
 void TTROOTClass::translate_to_net (const std::string &net_name, const std::string &cpp_name, SourceEmitter &emitter, bool use_interface, bool is_static) const
 {
 	RootClassInfo info (RootClassInfoCollection::GetRootClassInfo(_class_name));
-	string tname ("ROOTNET::Interface::" + info.NETName());
+	string tname ("ROOTNET::Interface::" + info.NETQualifiedName());
 	if (!use_interface)
-		tname = "ROOTNET::" + info.NETName();
+		tname = "ROOTNET::" + info.NETQualifiedName();
 
 	emitter.start_line() << tname << " ^"
 		<< net_name;
@@ -174,7 +176,7 @@ void TTROOTClass::translate_to_net (const std::string &net_name, const std::stri
 			emitter() << cpp_name << ");" << endl;
 		}
 	} else {
-		emitter() << " = gcnew ROOTNET::" << info.NETName() << " (";
+		emitter() << " = gcnew ROOTNET::" << info.NETQualifiedName() << " (";
 		if (_modifiers == "&") {
 		  if (_is_const) {
 		    emitter() << "const_cast<::" << _class_name << "*>(";

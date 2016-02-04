@@ -157,7 +157,7 @@ namespace t_MethodInherritance
       const RootClassInfo &ri1 (mh->GetClassInfo("TObject"));
       const RootClassInfo &ri2 (mh->GetClassInfo("TObject"));
       
-      Assert::IsTrue(ri1.CPPName() == "TObject", "Didn't get the TObject when we asked for it!");
+      Assert::IsTrue(ri1.CPPQualifiedName() == "TObject", "Didn't get the TObject when we asked for it!");
       const RootClassInfo *ri1p = &ri1;
       const RootClassInfo *ri2p = &ri2;
       Assert::IsTrue(ri1p == ri2p, "The two TObject pointers that came back aren't the same!");

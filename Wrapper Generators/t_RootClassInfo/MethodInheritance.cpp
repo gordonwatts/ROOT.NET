@@ -130,7 +130,7 @@ namespace t_RootClassInfo
 	  RootClassInfo cinfo ("TH1");
 	  const vector<RootClassMethod> protos (cinfo.GetAllPrototypesForThisClass(false));
 	  Assert::IsFalse(find_if(protos.begin(),protos.end(),findmethodname("SetLineWidth")) == protos.end(), "SetLineWidth should be visible, but it isn't!");
-	  Assert::IsTrue(find_if(protos.begin(),protos.end(),findmethodname("SetLineWidth"))->OwnerClass().CPPName() == "TH1", "SetLineWidth's parent class should be TH1");
+	  Assert::IsTrue(find_if(protos.begin(),protos.end(),findmethodname("SetLineWidth"))->OwnerClass().CPPQualifiedName() == "TH1", "SetLineWidth's parent class should be TH1");
 	}
 
 	[TestMethod]
@@ -139,7 +139,7 @@ namespace t_RootClassInfo
 	  RootClassInfo cinfo("TArrayF");
 	  const vector<RootClassMethod> protos (cinfo.GetAllPrototypesForThisClass(false));
 	  for (int i = 0; i < protos.size(); i++) {
-		Assert::IsTrue (protos[i].OwnerClass().CPPName() == "TArrayF", "The parent class should be the same!");
+		Assert::IsTrue (protos[i].OwnerClass().CPPQualifiedName() == "TArrayF", "The parent class should be the same!");
 	  }
 	}
 
@@ -150,7 +150,7 @@ namespace t_RootClassInfo
 	  const vector<RootClassMethod> protos (cinfo.GetAllPrototypesForThisClass(false));
 	  for (int i = 0; i < protos.size(); i++) {
 		if (protos[i].CPPName() == "operator=") {
-		  Assert::IsTrue (protos[i].OwnerClass().CPPName() == "TArrayF", "The parent class should be the same for operator=!");
+		  Assert::IsTrue (protos[i].OwnerClass().CPPQualifiedName() == "TArrayF", "The parent class should be the same for operator=!");
 		}
 	  }
 	}

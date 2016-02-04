@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <string>
+#include <algorithm>
 
 // Split a string by a deliminter
 inline std::vector<std::string> split(const std::string &source, const std::string &delimiter)
@@ -20,6 +21,14 @@ inline std::vector<std::string> split(const std::string &source, const std::stri
 	if (lastDelim <= source.size())
 		result.push_back(source.substr(lastDelim));
 
+	return result;
+}
+
+// Make a string suitable for source code.
+inline std::string sanitized_for_cpp(const std::string &source)
+{
+	std::string result(source);
+	std::replace(result.begin(), result.end(), ':', '_');
 	return result;
 }
 

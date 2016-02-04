@@ -9,6 +9,7 @@
 #include "ROOTHelpers.h"
 #include "ConverterErrorLog.hpp"
 #include "FeatureManager.hpp"
+#include "StringUtils.h"
 
 #include "TROOT.h"
 #include "TClass.h"
@@ -67,7 +68,7 @@ void ClassTranslator::translate(RootClassInfo &class_info)
 
 	clean_inheritance_list (class_info);
 	if (!check_inheritance_list(class_info)) {
-		throw new runtime_error ("Class '" + class_info.CPPName() + "' has some bad classes in its inherritance tree");
+		throw new runtime_error ("Class '" + class_info.CPPQualifiedName() + "' has some bad classes in its inherritance tree");
 	}
 
 	///
@@ -110,14 +111,14 @@ void ClassTranslator::translate(RootClassInfo &class_info)
 
 	hpp_emitter.start_line() << "/// Make sure all native objects are accessible outside the boundries of this library/dll" << endl;
 	hpp_emitter.include_file(class_info.LibraryName() + "-make_public.hpp");
-	_objects_in_library[class_info.LibraryName()].insert(class_info.CPPName());
+	_objects_in_library[class_info.LibraryName()].insert(class_info.CPPQualifiedName());
 	_base_directories[class_info.LibraryName()] = _base_directory;
 
 	///
 	/// If we have a non-TObject, then we will be needing TClass...
 	///
 
-	if (!class_info.InheritsFromTObject() && class_info.CPPName() != "TObject")
+	if (!class_info.InheritsFromTObject() && class_info.CPPQualifiedName() != "TObject")
 	{
 		hpp_emitter.include_file("TClass.h");
 	}
@@ -152,7 +153,7 @@ void ClassTranslator::translate(RootClassInfo &class_info)
 
 	for (unsigned int i = 0; i < v_referenced_classes.size(); i++) {
 		RootClassInfo &dep_class(RootClassInfoCollection::GetRootClassInfo(v_referenced_classes[i]));
-		if (CPPNetTypeMapper::instance()->has_mapping(dep_class.CPPName())) {
+		if (CPPNetTypeMapper::instance()->has_mapping(dep_class.CPPQualifiedName())) {
 			if (emit_this_header(class_info, dep_class)) {
 				cpp_emitter.include_file(dep_class.source_filename_stem() + ".hpp");
 			} else {
@@ -201,7 +202,7 @@ void ClassTranslator::translate(RootClassInfo &class_info)
 				}
 			} else {
 				if (dep_enum.LibraryName() == class_info.LibraryName()) {
-					if (dep_enum.NETClassName() != class_info.NETName()) {
+					if (dep_enum.NETClassName() != class_info.NETQualifiedName()) {
 						hpp_emitter.include_file(dep_enum.NETClassName() + ".hpp");
 					}
 				}
@@ -224,7 +225,7 @@ void ClassTranslator::translate(RootClassInfo &class_info)
 	for (unsigned int i = 0; i < class_info.GetReferencedClasses().size(); i++) {
 		string referenced_classname = class_info.GetReferencedClasses()[i];
 		if (CPPNetTypeMapper::instance()->has_mapping(referenced_classname)) {
-			hpp_emitter.forward_class_reference(RootClassInfoCollection::GetRootClassInfo(referenced_classname).NETName());
+			hpp_emitter.forward_class_reference(RootClassInfoCollection::GetRootClassInfo(referenced_classname));
 		}
 	}
 
@@ -439,7 +440,7 @@ namespace {
 				inh_classes.insert(cname);
 			}
 		});
-		inh_classes.insert(info.CPPName());
+		inh_classes.insert(info.CPPQualifiedName());
 
 		return inh_classes;
 	}
@@ -530,7 +531,7 @@ void ClassTranslator::generate_interface (RootClassInfo &class_info, SourceEmitt
 	for (unsigned int i = 0; i < class_info.GetReferencedClasses().size(); i++) {
 		string referenced_classname = class_info.GetReferencedClasses()[i];
 		if (CPPNetTypeMapper::instance()->has_mapping(referenced_classname)) {
-			emitter.forward_interface_reference(RootClassInfoCollection::GetRootClassInfo(referenced_classname).NETName());
+			emitter.forward_interface_reference(RootClassInfoCollection::GetRootClassInfo(referenced_classname));
 		}
 	}
 
@@ -539,8 +540,8 @@ void ClassTranslator::generate_interface (RootClassInfo &class_info, SourceEmitt
 	///
 
 	auto class_features = FeatureManager::GetFeaturesFor(class_info);
-	auto extra_ns_count = emitter.start_namespace(class_info.NETName(), true);
-	emitter.start_line() << "public interface class " << class_info.NETName_ClassOnly() << endl;
+	auto extra_ns_count = emitter.start_namespace(class_info);
+	emitter.start_line() << "public interface class " << class_info.NETQualifiedClassName() << endl;
 
 	///
 	/// The interface can inherrit from a number of places...
@@ -550,7 +551,7 @@ void ClassTranslator::generate_interface (RootClassInfo &class_info, SourceEmitt
 	set<string> inherited_interfaces;
 	transform (inherited_classes.begin(), inherited_classes.end(),
 		inserter(inherited_interfaces, inherited_interfaces.begin()),
-		[] (const string &s) { return "ROOTNET::Interface::" + RootClassInfoCollection::GetRootClassInfo(s).NETName(); });
+		[] (const string &s) { return "ROOTNET::Interface::" + RootClassInfoCollection::GetRootClassInfo(s).NETQualifiedName(); });
 	auto others = class_features.get_additional_interfaces(class_info);
 	copy (others.begin(), others.end(), inserter(inherited_interfaces, inherited_interfaces.begin()));
 
@@ -574,7 +575,7 @@ void ClassTranslator::generate_interface (RootClassInfo &class_info, SourceEmitt
 	/// The special prototype for accessing the raw objects...
 	///
 
-	emitter.start_line() << "::" << class_info.CPPName() << " *CPP_Instance_" << class_info.CPPNameUnqualified() << "(void);" << endl;
+	emitter.start_line() << "::" << class_info.CPPQualifiedName() << " *CPP_Instance_" << sanitized_for_cpp(class_info.CPPQualifiedName()) << "(void);" << endl;
 
 	///
 	/// Special prototype to set-to-null the instance object when ROOT (or similar) makes it go away, or to
@@ -759,7 +760,7 @@ void ClassTranslator::generate_interface_static_methods (RootClassInfo &class_in
 		if (method.has_return_value()) {
 			emitter() << "return ";
 		}
-		emitter() << "ROOTNET::" << class_info.NETName() << "::" << method.NETName() << "(";
+		emitter() << "ROOTNET::" << class_info.NETQualifiedName() << "::" << method.NETName() << "(";
 		for (unsigned int i = 0; i < method.arguments().size(); i++) {
 			if (i > 0) {
 				emitter() << ", ";
@@ -784,13 +785,13 @@ void ClassTranslator::generate_interface_static_methods (RootClassInfo &class_in
 			continue;
 
 		if (itr->isGetter()) {
-			emitter.start_line() << itr->property_type() << " " << class_info.NETName() << "::" << itr->name() << "::get ()" << endl;
+			emitter.start_line() << itr->property_type() << " " << class_info.NETQualifiedName() << "::" << itr->name() << "::get ()" << endl;
 			emitter.brace_open();
 			emit_function_body(*(itr->getter_method()), class_info, emitter);
 			emitter.brace_close();
 		}
 		if (itr->isSetter()) {
-			emitter.start_line() << "void " << class_info.NETName() << "::" << itr->name() << "::set (" << itr->property_type()
+			emitter.start_line() << "void " << class_info.NETQualifiedName() << "::" << itr->name() << "::set (" << itr->property_type()
 				<< " " << itr->setter_method()->arguments()[0].get_argname()  << ")" << endl;
 			emitter.brace_open();
 			emit_function_body(*(itr->setter_method()), class_info, emitter);
@@ -812,7 +813,7 @@ namespace {
 	// We reverse the order so that as long as their is one 
 	vector<string> generate_operator_header (const RootClassMethod &method, bool emit_class_method_name = false)
 	{
-		auto mainObj = CPPNetTypeMapper::instance()->get_translator_from_cpp(method.OwnerClass().CPPName());
+		auto mainObj = CPPNetTypeMapper::instance()->get_translator_from_cpp(method.OwnerClass().CPPQualifiedName());
 		auto base_arg (mainObj->net_typename() + " base_obj_a1");
 
 		string args (method.generate_normalized_method_arguments(true));
@@ -830,7 +831,7 @@ namespace {
 		const RootClassInfo &cInfo (method.OwnerClass());
 		if (method.arguments().size() == 0)
 			max_count = 1;
-		if (method.arguments().size() > 0 && method.arguments()[0].RawCPPTypeName() == cInfo.CPPName())
+		if (method.arguments().size() > 0 && method.arguments()[0].RawCPPTypeName() == cInfo.CPPQualifiedName())
 			max_count = 1;
 
 		//
@@ -847,7 +848,7 @@ namespace {
 			}
 
 			if (emit_class_method_name) {
-				header << method.OwnerClass().NETName() << "::";
+				header << method.OwnerClass().NETQualifiedName() << "::";
 			}
 
 			header << method.NETName()
@@ -874,8 +875,8 @@ void ClassTranslator::generate_class_header (RootClassInfo &info, SourceEmitter 
 	/// Emit the class declaration, along with the inherritance path.
 	///
 
-	auto extra_namespace_depth = emitter.start_namespace(info.NETName(), true);
-	emitter.start_line() << "public ref class " << info.NETName_ClassOnly() << endl;
+	auto extra_namespace_depth = emitter.start_namespace(info);
+	emitter.start_line() << "public ref class " << info.NETQualifiedClassName() << endl;
 
 	auto bestClassToInherrit (info.GetBestClassToInherrit());
 	RootClassInfo *infoInherrit = 0;
@@ -883,9 +884,9 @@ void ClassTranslator::generate_class_header (RootClassInfo &info, SourceEmitter 
 		emitter.start_line() << "  : ROOTNET::Utility::ROOTDOTNETBaseTObject," << endl;
 	} else {
 		infoInherrit = RootClassInfoCollection::GetRootClassInfoPtr(bestClassToInherrit);
-		emitter.start_line() << "  : ROOTNET::" << infoInherrit->NETName() << "," << endl;
+		emitter.start_line() << "  : ROOTNET::" << infoInherrit->NETQualifiedName() << "," << endl;
 	}
-	emitter.start_line() << "    ROOTNET::Interface::" << info.NETName() << endl;
+	emitter.start_line() << "    ROOTNET::Interface::" << info.NETQualifiedName() << endl;
 	emitter.brace_open();
 
 	//
@@ -893,10 +894,10 @@ void ClassTranslator::generate_class_header (RootClassInfo &info, SourceEmitter 
 	//
 
 	emitter.start_line() << "protected:" << endl;
-	emitter.start_line() << "  void SetInstance (::" << info.CPPName() << "* instance) {" << endl;
+	emitter.start_line() << "  void SetInstance (::" << info.CPPQualifiedName() << "* instance) {" << endl;
 	emitter.start_line() << "    _instance = instance;" << endl;
 	if (bestClassToInherrit.size() != 0)
-		emitter.start_line() << "    " << infoInherrit->NETName() << "::SetInstance (instance);" << endl;
+		emitter.start_line() << "    " << infoInherrit->NETQualifiedName() << "::SetInstance (instance);" << endl;
 	emitter.start_line() << "}" << endl;
 
 	///
@@ -904,7 +905,7 @@ void ClassTranslator::generate_class_header (RootClassInfo &info, SourceEmitter 
 	///
 
 	emitter.start_line() << "private:" << endl;
-	emitter.start_line() << "::" << info.CPPName() << " *_instance;" << endl;
+	emitter.start_line() << "::" << info.CPPQualifiedName() << " *_instance;" << endl;
 	emitter() << endl;
 
 	///
@@ -931,16 +932,16 @@ void ClassTranslator::generate_class_header (RootClassInfo &info, SourceEmitter 
 	/// And a ctor that can start from a pointer
 	///
 
-	emitter.start_line() << info.NETName() << "(::" << info.CPPName() << " *instance);" << endl;
+	emitter.start_line() << info.NETQualifiedClassName() << "(::" << info.CPPQualifiedName() << " *instance);" << endl;
 
-	emitter.start_line() << info.NETName() << "(::" << info.CPPName() << " &instance);" << endl;
+	emitter.start_line() << info.NETQualifiedClassName() << "(::" << info.CPPQualifiedName() << " &instance);" << endl;
 
 	//
 	// Common method to get out the TObject and void pointer.
 	//
 
 	emitter.start_line() << "public protected:" << endl;
-	if (info.InheritsFromTObject() || info.CPPName() == "TObject") {
+	if (info.InheritsFromTObject() || info.CPPQualifiedName() == "TObject") {
 		emitter.start_line() << "virtual ::TObject *GetTObjectPointer (void) override { return _instance; }" << endl;
 		emitter.start_line() << "virtual ::TClass *GetAssociatedTClassInfo (void) override" << endl;
 		emitter.brace_open();
@@ -952,7 +953,7 @@ void ClassTranslator::generate_class_header (RootClassInfo &info, SourceEmitter 
 		emitter.start_line() << "virtual ::TObject *GetTObjectPointer (void) override { return (::TObject*) 0; }" << endl;
 		emitter.start_line() << "virtual ::TClass *GetAssociatedTClassInfo (void) override" << endl;
 		emitter.brace_open();
-		emitter.start_line() << "return TClass::GetClass(\"" << info.CPPName() << "\");" << endl;
+		emitter.start_line() << "return TClass::GetClass(\"" << info.CPPQualifiedName() << "\");" << endl;
 		emitter.brace_close();
 	}
 	emitter.start_line() << "virtual void *GetVoidPointer (void) override { return _instance; }" << endl;
@@ -1178,21 +1179,21 @@ void ClassTranslator::generate_class_header (RootClassInfo &info, SourceEmitter 
 	/// We take a slightly different route for a non-TObject.
 	///
 
-	if (type_has_globals(info.CPPName())) {
-		auto &globals (list_of_globals_of_type(info.CPPName()));
+	if (type_has_globals(info.CPPQualifiedName())) {
+		auto &globals (list_of_globals_of_type(info.CPPQualifiedName()));
 		for (unsigned int i = 0; i < globals.size(); i++) {
 			string loadCall;
 			if (info.InheritsFromTObject()) {
-				loadCall = "ROOTNET::Utility::ROOTObjectServices::GetBestObject<Interface::" + info.NETName() + "^>(::" + globals[i].Name() + ")";
+				loadCall = "ROOTNET::Utility::ROOTObjectServices::GetBestObject<Interface::" + info.NETQualifiedName() + "^>(::" + globals[i].Name() + ")";
 			} else {
-				loadCall = "gcnew " + info.NETName() + "(::" + globals[i].Name() + ")";
+				loadCall = "gcnew " + info.NETQualifiedName() + "(::" + globals[i].Name() + ")";
 			}
 
 			///
 			/// Now create the static property accessor
 			///
 
-			string interfaceName = "Interface::" + info.NETName() + " ^";
+			string interfaceName = "Interface::" + info.NETQualifiedName() + " ^";
 			emitter.start_line() << "static property " << interfaceName << globals[i].Name() << endl;
 			emitter.brace_open();
 			emitter.start_line() << interfaceName << " get() { return " << loadCall << "; }" << endl;
@@ -1222,7 +1223,7 @@ void ClassTranslator::generate_class_header (RootClassInfo &info, SourceEmitter 
 ///
 void ClassTranslator::emit_registration (const RootClassInfo &info, SourceEmitter &emitter, bool we_own)
 {
-	if (info.CPPName() == "TObject" || info.InheritsFromTObject()) {
+	if (info.CPPQualifiedName() == "TObject" || info.InheritsFromTObject()) {
 		emitter.start_line() << "ROOTNET::Utility::ROOTObjectManager::instance()->RegisterObject (_instance, this);" << endl;
 		if (we_own) {
 			emitter.start_line() << "_owner = true;" << endl;
@@ -1342,7 +1343,7 @@ void ClassTranslator::emit_function_body(const RootClassMethod &method, const Ro
 	///
 
 	if (method.IsCtor()) {
-		emitter.start_line() << "_instance = new ::" << info.CPPName() << "(";
+		emitter.start_line() << "_instance = new ::" << info.CPPQualifiedName() << "(";
 		for (unsigned int i = 0; i < cpp_argnames.size(); i++) {
 			if (i != 0) {
 				emitter() << ", ";
@@ -1355,7 +1356,7 @@ void ClassTranslator::emit_function_body(const RootClassMethod &method, const Ro
 		auto superInfo (info.GetBestClassToInherrit());
 		if (superInfo.size() != 0) {
 			auto &superInfoPtr = RootClassInfoCollection::GetRootClassInfo(superInfo);
-			emitter.start_line() << superInfoPtr.NETName() << "::SetInstance(_instance);" << endl;
+			emitter.start_line() << superInfoPtr.NETQualifiedClassName() << "::SetInstance(_instance);" << endl;
 		}
 
 		emit_registration(info, emitter, true);
@@ -1372,7 +1373,7 @@ void ClassTranslator::emit_function_body(const RootClassMethod &method, const Ro
 			emitter() << "::" << method.ClassOfMethodDefinition() << "::" << method.NETName();
 		} else {
 			if (method.IsConst()) {
-				emitter() << "((const " << info.CPPName() << " *) _instance)->";
+				emitter() << "((const " << info.CPPQualifiedName() << " *) _instance)->";
 			} else {
 				emitter() << "_instance->";
 			}
@@ -1440,20 +1441,20 @@ void ClassTranslator::generate_class_methods (RootClassInfo &info, SourceEmitter
 	/// First, do our particular c-tors...
 	///
 
-	emitter.start_line() << info.NETName() << "::" << info.NETName_ClassOnly() << "(::" << info.CPPName() << " *instance)" << endl;
+	emitter.start_line() << info.NETQualifiedClassName() << "::" << info.NETClassName() << "(::" << info.CPPQualifiedName() << " *instance)" << endl;
 	emitter.start_line() << " : _instance(instance)";
 	if (superClassInfo != nullptr) {
-		emitter() << ", " << superClassInfo->NETName() << "(_instance)";
+		emitter() << ", " << superClassInfo->NETQualifiedClassName() << "(_instance)";
 	}
 	emitter() << endl;
 	emitter.brace_open();
 	emit_registration(info, emitter, false);
 	emitter.brace_close();
 
-	emitter.start_line() << info.NETName() << "::" << info.NETName_ClassOnly() << "(::" << info.CPPName() << " &instance)" << endl;
+	emitter.start_line() << info.NETQualifiedClassName() << "::" << info.NETClassName() << "(::" << info.CPPQualifiedName() << " &instance)" << endl;
 	emitter.start_line() << " : _instance(&instance)";
 	if (superClassInfo != nullptr) {
-		emitter() << ", " << superClassInfo->NETName() << "(_instance)";
+		emitter() << ", " << superClassInfo->NETQualifiedClassName() << "(_instance)";
 	}
 	emitter() << endl;
 	emitter.brace_open();
@@ -1464,9 +1465,9 @@ void ClassTranslator::generate_class_methods (RootClassInfo &info, SourceEmitter
 	/// Drop this object from registration info
 	///
 
-	emitter.start_line() << "void " << info.NETName() << "::DropObjectFromTables (void)" << endl;
+	emitter.start_line() << "void " << info.NETQualifiedClassName() << "::DropObjectFromTables (void)" << endl;
 	emitter.brace_open();
-	if (info.InheritsFromTObject() || info.CPPName() == "TObject") {
+	if (info.InheritsFromTObject() || info.CPPQualifiedName() == "TObject") {
 		emitter.start_line() << "ROOTNET::Utility::ROOTObjectManager::instance()->ForgetAboutObject(_instance);" << endl;
 	}
 	emitter.brace_close();
@@ -1519,7 +1520,7 @@ void ClassTranslator::generate_class_methods (RootClassInfo &info, SourceEmitter
 			emitter.start_line() << method.generate_method_header(true) << endl;
 
 			if (method.IsCtor() && superClassInfo != nullptr) {
-				emitter.start_line() << "  : " << superClassInfo->NETName() << " ((::" << superClassInfo->CPPName() << "*) nullptr)" << endl;
+				emitter.start_line() << "  : " << superClassInfo->NETClassName() << " ((::" << superClassInfo->CPPQualifiedName() << "*) nullptr)" << endl;
 			}
 
 			emitter.brace_open();
@@ -1600,13 +1601,13 @@ void ClassTranslator::generate_class_methods (RootClassInfo &info, SourceEmitter
 			continue;
 
 		if (itr->isGetter()) {
-			emitter.start_line() << itr->property_type() << " " << info.NETName() << "::" << itr->name() << "::get ()" << endl;
+			emitter.start_line() << itr->property_type() << " " << info.NETQualifiedName() << "::" << itr->name() << "::get ()" << endl;
 			emitter.brace_open();
 			emit_function_body(*(itr->getter_method()), info, emitter);
 			emitter.brace_close();
 		}
 		if (itr->isSetter()) {
-			emitter.start_line() << "void " << info.NETName() << "::" << itr->name() << "::set (" << itr->property_type()
+			emitter.start_line() << "void " << info.NETQualifiedClassName() << "::" << itr->name() << "::set (" << itr->property_type()
 				<< " " << itr->setter_method()->arguments()[0].get_argname()  << ")" << endl;
 			emitter.brace_open();
 			emit_function_body(*(itr->setter_method()), info, emitter);
@@ -1629,14 +1630,14 @@ void ClassTranslator::generate_class_methods (RootClassInfo &info, SourceEmitter
 			continue;
 
 		if (f.GetterOK()) {
-			emitter.start_line() << f.NETType() << " " << info.NETName() << "::" << f.NETName() << "::get ()" << endl;
+			emitter.start_line() << f.NETType() << " " << info.NETQualifiedClassName() << "::" << f.NETName() << "::get ()" << endl;
 			emitter.brace_open();
 			emit_return(f.Translator(), "_instance->" + f.CPPName(), emitter, false, true);
 			emitter.brace_close();
 		}
 
 		if (f.SetterOK()) {
-			emitter.start_line() << "void " << info.NETName() << "::" << f.NETName()
+			emitter.start_line() << "void " << info.NETQualifiedName() << "::" << f.NETName()
 				<< "::set (" << f.NETType() << " f_xyz_val)" << endl;
 			emitter.brace_open();
 			auto tempname (emit_translation_net_cpp("f_xyz_val", f.Translator(), emitter));
@@ -1660,12 +1661,12 @@ void ClassTranslator::generate_class_methods (RootClassInfo &info, SourceEmitter
 	for (unsigned int i = 0; i < indexers.size(); i++) {
 		CPPIndexerInfo &iinfo (indexers[i]);
 
-		emitter.start_line() << iinfo._return_type->net_return_type_name() << " " << info.NETName() << "::default::get(" << iinfo._index_type->net_interface_name() << " index)" << endl;
+		emitter.start_line() << iinfo._return_type->net_return_type_name() << " " << info.NETQualifiedClassName() << "::default::get(" << iinfo._index_type->net_interface_name() << " index)" << endl;
 		emitter.brace_open();
 		string arg_name (emit_translation_net_cpp ("index", iinfo._index_type, emitter));
 		string return_val ("f_abc_return");
 		emitter.start_line() << iinfo._return_type->cpp_code_typename() << " " << return_val << " = ";
-		if (iinfo._method->ClassOfMethodDefinition() != info.CPPName()) {
+		if (iinfo._method->ClassOfMethodDefinition() != info.CPPQualifiedName()) {
 			emitter() << " _instance->" << iinfo._method->ClassOfMethodDefinition() << "::operator[](" << arg_name << ");" << endl;
 		} else {
 			emitter() << " (*_instance)[" << arg_name << "];" << endl;
@@ -1678,7 +1679,7 @@ void ClassTranslator::generate_class_methods (RootClassInfo &info, SourceEmitter
 		emitter.brace_close();
 
 		if (iinfo._is_setter) {
-			emitter.start_line() << "void " << info.NETName() << "::default::set(" << iinfo._index_type->net_interface_name() << " index, " << iinfo._return_type->net_return_type_name() << " value)" << endl;
+			emitter.start_line() << "void " << info.NETQualifiedName() << "::default::set(" << iinfo._index_type->net_interface_name() << " index, " << iinfo._return_type->net_return_type_name() << " value)" << endl;
 			emitter.brace_open();
 			string arg_name (emit_translation_net_cpp ("index", iinfo._index_type, emitter));
 			string value_name (emit_translation_net_cpp ("value", iinfo._return_type, emitter));

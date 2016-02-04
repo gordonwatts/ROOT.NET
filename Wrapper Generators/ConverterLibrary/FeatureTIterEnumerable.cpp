@@ -26,7 +26,7 @@ FeatureTIterEnumerable::~FeatureTIterEnumerable(void)
 ///
 bool FeatureTIterEnumerable::is_applicable (const RootClassInfo &info)
 {
-	if (info.CPPName() == "TIter")
+	if (info.CPPQualifiedName() == "TIter")
 		return true;
 
 	return false;
@@ -39,7 +39,7 @@ bool FeatureTIterEnumerable::is_applicable (const RootClassInfo &info)
 std::vector<std::string> FeatureTIterEnumerable::get_additional_interfaces (const RootClassInfo &info)
 {
 	vector<string> result;
-	if (info.CPPName() == "TIter")
+	if (info.CPPQualifiedName() == "TIter")
 		result.push_back("System::Collections::Generic::IEnumerable<Interface::NTObject^>");
 
 	return result;

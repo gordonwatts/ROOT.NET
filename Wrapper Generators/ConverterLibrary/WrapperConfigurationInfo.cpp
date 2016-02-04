@@ -722,7 +722,7 @@ void WrapperConfigurationInfo::FixUpMethodArguments (const RootClassInfo *class_
 
 	auto &inher = class_info->GetInheritedClassesDeep();
 	if (method_name == "Process"
-		&& (class_info->CPPName() == "TTree"
+		&& (class_info->CPPQualifiedName() == "TTree"
 		|| find(inher.begin(), inher.end(), "TTree") != inher.end())) {
 			if (args[0].CPPTypeName() == "void*") {
 				args[0].ResetType("TSelector*", "TSelector");
@@ -783,7 +783,7 @@ bool WrapperConfigurationInfo::CheckPropertyNameBad (const RootClassInfo *class_
 {
 	if (property_name == "Selected") {
 		vector<string> allcls = class_info->GetInheritedClassesDeep();
-		allcls.push_back(class_info->CPPName());
+		allcls.push_back(class_info->CPPQualifiedName());
 		if (find(allcls.begin(), allcls.end(), "TVirtualPad") != allcls.end()) {
 			return true;
 		}
@@ -791,7 +791,7 @@ bool WrapperConfigurationInfo::CheckPropertyNameBad (const RootClassInfo *class_
 
 	if (property_name == "Cleanup") {
 		vector<string> allcls = class_info->GetInheritedClassesDeep();
-		allcls.push_back(class_info->CPPName());
+		allcls.push_back(class_info->CPPQualifiedName());
 		if (find(allcls.begin(), allcls.end(), "TGFrame") != allcls.end()) {
 			return true;
 		}
@@ -799,7 +799,7 @@ bool WrapperConfigurationInfo::CheckPropertyNameBad (const RootClassInfo *class_
 
 	if (property_name == "Select") {
 		vector<string> allcls = class_info->GetInheritedClassesDeep();
-		allcls.push_back(class_info->CPPName());
+		allcls.push_back(class_info->CPPQualifiedName());
 		if (find(allcls.begin(), allcls.end(), "TSelectorDraw") != allcls.end()) {
 			return true;
 		}
@@ -814,7 +814,7 @@ bool WrapperConfigurationInfo::CheckPropertyNameBad (const RootClassInfo *class_
 		|| property_name == "TypeSize"
 		) {
 		vector<string> allcls = class_info->GetInheritedClassesDeep();
-		allcls.push_back(class_info->CPPName());
+		allcls.push_back(class_info->CPPQualifiedName());
 		if (find(allcls.begin(), allcls.end(), "TTable") != allcls.end()) {
 			return true;
 		}

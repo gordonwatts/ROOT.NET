@@ -19,7 +19,7 @@ using std::endl;
 ///
 bool FeatureTreeIterator::is_applicable (const RootClassInfo &info)
 {
-	return info.CPPName() == "TTree";
+	return info.CPPQualifiedName() == "TTree";
 }
 
 ///

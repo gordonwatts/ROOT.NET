@@ -98,7 +98,7 @@ inline std::vector<RootClassField> make_field_list_clean (const RootClassInfo &t
 		std::vector<std::string> bad_classes (WrapperConfigurationInfo::BadClassLibraryCrossReference(thisclass.LibraryName(), field.get_all_referenced_raw_types()));
 		if (bad_classes.size() > 0) {
 			for (int i = 0; i < bad_classes.size(); i++) {
-				ConverterErrorLog::log_type_error(bad_classes[i], "Field " + thisclass.CPPName() + "::" + field.CPPName() + " can't be translated because it would cause an incorrect reference from this library (" + thisclass.LibraryName() + ")");
+				ConverterErrorLog::log_type_error(bad_classes[i], "Field " + thisclass.CPPQualifiedName() + "::" + field.CPPName() + " can't be translated because it would cause an incorrect reference from this library (" + thisclass.LibraryName() + ")");
 			}
 			continue;
 		}

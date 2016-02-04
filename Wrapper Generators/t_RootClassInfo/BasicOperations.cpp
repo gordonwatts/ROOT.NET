@@ -99,8 +99,8 @@ namespace t_RootClassInfo
 		void CheckBasicAccessors()
 		{
 			RootClassInfo *cinfo = new RootClassInfo ("TH1F");
-			Assert::IsTrue (cinfo->CPPName() == "TH1F", "CPP Name is incorrect");
-			Assert::IsTrue (cinfo->NETName() == "NTH1F", "NET Name is incorrect");
+			Assert::IsTrue (cinfo->CPPQualifiedName() == "TH1F", "CPP Name is incorrect");
+			Assert::IsTrue (cinfo->NETQualifiedName() == "NTH1F", "NET Name is incorrect");
 			delete cinfo;
 		}
 
