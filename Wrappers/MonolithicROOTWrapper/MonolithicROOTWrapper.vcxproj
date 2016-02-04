@@ -118,6 +118,7 @@
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="ROOTSource\NROOT__NTSchemaRule.cpp" />
+    <ClCompile Include="ROOTSource\NROOT__NTSchemaRule__NTSources.cpp" />
     <ClCompile Include="ROOTSource\NTArray.cpp" />
     <ClCompile Include="ROOTSource\NTArrayF.cpp" />
     <ClCompile Include="ROOTSource\NTAttFill.cpp" />
@@ -135,6 +136,7 @@
     <ClInclude Include="ROOTSource\libHist-make_public.hpp" />
     <ClInclude Include="ROOTSource\libTree-make_public.hpp" />
     <ClInclude Include="ROOTSource\NROOT__NTSchemaRule.hpp" />
+    <ClInclude Include="ROOTSource\NROOT__NTSchemaRule__NTSources.hpp" />
     <ClInclude Include="ROOTSource\NTArray.hpp" />
     <ClInclude Include="ROOTSource\NTArrayF.hpp" />
     <ClInclude Include="ROOTSource\NTAttFill.hpp" />

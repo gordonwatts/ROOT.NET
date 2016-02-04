@@ -302,10 +302,13 @@ void write_out_make_public::operator ()(const std::pair<string,set<string> > &it
 	vector<string> all_objects(all_objects_set.begin(), all_objects_set.end());
 	for (unsigned int i = 0; i < all_objects.size(); i++) {
 		auto info = RootClassInfoCollection::GetRootClassInfo(all_objects[i]);
-		auto ns_depth = make_public_header.start_namespace(info, false);
-		make_public_header.start_line() << "class " << info.CPPClassName() << ";" << endl;
-		make_public_header.brace_close(ns_depth);
-		make_public_header.start_line() << "#pragma make_public(" << info.CPPQualifiedName() << ")" << endl;
+		// Nested classes can't be made public - the parent should take care of that.
+		if (info.CPPQualifiedClassName().find("::") == string::npos) {
+			auto ns_depth = make_public_header.start_namespace(info, false);
+			make_public_header.start_line() << "class " << info.CPPClassName() << ";" << endl;
+			make_public_header.brace_close(ns_depth);
+			make_public_header.start_line() << "#pragma make_public(" << info.CPPQualifiedName() << ")" << endl;
+		}
 	}
 	make_public_header.close();
 }

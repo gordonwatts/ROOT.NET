@@ -99,7 +99,7 @@ namespace t_RootClassInfo
 		}
 
 		[TestMethod]
-		void NCPPNamespaceParsing()
+		void NETNamespaceParsing()
 		{
 			gSystem->Load("libTMVA");
 			auto histo = RootClassInfoCollection::GetRootClassInfo("TH1F");
@@ -133,7 +133,7 @@ namespace t_RootClassInfo
 		}
 
 		[TestMethod]
-		void NCPPQualifiedName()
+		void NETQualifiedName()
 		{
 			gSystem->Load("libTMVA");
 			auto histo = RootClassInfoCollection::GetRootClassInfo("TH1F");
@@ -146,7 +146,7 @@ namespace t_RootClassInfo
 
 			Assert::IsTrue(nhisto == "NTH1F");
 			Assert::IsTrue(nfactory == "NTMVA::NFactory");
-			Assert::IsTrue(nsource == "NROOT::NTSchemaRule::NTSource");
+			Assert::IsTrue(nsource == "NROOT::NTSchemaRule__NTSource");
 		}
 
 		[TestMethod]

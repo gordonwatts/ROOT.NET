@@ -54,6 +54,9 @@
     <ClCompile Include="ROOTSource\NROOT__NTSchemaRule.cpp">
       <Filter>ROOTSource</Filter>
     </ClCompile>
+    <ClCompile Include="ROOTSource\NROOT__NTSchemaRule__NTSources.cpp">
+      <Filter>ROOTSource</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -99,6 +102,9 @@
       <Filter>ROOTSource</Filter>
     </ClInclude>
     <ClInclude Include="ROOTSource\NROOT__NTSchemaRule.hpp">
+      <Filter>ROOTSource</Filter>
+    </ClInclude>
+    <ClInclude Include="ROOTSource\NROOT__NTSchemaRule__NTSources.hpp">
       <Filter>ROOTSource</Filter>
     </ClInclude>
   </ItemGroup>

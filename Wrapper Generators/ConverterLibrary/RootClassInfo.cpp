@@ -75,20 +75,11 @@ _best_class_to_inherrit_good(false)
 	auto netparts = vector<string>(cppparts);
 	transform(netparts.begin(), netparts.end(), netparts.begin(), [](string &s) {return "N" + s; });
 
-	// The fully qualified name
-	_cpp_qualified_name = name;
-	_net_qualified_name = join_with_namespace(netparts.begin(), netparts.end());
-
-	// The CPP class name. We aren't supporting nested class translation in NET for now.
-	_cpp_class_name = *(cppparts.end() - 1);
-
-	// In order to do anything with namespaces or sub classes we have to know what parts are namespaces and
-	// what parts are class names. So we will have to look through this one at a time.
-
+	// Figure out what is sub class and what is namespace.
 	auto last_namespace = cppparts.begin();
 	if (cppparts.size() > 1) {
 		// Just see where we suddenly start getting class
-		for (auto part = cppparts.begin()+1; part != cppparts.end(); part++) {
+		for (auto part = cppparts.begin() + 1; part != cppparts.end(); part++) {
 			auto qualified_class = join_with_namespace(cppparts.begin(), part);
 			auto c = TClass::GetClass(qualified_class.c_str());
 			if (c != nullptr && (c->Property() & kIsClass)) {
@@ -101,8 +92,18 @@ _best_class_to_inherrit_good(false)
 	_cpp_namespace = join_with_namespace(cppparts.begin(), last_namespace);
 	_net_namespace = join_with_namespace(netparts.begin(), netparts.begin() + (last_namespace - cppparts.begin()));
 
+	// The qualified class name can be done now that we know what is namepace and what isn't.
+	// The net class name is the same as the fully qualified class name since we really aren't supporting
+	// subclasses (though .NET allows them - just too much work!).
 	_cpp_qualified_class_name = join_with_namespace(last_namespace, cppparts.end());
 	_net_qualified_class_name = join_with_namespace(netparts.begin() + (last_namespace - cppparts.begin()), netparts.end(), "__");
+
+	// The fully qualified name. In the case of .NET, this is the name space plus the qualified class name.
+	_cpp_qualified_name = name;
+	_net_qualified_name = _net_namespace + (_net_namespace.size() > 0 ? "::" : "") + _net_qualified_class_name;
+
+	// The CPP class name. We aren't supporting nested class translation in NET for now.
+	_cpp_class_name = *(cppparts.end() - 1);
 	_net_class_name = _net_qualified_class_name;
 }
 
