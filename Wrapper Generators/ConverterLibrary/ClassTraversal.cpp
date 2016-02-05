@@ -81,7 +81,10 @@ vector<string> ClassTraversal::FindInheritedClasses(const std::string &class_nam
 	vector<string> result;
 	while (TBaseClass *bobj = static_cast<TBaseClass*>(next()))
 	{
-	  if (protected_ok || (!protected_ok && (bobj->Property() & kIsProtected) == 0)) {
+	  if (
+		  ((bobj->Property() & kIsPrivate) == 0)
+		  && (protected_ok || (!protected_ok && (bobj->Property() & kIsProtected) == 0))
+			  ) {
 		TClass *cl = bobj->GetClassPointer();
 		string subname (cl->GetName());
 		result.push_back (subname);
