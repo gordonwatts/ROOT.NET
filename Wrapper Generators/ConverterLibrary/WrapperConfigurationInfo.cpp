@@ -341,6 +341,8 @@ set<string> WrapperConfigurationInfo::GetListOfBadMethods()
 	methods_to_skip.insert("ROOT::Math::GSLIntegrator::IntegralLow");
 	methods_to_skip.insert("ROOT::Math::GSLIntegrator::IntegralUp");
 	methods_to_skip.insert("ROOT::Math::GSLIntegrator::SetFunction");
+	methods_to_skip.insert("ROOT::Math::GSLMinimizer1D::SetFunction");
+	methods_to_skip.insert("ROOT::Math::GSLRootFinder::SetFunction");
 
 	//
 	// Return the list
