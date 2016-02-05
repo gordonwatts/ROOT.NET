@@ -344,6 +344,11 @@ set<string> WrapperConfigurationInfo::GetListOfBadMethods()
 	methods_to_skip.insert("ROOT::Math::GSLMinimizer1D::SetFunction");
 	methods_to_skip.insert("ROOT::Math::GSLRootFinder::SetFunction");
 
+	// Bizare duplication of const and non-const functions that have only arguments by value.
+	methods_to_skip.insert("TMVA::kNN::Event::GetDist");
+	methods_to_skip.insert("TMVA::kNN::Event::GetTgt");
+	methods_to_skip.insert("TMVA::kNN::Event::GetVar");
+
 	//
 	// Return the list
 	//
