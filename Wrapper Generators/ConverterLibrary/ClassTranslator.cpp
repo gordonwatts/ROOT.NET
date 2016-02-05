@@ -210,6 +210,14 @@ void ClassTranslator::translate(RootClassInfo &class_info)
 		}
 	}
 
+	/// Every library should reference Core. This is because we stash in Core some helper classes
+	/// for dealing with arrays and the like. So explicitly add it here.
+	for (auto &lib : _library_dependencies) {
+		if (lib.first != "libCore") {
+			lib.second.insert("libCore");
+		}
+	}
+
 	///
 	/// Put everything in a ROOT namespace to keep it clean...
 	///
