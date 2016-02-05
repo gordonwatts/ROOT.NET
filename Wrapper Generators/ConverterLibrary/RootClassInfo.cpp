@@ -1052,6 +1052,17 @@ namespace {
   }
 }
 
+namespace {
+	bool has_enum(const string &name, const vector<RootEnum> &enums)
+	{
+		for (auto e : enums) {
+			if (e.NameUnqualified() == name)
+				return true;
+		}
+		return false;
+	}
+}
+
 ///
 /// GetProperties
 ///
@@ -1090,7 +1101,7 @@ const std::vector<RootClassProperty> &RootClassInfo::GetProperties(void) const
 	bool is_setter = false;
 	string return_type;
 
-	/// Is this a getter?
+	/// Is this a getter? Is it a setter?
 
 	if (method.arguments().size() == 0
 	  && method.return_type() != "void"
@@ -1122,6 +1133,7 @@ const std::vector<RootClassProperty> &RootClassInfo::GetProperties(void) const
 	string prop_name = method.NETName().substr(3);
 	if (has_method(prop_name)
 		|| TClass::GetClass(prop_name.c_str()) != 0
+		|| has_enum(prop_name, GetClassEnums())
 		|| WrapperConfigurationInfo::CheckPropertyNameBad(this, prop_name)) {
 		prop_name = prop_name + "_GetSetProperty";
 	}
