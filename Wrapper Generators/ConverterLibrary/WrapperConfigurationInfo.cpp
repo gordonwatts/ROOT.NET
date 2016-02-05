@@ -336,6 +336,7 @@ set<string> WrapperConfigurationInfo::GetListOfBadMethods()
 	methods_to_skip.insert("ROOT::Fit::Fitter::FitFCN");
 	methods_to_skip.insert("ROOT::Fit::Fitter::SetFCN");
 	methods_to_skip.insert("TGenCollectionProxy::Method::Method");
+	methods_to_skip.insert("ROOT::Math::ChebyshevApprox::ChebyshevApprox");
 
 	//
 	// Return the list
