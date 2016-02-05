@@ -115,6 +115,9 @@ set<string> WrapperConfigurationInfo::GetListOfBadFields()
 	bad_fields.insert("TGenCollectionProxy::Method::call");
 	bad_fields.insert("TGenCollectionProxy::Value::fDtor");
 	bad_fields.insert("TGenCollectionProxy::Value::fDtor");
+	bad_fields.insert("TStreamerInfoActions::TConfiguredAction::fAction");
+	bad_fields.insert("TStreamerInfoActions::TConfiguredAction::fLoopAction");
+	bad_fields.insert("TStreamerInfoActions::TConfiguredAction::fVecPtrLoopAction");
 
 	return bad_fields;
 }
