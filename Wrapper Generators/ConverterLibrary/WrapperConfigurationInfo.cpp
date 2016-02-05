@@ -126,6 +126,9 @@ set<string> WrapperConfigurationInfo::GetListOfBadMethods()
 	methods_to_skip.insert("FitResult::Error");
 	methods_to_skip.insert("ROOT::Fit::FitResult::Error");
 	methods_to_skip.insert("ROOT::Math::Functor::Functor");
+	methods_to_skip.insert("ROOT::Math::GradFunctor::GradFunctor");
+	methods_to_skip.insert("ROOT::Math::GradFunctor1D::GradFunctor1D");
+	methods_to_skip.insert("ROOT::Math::ParamFunctor::ParamFunctor");
 	methods_to_skip.insert("TObject::Error");
 
 	///
