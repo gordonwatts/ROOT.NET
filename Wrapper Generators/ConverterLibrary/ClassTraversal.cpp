@@ -3,6 +3,7 @@
 ///
 
 #include "ClassTraversal.h"
+#include "WrapperConfigurationInfo.hpp"
 
 #include "TClass.h"
 #include "TBaseClass.h"
@@ -121,11 +122,22 @@ vector<TDataMember*> ClassTraversal::FindClassFields(const string &class_name)
 	TIter next (all_public_fields);
 	vector<TDataMember*> results;
 	TDataMember *field;
+	static bool got_list = false;
+	static set<string> bad_fields;
+
+	if (!got_list) {
+		got_list = true;
+		bad_fields = WrapperConfigurationInfo::GetListOfBadFields();
+	}
+
 	while ((field = static_cast<TDataMember*>(next.Next()))) {
 		bool isenum = (field->Property() & (kIsEnum | kIsStatic)) == (kIsEnum | kIsStatic);
 		bool isstatic = (field->Property() & kIsStatic) == kIsStatic;
 		if (!(isenum || isstatic)) {
-			results.push_back(field);
+			auto fullname = class_name + "::" + field->GetName();
+			if (bad_fields.find(fullname) == bad_fields.end()) {
+				results.push_back(field);
+			}
 		}
 	}
 	return results;

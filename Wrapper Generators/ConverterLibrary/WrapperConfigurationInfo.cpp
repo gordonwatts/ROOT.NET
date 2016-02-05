@@ -102,6 +102,24 @@ vector<string> WrapperConfigurationInfo::RemoveBrokenClasses (const vector<strin
 }
 
 ///
+/// Return a list of bad fields.
+///
+set<string> WrapperConfigurationInfo::GetListOfBadFields()
+{
+	set<string> bad_fields;
+
+	// These are here because the CINT and C++ definitions are different.
+	bad_fields.insert("TGenCollectionProxy::Value::fDtor");
+	bad_fields.insert("TGenCollectionProxy::Value::fDelete");
+	bad_fields.insert("TGenCollectionProxy::Value::fCtor");
+	bad_fields.insert("TGenCollectionProxy::Method::call");
+	bad_fields.insert("TGenCollectionProxy::Value::fDtor");
+	bad_fields.insert("TGenCollectionProxy::Value::fDtor");
+
+	return bad_fields;
+}
+
+///
 /// Return a list of methods that we cna't translate for whatever reason. We
 /// do this by svn revision number. So this requires some care and feeding.
 ///
@@ -125,16 +143,6 @@ set<string> WrapperConfigurationInfo::GetListOfBadMethods()
 	methods_to_skip.insert("TFitResult::Error");
 	methods_to_skip.insert("FitResult::Error");
 	methods_to_skip.insert("ROOT::Fit::FitResult::Error");
-	methods_to_skip.insert("ROOT::Math::Functor::Functor");
-	methods_to_skip.insert("ROOT::Math::Functor1D::Functor1D");
-	methods_to_skip.insert("ROOT::Math::GradFunctor::GradFunctor");
-	methods_to_skip.insert("ROOT::Math::GradFunctor1D::GradFunctor1D");
-	methods_to_skip.insert("ROOT::Math::ParamFunctor::ParamFunctor");
-	methods_to_skip.insert("TObject::Error");
-
-	// Weird cases of C++ and CINT not matching.
-	methods_to_skip.insert("ROOT::Fit::Fitter::FitFCN");
-	methods_to_skip.insert("ROOT::Fit::Fitter::SetFCN");
 
 	///
 	/// While .NET can deal with covariant returns, my code is having
@@ -312,6 +320,19 @@ set<string> WrapperConfigurationInfo::GetListOfBadMethods()
 	// Some items in the gui code
 
 	methods_to_skip.insert("TBrowserImp::GetMainFrame");
+
+	// Issues that are differences between CINT and C++
+	// If needed, many of these could be fixed by the fix up bad args call elsewhere in this
+	// code.
+	methods_to_skip.insert("ROOT::Math::Functor::Functor");
+	methods_to_skip.insert("ROOT::Math::Functor1D::Functor1D");
+	methods_to_skip.insert("ROOT::Math::GradFunctor::GradFunctor");
+	methods_to_skip.insert("ROOT::Math::GradFunctor1D::GradFunctor1D");
+	methods_to_skip.insert("ROOT::Math::ParamFunctor::ParamFunctor");
+	methods_to_skip.insert("TObject::Error");
+	methods_to_skip.insert("ROOT::Fit::Fitter::FitFCN");
+	methods_to_skip.insert("ROOT::Fit::Fitter::SetFCN");
+	methods_to_skip.insert("TGenCollectionProxy::Method::Method");
 
 	//
 	// Return the list
