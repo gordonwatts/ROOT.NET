@@ -203,7 +203,7 @@ void ClassTranslator::translate(RootClassInfo &class_info)
 			} else {
 				if (dep_enum.LibraryName() == class_info.LibraryName()) {
 					if (dep_enum.NETClassName() != class_info.NETQualifiedName()) {
-						hpp_emitter.include_file(dep_enum.NETClassName() + ".hpp");
+						hpp_emitter.include_file(sanitized_for_cpp(dep_enum.NETClassName()) + ".hpp");
 					}
 				}
 			}
