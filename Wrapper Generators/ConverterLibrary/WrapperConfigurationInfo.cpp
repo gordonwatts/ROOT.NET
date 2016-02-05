@@ -126,10 +126,15 @@ set<string> WrapperConfigurationInfo::GetListOfBadMethods()
 	methods_to_skip.insert("FitResult::Error");
 	methods_to_skip.insert("ROOT::Fit::FitResult::Error");
 	methods_to_skip.insert("ROOT::Math::Functor::Functor");
+	methods_to_skip.insert("ROOT::Math::Functor1D::Functor1D");
 	methods_to_skip.insert("ROOT::Math::GradFunctor::GradFunctor");
 	methods_to_skip.insert("ROOT::Math::GradFunctor1D::GradFunctor1D");
 	methods_to_skip.insert("ROOT::Math::ParamFunctor::ParamFunctor");
 	methods_to_skip.insert("TObject::Error");
+
+	// Weird cases of C++ and CINT not matching.
+	methods_to_skip.insert("ROOT::Fit::Fitter::FitFCN");
+	methods_to_skip.insert("ROOT::Fit::Fitter::SetFCN");
 
 	///
 	/// While .NET can deal with covariant returns, my code is having
