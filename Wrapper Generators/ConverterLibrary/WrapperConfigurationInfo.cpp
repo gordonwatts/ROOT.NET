@@ -359,6 +359,15 @@ set<string> WrapperConfigurationInfo::GetListOfBadMethods()
 
 	methods_to_skip.insert("TIndexTable::iterator::operator-");
 
+	// Here are a few undefined static variable references that aren't done right in TMVA:
+	methods_to_skip.insert("TMVA::BDTEventWrapper::SetVarIndex");
+	methods_to_skip.insert("TMVA::BDTEventWrapper::GetVal");
+	methods_to_skip.insert("TMVA::BDTEventWrapper::operator<");
+	methods_to_skip.insert("TMVA::DecisionTree::DecisionTree");
+	methods_to_skip.insert("TMVA::Factory::RootBaseDir");
+	methods_to_skip.insert("TMVA::LogInterval::Log");
+	methods_to_skip.insert("TMVA::MsgLogger::GetMaxSourceSize");
+
 	//
 	// Return the list
 	//
