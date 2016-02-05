@@ -349,6 +349,16 @@ set<string> WrapperConfigurationInfo::GetListOfBadMethods()
 	methods_to_skip.insert("TMVA::kNN::Event::GetTgt");
 	methods_to_skip.insert("TMVA::kNN::Event::GetVar");
 
+	// Postfix ++ and -- are not valid CLR... perhaps need something more general, but for now...
+	methods_to_skip.insert("TGenericTable::iterator::operator++");
+	methods_to_skip.insert("TGenericTable::iterator::operator--");
+	methods_to_skip.insert("TIndexTable::iterator::operator++");
+	methods_to_skip.insert("TIndexTable::iterator::operator--");
+	methods_to_skip.insert("TTable::iterator::operator++");
+	methods_to_skip.insert("TTable::iterator::operator--");
+
+	methods_to_skip.insert("TIndexTable::iterator::operator-");
+
 	//
 	// Return the list
 	//
