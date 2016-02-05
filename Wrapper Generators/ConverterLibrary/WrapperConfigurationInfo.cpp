@@ -337,6 +337,10 @@ set<string> WrapperConfigurationInfo::GetListOfBadMethods()
 	methods_to_skip.insert("ROOT::Fit::Fitter::SetFCN");
 	methods_to_skip.insert("TGenCollectionProxy::Method::Method");
 	methods_to_skip.insert("ROOT::Math::ChebyshevApprox::ChebyshevApprox");
+	methods_to_skip.insert("ROOT::Math::GSLIntegrator::Integral");
+	methods_to_skip.insert("ROOT::Math::GSLIntegrator::IntegralLow");
+	methods_to_skip.insert("ROOT::Math::GSLIntegrator::IntegralUp");
+	methods_to_skip.insert("ROOT::Math::GSLIntegrator::SetFunction");
 
 	//
 	// Return the list
