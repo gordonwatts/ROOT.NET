@@ -125,6 +125,7 @@ set<string> WrapperConfigurationInfo::GetListOfBadMethods()
 	methods_to_skip.insert("TFitResult::Error");
 	methods_to_skip.insert("FitResult::Error");
 	methods_to_skip.insert("ROOT::Fit::FitResult::Error");
+	methods_to_skip.insert("ROOT::Math::Functor::Functor");
 	methods_to_skip.insert("TObject::Error");
 
 	///
