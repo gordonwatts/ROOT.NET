@@ -243,3 +243,6 @@ Wrapper Generators/FindBadRootHeadersStatus.txt
 nuget.exe
 nuget/*
 *.opendb
+
+# Everything from our builds.
+Wrappers/AAROOT/*
