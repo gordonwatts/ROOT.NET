@@ -637,7 +637,7 @@ vector<string> WrapperConfigurationInfo::GetListOfBadLibraries(void)
 	bad_libs.push_back("libRMySQL");
 	bad_libs.push_back("libNew");
 	bad_libs.push_back("libCintex");
-	bad_libs.push_back("libReflex");
+	//bad_libs.push_back("libReflex");
 	bad_libs.push_back("libGviz");
 	bad_libs.push_back("libRCastor");
 	bad_libs.push_back("libRFIO");
