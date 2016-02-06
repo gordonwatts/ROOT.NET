@@ -196,7 +196,16 @@ namespace ROOTNET {
 		///
 		System::String ^root_type_holder::NetTranslatedClass(System::String ^root_class_name)
 		{
-			System::String ^net_class_name = gcnew System::String ("ROOTNET.N" + root_class_name);
+			// Namespaces and sub classes mean splitting everything carefully here.
+			auto arr = gcnew array<System::String^>(1);
+			arr[0] = gcnew System::String("::");
+			auto name_parts = root_class_name->Split(arr, System::StringSplitOptions::RemoveEmptyEntries);
+
+			auto net_class_name = gcnew System::String("ROOTNET");
+			for (int i = 0; i < name_parts->Length; i++) {
+				net_class_name += ".N" + name_parts[i];
+			}
+
 			if (!_class_map->ContainsKey(root_class_name)) {
 				if (!findClassInLoadedAssemblies(root_class_name, net_class_name)) {
 					return nullptr;

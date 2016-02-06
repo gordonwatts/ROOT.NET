@@ -27,6 +27,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "t_CPPPointerInteractions", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "t_TString", "t_TString\t_TString.csproj", "{4C8731A0-90BD-4C23-B935-9A91992FD089}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "t_TMVA", "t_TMVA\t_TMVA.csproj", "{7F26B580-01D4-4549-9E85-E2C0796C54E2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -175,6 +177,30 @@ Global
 		{4C8731A0-90BD-4C23-B935-9A91992FD089}.Release|x64.ActiveCfg = Release|x86
 		{4C8731A0-90BD-4C23-B935-9A91992FD089}.Release|x86.ActiveCfg = Release|x86
 		{4C8731A0-90BD-4C23-B935-9A91992FD089}.Release|x86.Build.0 = Release|x86
+		{7F26B580-01D4-4549-9E85-E2C0796C54E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F26B580-01D4-4549-9E85-E2C0796C54E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F26B580-01D4-4549-9E85-E2C0796C54E2}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{7F26B580-01D4-4549-9E85-E2C0796C54E2}.Debug|ARM.Build.0 = Debug|Any CPU
+		{7F26B580-01D4-4549-9E85-E2C0796C54E2}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{7F26B580-01D4-4549-9E85-E2C0796C54E2}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{7F26B580-01D4-4549-9E85-E2C0796C54E2}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{7F26B580-01D4-4549-9E85-E2C0796C54E2}.Debug|Win32.Build.0 = Debug|Any CPU
+		{7F26B580-01D4-4549-9E85-E2C0796C54E2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7F26B580-01D4-4549-9E85-E2C0796C54E2}.Debug|x64.Build.0 = Debug|Any CPU
+		{7F26B580-01D4-4549-9E85-E2C0796C54E2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7F26B580-01D4-4549-9E85-E2C0796C54E2}.Debug|x86.Build.0 = Debug|Any CPU
+		{7F26B580-01D4-4549-9E85-E2C0796C54E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F26B580-01D4-4549-9E85-E2C0796C54E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F26B580-01D4-4549-9E85-E2C0796C54E2}.Release|ARM.ActiveCfg = Release|Any CPU
+		{7F26B580-01D4-4549-9E85-E2C0796C54E2}.Release|ARM.Build.0 = Release|Any CPU
+		{7F26B580-01D4-4549-9E85-E2C0796C54E2}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{7F26B580-01D4-4549-9E85-E2C0796C54E2}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{7F26B580-01D4-4549-9E85-E2C0796C54E2}.Release|Win32.ActiveCfg = Release|Any CPU
+		{7F26B580-01D4-4549-9E85-E2C0796C54E2}.Release|Win32.Build.0 = Release|Any CPU
+		{7F26B580-01D4-4549-9E85-E2C0796C54E2}.Release|x64.ActiveCfg = Release|Any CPU
+		{7F26B580-01D4-4549-9E85-E2C0796C54E2}.Release|x64.Build.0 = Release|Any CPU
+		{7F26B580-01D4-4549-9E85-E2C0796C54E2}.Release|x86.ActiveCfg = Release|Any CPU
+		{7F26B580-01D4-4549-9E85-E2C0796C54E2}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

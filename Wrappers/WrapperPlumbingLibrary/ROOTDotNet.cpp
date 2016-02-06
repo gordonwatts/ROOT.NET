@@ -26,9 +26,29 @@ using namespace System::Collections::Generic;
 #undef nullptr
 #endif
 
+namespace {
+	// Return the C++ name starting from a .NET name
+	System::String ^GetCPPNameFromNETFullTypeName(System::String ^full_name)
+	{
+		auto arr = gcnew array<System::String^>(2);
+		arr[0] = gcnew System::String(".");
+		arr[1] = gcnew System::String("__");
+		auto name_parts = full_name->Split(arr, System::StringSplitOptions::RemoveEmptyEntries);
+
+		auto cpp_name = gcnew System::String("");
+		for (int i = 1; i < name_parts->Length; i++) {
+			if (i > 1) {
+				cpp_name += ".";
+			}
+			cpp_name += name_parts[i]->Substring(1);
+		}
+
+		return cpp_name;
+	}
+}
+
 namespace ROOTNET {
 	namespace Utility {
-
 		///
 		/// GetBestObject
 		///
@@ -75,7 +95,7 @@ namespace ROOTNET {
 			///
 
 			array<ConstructorInfo^>^ ctors = class_type->GetConstructors();
-			String ^class_name_ptr = class_type->Name->Substring(1) + "*";
+			String ^class_name_ptr = GetCPPNameFromNETFullTypeName(class_type->FullName) + "*";
 			ConstructorInfo ^the_ctor;
 			bool found_ctor = false;
 			for (int i_ctor = 0; i_ctor < ctors->Length; i_ctor++) {
