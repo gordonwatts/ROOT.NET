@@ -16,6 +16,7 @@
     <ProjectGUID>{0C65B73F-2073-4D9D-89D5-49CA020710BA}</ProjectGUID>
     <Keyword>ManagedCProj</Keyword>
     <RootNamespace>t_CPPPointerInteractions</RootNamespace>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -89,9 +90,6 @@
   <ItemGroup>
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="app.rc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.ico" />

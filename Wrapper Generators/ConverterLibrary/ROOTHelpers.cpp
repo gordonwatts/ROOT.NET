@@ -109,10 +109,6 @@ vector<string> ROOTHelpers::GetAllClassesInLibraries(const vector<string> &libra
 	for (int i = 0; i < num_classes; i++)
 	{
 		string class_name = gClassTable->Next();
-		if (class_name.find("::") != class_name.npos) {
-			ConverterErrorLog::log_type_error (class_name, "Private namespace not supported yet.");
-			continue; // Don't do private namespace for now.
-		}
 		if (class_name.find("<") != class_name.npos) {
 			ConverterErrorLog::log_type_error (class_name, "Template classes not supported yet.");
 			continue; // Don't do templates for now.

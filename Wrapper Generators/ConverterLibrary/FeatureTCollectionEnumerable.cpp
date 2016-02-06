@@ -29,7 +29,7 @@ FeatureTCollectionEnumerable::~FeatureTCollectionEnumerable(void)
 ///
 bool FeatureTCollectionEnumerable::is_applicable (const RootClassInfo &info)
 {
-	if (info.CPPName() == "TCollection")
+	if (info.CPPQualifiedName() == "TCollection")
 		return true;
 
 	return false;
@@ -42,7 +42,7 @@ bool FeatureTCollectionEnumerable::is_applicable (const RootClassInfo &info)
 std::vector<std::string> FeatureTCollectionEnumerable::get_additional_interfaces (const RootClassInfo &info)
 {
 	vector<string> result;
-	if (info.CPPName() == "TCollection")
+	if (info.CPPQualifiedName() == "TCollection")
 		result.push_back("System::Collections::Generic::IEnumerable<Interface::NTObject^>");
 
 	return result;
@@ -63,7 +63,7 @@ void FeatureTCollectionEnumerable::emit_header_method_definitions (const RootCla
 ///
 void FeatureTCollectionEnumerable::emit_class_methods (const RootClassInfo &info, SourceEmitter &emitter)
 {
-	emitter.start_line() << "System::Collections::Generic::IEnumerator<Interface::NTObject^> ^" << info.NETName() << "::GetEnumerator()" << endl;
+	emitter.start_line() << "System::Collections::Generic::IEnumerator<Interface::NTObject^> ^" << info.NETQualifiedName() << "::GetEnumerator()" << endl;
 	emitter.brace_open();
 	emitter.start_line() << "auto itr = gcnew ROOTNET::NTIter(this);" << endl;
 	emitter.start_line() << "return itr->GetEnumerator();" << endl;

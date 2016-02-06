@@ -1,13 +1,16 @@
 #include "SourceEmitter.hpp"
+#include "StringUtils.h"
 
 #include <iostream>
 #include <fstream>
+#include <vector>
 
 using std::endl;
 using std::string;
 using std::istringstream;
 using std::ofstream;
 using std::ifstream;
+using std::vector;
 
 ///
 /// Start by opening a file for output.
@@ -96,6 +99,13 @@ void SourceEmitter::brace_close(bool add_semicolon)
 	_file << endl;
 }
 
+void SourceEmitter::brace_close(int depth)
+{
+	for (int i = 0; i < depth; i++) {
+		brace_close();
+	}
+}
+
 ///
 /// Change the size of the indent
 ///
@@ -115,26 +125,72 @@ void SourceEmitter::indent_decrease(void)
 }
 
 ///
-/// Start a namespace
+/// Start a namespace. Can deal with nested namespaces.
 ///
-void SourceEmitter::start_namespace(const std::string &namespace_name)
+int SourceEmitter::start_namespace(const std::string &namespace_name)
 {
-	start_line() << "namespace " << namespace_name << " {" << endl;
-	indent_increase();
+	// Get the list of namespaces we want to look at.
+
+	auto all_parts(split(namespace_name, "::"));
+
+	// Now, nest them and return the number of nestings we do.
+	int count = 0;
+	for (auto n : all_parts) {
+		start_line() << "namespace " << n << " {" << endl;
+		indent_increase();
+		count++;
+	}
+	return count;
+}
+
+int SourceEmitter::start_namespace(const RootClassInfo &info, bool useNETNamespace)
+{
+	// Get the list of namespaces we want to look at.
+
+	auto all_parts(split(useNETNamespace ? info.NETNameSpace() : info.CPPNameSpace(), "::"));
+
+	// Now, nest them and return the number of nestings we do.
+	int count = 0;
+	for (auto n : all_parts) {
+		start_line() << "namespace " << n << " {" << endl;
+		indent_increase();
+		count++;
+	}
+	return count;
+}
+
+// Helper to do a decl in the middle of a namespace for a class (forward decl).
+void SourceEmitter::namespace_depth_decl(const RootClassInfo &info, const std::string &stub)
+{
+	auto extra_depth = start_namespace(info);
+	start_line() << stub << " " << info.NETClassName() << ";" << endl;
+	for (int i = 0; i < extra_depth; i++) {
+		brace_close();
+	}
+}
+
+// Helper to do a decl in the middle of a namespace for a class (forward decl).
+void SourceEmitter::namespace_depth_decl_cpp(const RootClassInfo &info, const std::string &stub)
+{
+	auto extra_depth = start_namespace(info);
+	start_line() << stub << " " << info.CPPClassName() << ";" << endl;
+	for (int i = 0; i < extra_depth; i++) {
+		brace_close();
+	}
 }
 
 ///
 /// Make a forward class reference
 ///
-void SourceEmitter::forward_class_reference(const std::string &class_name)
+void SourceEmitter::forward_class_reference(const RootClassInfo &info)
 {
-	start_line() << "ref class " << class_name << ";" << endl;
+	namespace_depth_decl(info, "ref class");
 }
 
 ///
 /// Make a forward interface reference
 ///
-void SourceEmitter::forward_interface_reference(const std::string &class_name)
+void SourceEmitter::forward_interface_reference(const RootClassInfo &info)
 {
-	start_line() << "interface class " << class_name << ";" << endl;
+	namespace_depth_decl(info, "interface class");
 }

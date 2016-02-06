@@ -62,7 +62,7 @@ int main()
 	vector<string> asked_for_enum_list;		/// What enums should we translate?
 	vector<string> libraries_to_load;		/// What libraries (dll's) should be loaded before we start translation?
 	string output_dir;						/// Where the source code should be written. This directory should already exist!!!
-	bool scan_libraries_for_classes = false;/// If true, then every single class that is a member of a loaded library is wrapped,
+	bool scan_libraries_for_classes = true;/// If true, then every single class that is a member of a loaded library is wrapped,
 	/// in addition to the asked_for_class_list.
 
 	///
@@ -71,7 +71,7 @@ int main()
 
 	/// The below lines are used during debugging in order to build a single (problem) class.
 
-#define UNIT_TEST
+//#define UNIT_TEST
 #ifdef UNIT_TEST
 	// These are the classes needed for all the Wrapper unit tests to succeed.
 	asked_for_class_list.push_back ("TLorentzVector");
@@ -80,16 +80,24 @@ int main()
 	asked_for_class_list.push_back ("TTree");
 	asked_for_class_list.push_back ("TFile");
 #else
-	asked_for_class_list.push_back("TList");
-	asked_for_class_list.push_back("TRootSnifferScanRec");
-	asked_for_class_list.push_back("TIter");
-	libraries_to_load.push_back("libRHTTP");
+	//asked_for_class_list.push_back("TList");
+	//asked_for_class_list.push_back("TRootSnifferScanRec");
+	//asked_for_class_list.push_back("TIter");
+	//asked_for_class_list.push_back("TMVA::Factory");
+	libraries_to_load.push_back("libTMVA");
+	//libraries_to_load.push_back("libRIO");
+	libraries_to_load.push_back("libTree");
+	libraries_to_load.push_back("libHist");
+	//asked_for_class_list.push_back("ROOT::TSchemaRule");
+	//asked_for_class_list.push_back("TH1F");
+	//asked_for_class_list.push_back("ROOT::TSchemaRule::TSources");
+	//libraries_to_load.push_back("libRHTTP");
 #endif
 
 	/// Make sure the libraries that are going to be needed are loaded!
 	libraries_to_load.push_back ("libCore");
-	libraries_to_load.push_back ("libPhysics");
-	libraries_to_load.push_back ("libThread");
+	//libraries_to_load.push_back ("libPhysics");
+	//libraries_to_load.push_back ("libThread");
 
 	output_dir = "..\\..\\Wrappers\\MonolithicROOTWrapper\\ROOTSource";
 

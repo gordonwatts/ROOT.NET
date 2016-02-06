@@ -110,7 +110,7 @@ string RootClassMethod::generate_method_header(bool add_object_qualifier, bool u
 	///
 
 	if (add_object_qualifier) {
-		result << _parent->NETName() << "::";
+		result << _parent->NETQualifiedName() << "::";
 	}
 
 	if (IsUserConversion()) {
@@ -119,7 +119,7 @@ string RootClassMethod::generate_method_header(bool add_object_qualifier, bool u
 		const CPPNetTypeMapper::TypeTranslator *return_translator = get_return_type_translator();
 		result << return_translator->net_return_type_name();
 	} else if (IsCtor()) {
-		result << _parent->NETName();
+		result << _parent->NETClassName();
 	} else {
 		/// Simply just the name...
 		result << NETName();
@@ -217,7 +217,7 @@ bool RootClassMethod::can_be_translated (void) const
 bool RootClassMethod::IsCtor() const
 {
 	string name = _root_method_info->GetName();
-	if (name == _parent->CPPName()) {
+	if (name == _parent->CPPClassName()) {
 		return true;
 	}
 	return false;
@@ -233,7 +233,7 @@ bool RootClassMethod::IsConst() const
 bool RootClassMethod::IsOtherObjectCtor(void) const
 {
 	string name = _root_method_info->GetName();
-	return name == return_type() && (name != _parent->CPPName());
+	return name == return_type() && (name != _parent->CPPClassName());
 }
 
 /// Simple test to see if we are a dtor
@@ -396,7 +396,7 @@ string RootClassMethod::ClassOfMethodDefinition() const
 string RootClassMethod::FullName() const
 {
 	string method_class (ClassOfMethodDefinition());
-	if (method_class != _parent->CPPName() && !IsVirtual()) {
+	if (method_class != _parent->CPPQualifiedName() && !IsVirtual()) {
 		return method_class + "::" + CPPName();
 	}
 	if (IsUserConversion()) {

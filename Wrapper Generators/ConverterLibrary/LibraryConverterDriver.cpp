@@ -679,7 +679,7 @@ void LibraryConverterDriver::translate(void)
 			}
 
 			string libName = info.LibraryName();
-			files_by_library[libName].push_back("N" + class_name);
+			files_by_library[libName].push_back(info.source_filename_stem());
 
 			string output_dir = _output_dir + "\\" + libName + "\\Source";
 			check_dir (output_dir);

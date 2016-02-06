@@ -138,6 +138,7 @@
     <ClInclude Include="CPPNetTypeMapper.hpp" />
     <ClInclude Include="RootClassField.hpp" />
     <ClInclude Include="RootGlobalVariable.hpp" />
+    <ClInclude Include="StringUtils.h" />
     <ClInclude Include="TArrayOfChar.hpp" />
     <ClInclude Include="TPointerSimpleType.hpp" />
     <ClInclude Include="translation_history.hpp" />

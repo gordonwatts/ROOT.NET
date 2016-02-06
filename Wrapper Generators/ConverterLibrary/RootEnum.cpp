@@ -79,7 +79,7 @@ string RootEnum::NETClassName() const
 		return "";
 	}
 
-	return "N" + _name.substr(0, lastID);
+	return DetermineNetNameFromCPP(_name.substr(0, lastID));
 }
 
 ///
@@ -172,7 +172,7 @@ string RootEnum::NameUnqualified() const
 	if (_name == "enum ") {
 		return "enum_";
 	} else {
-		int index = _name.find("::");
+		int index = _name.rfind("::");
 		if (index == _name.npos) {
 			return _name;
 		}

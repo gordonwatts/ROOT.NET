@@ -22,10 +22,24 @@ public:
 	RootClassInfo();
 	~RootClassInfo(void);
 
-	/// Return the name
-	const std::string &CPPName (void) const {return _name;}
-	/// Return the name in the .NET world, in case it is different.
-	const std::string &NETName (void) const {return _netname;}
+	/// Examples below use THF1 in the global namespace, TMVA::Factory, and ROOT::TSchemaRule::TSource
+	/// as their source.
+
+	/// Return just the class name (TH1F, Factory, TSource)
+	inline const std::string &CPPClassName(void) const { return _cpp_class_name; }
+	inline const std::string &NETClassName(void) const { return _net_class_name; }
+
+	/// Return the class name along with sub-class paths (TH1F, Factory, TSchemaRule::TSource)
+	inline const std::string &CPPQualifiedClassName(void) const { return _cpp_qualified_class_name; }
+	inline const std::string &NETQualifiedClassName(void) const { return _net_qualified_class_name; }
+
+	/// Return the Namespace ("", TMVA, ROOT)
+	inline const std::string &CPPNameSpace(void) const { return _cpp_namespace; }
+	inline const std::string &NETNameSpace(void) const { return _net_namespace; }
+
+	/// Return the full name (TH1F, TMVA::Factory, ROOT::TSchemaRule::TSource)
+	inline const std::string &CPPQualifiedName(void) const { return _cpp_qualified_name; }
+	inline const std::string &NETQualifiedName(void) const { return _net_qualified_name; }
 
 	/// The include file that this class resides in
 	std::string include_filename (void) const;
@@ -35,6 +49,9 @@ public:
 
 	/// The name of the include file, w/o the .h
 	std::string include_filename_stub (void) const;
+
+	/// Return the filename stem that this object will be written into.
+	std::string source_filename_stem(void) const;
 
 	/// Returns a list of ROOT classes this class inherits directly from (no deep inherritance is calculated).
 	const std::vector<std::string> &GetDirectInheritedClasses (void) const;
@@ -144,8 +161,16 @@ private:
 	mutable std::vector<RootClassProperty> _class_properties;
 	mutable bool _class_properties_good;
 
-	std::string _name;
-	std::string _netname;
+	/// Hang onto everything that we need setting!
+	std::string _cpp_class_name;
+	std::string _net_class_name;
+	std::string _cpp_qualified_class_name;
+	std::string _net_qualified_class_name;
+	std::string _cpp_namespace;
+	std::string _net_namespace;
+	std::string _cpp_qualified_name;
+	std::string _net_qualified_name;
+
 
 	/// TMethod::Name strings that we should never allow into our list of methods!
 	std::set<std::string> _bad_method_names;
@@ -154,3 +179,7 @@ private:
 	mutable bool _enum_info_valid;
 	mutable std::vector<RootEnum> _enum_info;
 };
+
+/// Help with altering names
+std::string DetermineNetNameFromCPP(const std::string &cppname);
+

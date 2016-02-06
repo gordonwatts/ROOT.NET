@@ -89,6 +89,7 @@ void find_bad_headers::operator ()(const std::string &inlcude_filename)
 	if (pos != include_name_stub.npos) {
 		include_name_stub = include_name_stub.substr(0, pos);
 	}
+	replace(include_name_stub.begin(), include_name_stub.end(), '/', '_');
 
 	/// Write out the input file
 	string input_source_filename (include_name_stub + "-input.cpp");
@@ -106,7 +107,7 @@ void find_bad_headers::operator ()(const std::string &inlcude_filename)
 
 	/// Build up the command line
 	ostringstream cmd_line;
-	cmd_line << "\"C:\\Program Files (x86)\\Microsoft Visual Studio 11.0\\VC\\vcvarsall.bat\" x86 & ";
+	cmd_line << "\"C:\\Program Files (x86)\\Microsoft Visual Studio 12.0\\VC\\vcvarsall.bat\" x86 & ";
 	string error_output_file (include_name_stub + "-errors.txt");
 	files_to_delete.push_back(error_output_file);
 	cmd_line << "cl /D WIN32 /EHsc /I %ROOTSYS%\\include /FI w32pragma.h  /c /nologo " << input_source_filename << "> " << error_output_file;

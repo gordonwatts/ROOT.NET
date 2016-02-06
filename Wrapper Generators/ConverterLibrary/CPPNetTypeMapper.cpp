@@ -2,6 +2,7 @@
 #include "ConverterErrorLog.hpp"
 #include "TTROOTClass.hpp"
 #include "TTROOTClassVector.hpp"
+#include "RootClassInfoCollection.hpp"
 
 #include <stdexcept>
 #include <algorithm>
@@ -157,6 +158,14 @@ string CPPNetTypeMapper::normalize_template_referece(const string &in_name)
 		///
 
 		if (dynamic_cast<const TTROOTClass*>(trans) == 0) {
+			return "vector<" + arg + ">";
+		}
+
+		// The Class Vector holder only works with TObject derived things,
+		// so we will have to watch for that.
+
+		auto info = RootClassInfoCollection::GetRootClassInfoPtr(in_name);
+		if (info != 0 && !info->InheritsFromTObject()) {
 			return "vector<" + arg + ">";
 		}
 

@@ -22,6 +22,9 @@ public:
 	/// A list of methods that we should skip for whatever reason.
 	static std::set<std::string> GetListOfBadMethods (void);
 
+	/// Return a list of bad fields.
+	static std::set<std::string> WrapperConfigurationInfo::GetListOfBadFields();
+
 	/// Init the type translation system....
 	static void InitTypeTranslators(void);
 

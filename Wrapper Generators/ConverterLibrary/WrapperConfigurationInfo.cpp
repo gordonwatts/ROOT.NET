@@ -102,6 +102,27 @@ vector<string> WrapperConfigurationInfo::RemoveBrokenClasses (const vector<strin
 }
 
 ///
+/// Return a list of bad fields.
+///
+set<string> WrapperConfigurationInfo::GetListOfBadFields()
+{
+	set<string> bad_fields;
+
+	// These are here because the CINT and C++ definitions are different.
+	bad_fields.insert("TGenCollectionProxy::Value::fDtor");
+	bad_fields.insert("TGenCollectionProxy::Value::fDelete");
+	bad_fields.insert("TGenCollectionProxy::Value::fCtor");
+	bad_fields.insert("TGenCollectionProxy::Method::call");
+	bad_fields.insert("TGenCollectionProxy::Value::fDtor");
+	bad_fields.insert("TGenCollectionProxy::Value::fDtor");
+	bad_fields.insert("TStreamerInfoActions::TConfiguredAction::fAction");
+	bad_fields.insert("TStreamerInfoActions::TConfiguredAction::fLoopAction");
+	bad_fields.insert("TStreamerInfoActions::TConfiguredAction::fVecPtrLoopAction");
+
+	return bad_fields;
+}
+
+///
 /// Return a list of methods that we cna't translate for whatever reason. We
 /// do this by svn revision number. So this requires some care and feeding.
 ///
@@ -125,7 +146,6 @@ set<string> WrapperConfigurationInfo::GetListOfBadMethods()
 	methods_to_skip.insert("TFitResult::Error");
 	methods_to_skip.insert("FitResult::Error");
 	methods_to_skip.insert("ROOT::Fit::FitResult::Error");
-	methods_to_skip.insert("TObject::Error");
 
 	///
 	/// While .NET can deal with covariant returns, my code is having
@@ -303,6 +323,50 @@ set<string> WrapperConfigurationInfo::GetListOfBadMethods()
 	// Some items in the gui code
 
 	methods_to_skip.insert("TBrowserImp::GetMainFrame");
+
+	// Issues that are differences between CINT and C++
+	// If needed, many of these could be fixed by the fix up bad args call elsewhere in this
+	// code.
+	methods_to_skip.insert("ROOT::Math::Functor::Functor");
+	methods_to_skip.insert("ROOT::Math::Functor1D::Functor1D");
+	methods_to_skip.insert("ROOT::Math::GradFunctor::GradFunctor");
+	methods_to_skip.insert("ROOT::Math::GradFunctor1D::GradFunctor1D");
+	methods_to_skip.insert("ROOT::Math::ParamFunctor::ParamFunctor");
+	methods_to_skip.insert("TObject::Error");
+	methods_to_skip.insert("ROOT::Fit::Fitter::FitFCN");
+	methods_to_skip.insert("ROOT::Fit::Fitter::SetFCN");
+	methods_to_skip.insert("TGenCollectionProxy::Method::Method");
+	methods_to_skip.insert("ROOT::Math::ChebyshevApprox::ChebyshevApprox");
+	methods_to_skip.insert("ROOT::Math::GSLIntegrator::Integral");
+	methods_to_skip.insert("ROOT::Math::GSLIntegrator::IntegralLow");
+	methods_to_skip.insert("ROOT::Math::GSLIntegrator::IntegralUp");
+	methods_to_skip.insert("ROOT::Math::GSLIntegrator::SetFunction");
+	methods_to_skip.insert("ROOT::Math::GSLMinimizer1D::SetFunction");
+	methods_to_skip.insert("ROOT::Math::GSLRootFinder::SetFunction");
+
+	// Bizare duplication of const and non-const functions that have only arguments by value.
+	methods_to_skip.insert("TMVA::kNN::Event::GetDist");
+	methods_to_skip.insert("TMVA::kNN::Event::GetTgt");
+	methods_to_skip.insert("TMVA::kNN::Event::GetVar");
+
+	// Postfix ++ and -- are not valid CLR... perhaps need something more general, but for now...
+	methods_to_skip.insert("TGenericTable::iterator::operator++");
+	methods_to_skip.insert("TGenericTable::iterator::operator--");
+	methods_to_skip.insert("TIndexTable::iterator::operator++");
+	methods_to_skip.insert("TIndexTable::iterator::operator--");
+	methods_to_skip.insert("TTable::iterator::operator++");
+	methods_to_skip.insert("TTable::iterator::operator--");
+
+	methods_to_skip.insert("TIndexTable::iterator::operator-");
+
+	// Here are a few undefined static variable references that aren't done right in TMVA:
+	methods_to_skip.insert("TMVA::BDTEventWrapper::SetVarIndex");
+	methods_to_skip.insert("TMVA::BDTEventWrapper::GetVal");
+	methods_to_skip.insert("TMVA::BDTEventWrapper::operator<");
+	methods_to_skip.insert("TMVA::DecisionTree::DecisionTree");
+	methods_to_skip.insert("TMVA::Factory::RootBaseDir");
+	methods_to_skip.insert("TMVA::LogInterval::Log");
+	methods_to_skip.insert("TMVA::MsgLogger::GetMaxSourceSize");
 
 	//
 	// Return the list
@@ -573,7 +637,7 @@ vector<string> WrapperConfigurationInfo::GetListOfBadLibraries(void)
 	bad_libs.push_back("libRMySQL");
 	bad_libs.push_back("libNew");
 	bad_libs.push_back("libCintex");
-	bad_libs.push_back("libReflex");
+	//bad_libs.push_back("libReflex");
 	bad_libs.push_back("libGviz");
 	bad_libs.push_back("libRCastor");
 	bad_libs.push_back("libRFIO");
@@ -722,7 +786,7 @@ void WrapperConfigurationInfo::FixUpMethodArguments (const RootClassInfo *class_
 
 	auto &inher = class_info->GetInheritedClassesDeep();
 	if (method_name == "Process"
-		&& (class_info->CPPName() == "TTree"
+		&& (class_info->CPPQualifiedName() == "TTree"
 		|| find(inher.begin(), inher.end(), "TTree") != inher.end())) {
 			if (args[0].CPPTypeName() == "void*") {
 				args[0].ResetType("TSelector*", "TSelector");
@@ -783,7 +847,7 @@ bool WrapperConfigurationInfo::CheckPropertyNameBad (const RootClassInfo *class_
 {
 	if (property_name == "Selected") {
 		vector<string> allcls = class_info->GetInheritedClassesDeep();
-		allcls.push_back(class_info->CPPName());
+		allcls.push_back(class_info->CPPQualifiedName());
 		if (find(allcls.begin(), allcls.end(), "TVirtualPad") != allcls.end()) {
 			return true;
 		}
@@ -791,7 +855,7 @@ bool WrapperConfigurationInfo::CheckPropertyNameBad (const RootClassInfo *class_
 
 	if (property_name == "Cleanup") {
 		vector<string> allcls = class_info->GetInheritedClassesDeep();
-		allcls.push_back(class_info->CPPName());
+		allcls.push_back(class_info->CPPQualifiedName());
 		if (find(allcls.begin(), allcls.end(), "TGFrame") != allcls.end()) {
 			return true;
 		}
@@ -799,7 +863,7 @@ bool WrapperConfigurationInfo::CheckPropertyNameBad (const RootClassInfo *class_
 
 	if (property_name == "Select") {
 		vector<string> allcls = class_info->GetInheritedClassesDeep();
-		allcls.push_back(class_info->CPPName());
+		allcls.push_back(class_info->CPPQualifiedName());
 		if (find(allcls.begin(), allcls.end(), "TSelectorDraw") != allcls.end()) {
 			return true;
 		}
@@ -814,7 +878,7 @@ bool WrapperConfigurationInfo::CheckPropertyNameBad (const RootClassInfo *class_
 		|| property_name == "TypeSize"
 		) {
 		vector<string> allcls = class_info->GetInheritedClassesDeep();
-		allcls.push_back(class_info->CPPName());
+		allcls.push_back(class_info->CPPQualifiedName());
 		if (find(allcls.begin(), allcls.end(), "TTable") != allcls.end()) {
 			return true;
 		}
