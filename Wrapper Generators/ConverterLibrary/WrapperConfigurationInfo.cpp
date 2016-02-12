@@ -430,8 +430,8 @@ void WrapperConfigurationInfo::InitTypeTranslators()
 	/// arrays back and forth. ;-) [Good way to piss people off!]
 	///
 
-	CPPNetTypeMapper::instance()->AddTypeMapper (new TTCPPString());
-	CPPNetTypeMapper::instance()->AddTypeMapper (new TTCPPString("char*"));
+	CPPNetTypeMapper::instance()->AddTypeMapper (new TTCPPString(true, true, false));
+	CPPNetTypeMapper::instance()->AddTypeMapper (new TTCPPString(true, false, false));
 
 	CPPNetTypeMapper::instance()->AddTypeMapper (new TArrayOfChar ("char**", false));
 	CPPNetTypeMapper::instance()->AddTypeMapper (new TTSimpleType ("unsigned char", "unsigned char"));

@@ -126,13 +126,7 @@
     <ClCompile Include="ROOTSource\NTAttFill.cpp" />
     <ClCompile Include="ROOTSource\NTAttLine.cpp" />
     <ClCompile Include="ROOTSource\NTAttMarker.cpp" />
-    <ClCompile Include="ROOTSource\NTDirectory.cpp" />
-    <ClCompile Include="ROOTSource\NTDirectoryFile.cpp" />
-    <ClCompile Include="ROOTSource\NTFile.cpp" />
     <ClCompile Include="ROOTSource\NTMVA__NConfigurable.cpp" />
-    <ClCompile Include="ROOTSource\NTMVA__NFactory.cpp" />
-    <ClCompile Include="ROOTSource\NTMVA__NIMethod.cpp" />
-    <ClCompile Include="ROOTSource\NTMVA__NMethodBase.cpp" />
     <ClCompile Include="ROOTSource\NTMVA__NReader.cpp" />
     <ClCompile Include="ROOTSource\NTNamed.cpp" />
     <ClCompile Include="ROOTSource\NTObject.cpp" />
@@ -143,19 +137,12 @@
   <ItemGroup>
     <ClInclude Include="resource.h" />
     <ClInclude Include="ROOTSource\libCore-make_public.hpp" />
-    <ClInclude Include="ROOTSource\libRIO-make_public.hpp" />
     <ClInclude Include="ROOTSource\libTMVA-make_public.hpp" />
     <ClInclude Include="ROOTSource\libTree-make_public.hpp" />
     <ClInclude Include="ROOTSource\NTAttFill.hpp" />
     <ClInclude Include="ROOTSource\NTAttLine.hpp" />
     <ClInclude Include="ROOTSource\NTAttMarker.hpp" />
-    <ClInclude Include="ROOTSource\NTDirectory.hpp" />
-    <ClInclude Include="ROOTSource\NTDirectoryFile.hpp" />
-    <ClInclude Include="ROOTSource\NTFile.hpp" />
     <ClInclude Include="ROOTSource\NTMVA__NConfigurable.hpp" />
-    <ClInclude Include="ROOTSource\NTMVA__NFactory.hpp" />
-    <ClInclude Include="ROOTSource\NTMVA__NIMethod.hpp" />
-    <ClInclude Include="ROOTSource\NTMVA__NMethodBase.hpp" />
     <ClInclude Include="ROOTSource\NTMVA__NReader.hpp" />
     <ClInclude Include="ROOTSource\NTNamed.hpp" />
     <ClInclude Include="ROOTSource\NTObject.hpp" />
