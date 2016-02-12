@@ -12,7 +12,7 @@ public:
 	{
 	}
 
-	TVectorArray(const std::string &simpleTypeName);
+	TVectorArray(const std::string &simpleTypeName, bool reference, bool constant);
 	~TVectorArray(void);
 
 	/// Make sure we do the translation correctly

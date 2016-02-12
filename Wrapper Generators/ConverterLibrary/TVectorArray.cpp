@@ -2,25 +2,38 @@
 #include "SourceEmitter.hpp"
 
 #include <string>
-using std::string;
-using std::endl;
+#include <stdexcept>
+
+using namespace std;
 
 string build_net_type (const string &name)
 {
 	return string("array<") + name + ">^";
 }
 
-string build_cpp_type (const string &name)
+string build_cpp_type (const string &name, bool is_reference, bool is_constant)
 {
-	return string ("vector<") + name + ">";
+	string result("");
+	if (is_constant) {
+		result += "const ";
+	}
+	result += "vector<" + name + ">";
+	if (is_reference) {
+		result += "&";
+	}
+	return result;
 }
 
 ///
 /// Get ourselves setup
 ///
-TVectorArray::TVectorArray(const string &simpleTypeName)
-	: TypeTranslator(build_net_type(simpleTypeName), build_cpp_type(simpleTypeName)), _simple_name(simpleTypeName)
+TVectorArray::TVectorArray(const string &simpleTypeName, bool is_reference, bool is_constant)
+	: TypeTranslator(build_net_type(simpleTypeName), build_cpp_type(simpleTypeName, is_reference, is_constant)), _simple_name(simpleTypeName)
 {
+	if (!is_constant && is_reference) {
+		// We don't know how to reflect an updated array back to the caller
+		throw runtime_error("Do not know how to deal with non-const vector references.");
+	}
 }
 
 TVectorArray::~TVectorArray(void)

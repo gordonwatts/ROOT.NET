@@ -85,10 +85,11 @@ int main()
 	//asked_for_class_list.push_back("TIter");
 	//asked_for_class_list.push_back("TMVA::Factory");
 	//libraries_to_load.push_back("libMathCore");
-	asked_for_class_list.push_back("TMVA::Factory");
-	asked_for_class_list.push_back("TMVA::MethodBase");
+	//asked_for_class_list.push_back("TMVA::Factory");
+	//asked_for_class_list.push_back("TMVA::MethodBase");
+	asked_for_class_list.push_back("TMVA::Reader");
 	asked_for_class_list.push_back("TString");
-	asked_for_class_list.push_back("TFile");
+	//asked_for_class_list.push_back("TFile");
 	asked_for_class_list.push_back("TTree");
 	libraries_to_load.push_back("libTMVA");
 	libraries_to_load.push_back("libTree");

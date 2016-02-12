@@ -133,6 +133,7 @@
     <ClCompile Include="ROOTSource\NTMVA__NFactory.cpp" />
     <ClCompile Include="ROOTSource\NTMVA__NIMethod.cpp" />
     <ClCompile Include="ROOTSource\NTMVA__NMethodBase.cpp" />
+    <ClCompile Include="ROOTSource\NTMVA__NReader.cpp" />
     <ClCompile Include="ROOTSource\NTNamed.cpp" />
     <ClCompile Include="ROOTSource\NTObject.cpp" />
     <ClCompile Include="ROOTSource\NTString.cpp" />
@@ -155,6 +156,7 @@
     <ClInclude Include="ROOTSource\NTMVA__NFactory.hpp" />
     <ClInclude Include="ROOTSource\NTMVA__NIMethod.hpp" />
     <ClInclude Include="ROOTSource\NTMVA__NMethodBase.hpp" />
+    <ClInclude Include="ROOTSource\NTMVA__NReader.hpp" />
     <ClInclude Include="ROOTSource\NTNamed.hpp" />
     <ClInclude Include="ROOTSource\NTObject.hpp" />
     <ClInclude Include="ROOTSource\NTString.hpp" />
