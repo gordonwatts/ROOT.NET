@@ -28,7 +28,8 @@ string build_cpp_type (const string &name, bool is_reference, bool is_constant)
 /// Get ourselves setup
 ///
 TVectorArray::TVectorArray(const string &simpleTypeName, bool is_reference, bool is_constant)
-	: TypeTranslator(build_net_type(simpleTypeName), build_cpp_type(simpleTypeName, is_reference, is_constant)), _simple_name(simpleTypeName)
+	: TypeTranslator(build_net_type(simpleTypeName), build_cpp_type(simpleTypeName, is_reference, is_constant)), 
+	_simple_name(simpleTypeName)
 {
 	if (!is_constant && is_reference) {
 		// We don't know how to reflect an updated array back to the caller
@@ -45,7 +46,7 @@ TVectorArray::~TVectorArray(void)
 ///
 void TVectorArray::translate_to_cpp (const std::string &name_net, const std::string &name_cpp, SourceEmitter &emitter) const
 {
-	emitter.start_line() << cpp_code_typename() << " " << name_cpp << "(" << name_net << "->Length);" << endl;;
+	emitter.start_line() << "vector<" << _simple_name << "> " << name_cpp << "(" << name_net << "->Length);" << endl;;
 	emitter.start_line() << "for (int index = 0; index < " << name_net << "->Length; index++)" << endl;
 	emitter.start_line() << "  " << name_cpp << ".push_back(" << name_net << "[index]);" << endl;
 }
