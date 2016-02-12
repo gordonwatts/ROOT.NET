@@ -246,3 +246,4 @@ nuget/*
 
 # Everything from our builds.
 Wrappers/AAROOT/*
+Wrapper Generators/*.cpp
