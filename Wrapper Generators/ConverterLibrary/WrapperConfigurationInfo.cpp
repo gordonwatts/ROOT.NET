@@ -23,6 +23,7 @@
 #include "TArrayOfChar.hpp"
 #include "TVoidPointer.hpp"
 #include "TVectorArray.hpp"
+#include "TTChar.hpp"
 
 #include "TROOT.h"
 #include "TDataType.h"
@@ -432,8 +433,8 @@ void WrapperConfigurationInfo::InitTypeTranslators()
 
 	CPPNetTypeMapper::instance()->AddTypeMapper (new TArrayOfChar ("char**", false));
 	CPPNetTypeMapper::instance()->AddTypeMapper (new TTSimpleType ("unsigned char", "unsigned char"));
-	CPPNetTypeMapper::instance()->AddTypeMapper (new TTSimpleType ("char", "char"));
-	CPPNetTypeMapper::instance()->AddTypeMapper (new TTSimpleType ("const char", "const char"));
+	CPPNetTypeMapper::instance()->AddTypeMapper (new TTChar("char"));
+	CPPNetTypeMapper::instance()->AddTypeMapper (new TTChar("const char"));
 	CPPNetTypeMapper::instance()->AddTypeMapper (new TPointerSimpleType ("unsigned char"));
 	CPPNetTypeMapper::instance()->AddTypeMapper (new TPointerSimpleType ("const unsigned char", true));
 	CPPNetTypeMapper::instance()->AddTypeMapper (new TTSimpleReference ("char"));

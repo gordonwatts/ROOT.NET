@@ -155,6 +155,9 @@
     <ClCompile Include="FeatureTreeIterator.cpp">
       <Filter>Source Files\Features</Filter>
     </ClCompile>
+    <ClCompile Include="TTChar.cpp">
+      <Filter>Source Files\TypeSystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ClassInterfaceRepositoryState.hpp">
@@ -270,6 +273,9 @@
     </ClInclude>
     <ClInclude Include="StringUtils.h">
       <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="TTChar.hpp">
+      <Filter>Header Files\TypeSystem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

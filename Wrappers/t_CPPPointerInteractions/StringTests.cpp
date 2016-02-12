@@ -32,5 +32,16 @@ namespace t_CPPPointerInteractions
 			char c = *cstr;
 			Marshal::FreeHGlobal(trans);
 		}
+
+		[TestMethodAttribute]
+		void ConvertToChar2()
+		{
+			System::Char neta = System::Char('b');
+
+			//auto c = neta->ToChar(nullptr);
+			char c = (char) neta;
+
+			System::Console::WriteLine(System::Char(c));
+		}
 	};
 }
