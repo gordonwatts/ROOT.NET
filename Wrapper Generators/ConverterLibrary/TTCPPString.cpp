@@ -42,8 +42,13 @@ TTCPPString::~TTCPPString(void)
 ///
 void TTCPPString::translate_to_cpp(const std::string &net_name, const std::string &cpp_name, SourceEmitter &emitter) const
 {
-	emitter.start_line() << "ROOTNET::Utility::NetStringToConstCPP " << cpp_name << "_s(" << net_name << ");" << endl;
-	emitter.start_line() << "std::string " << cpp_name << "(" << cpp_name << "_s);" << endl;
+	if (_is_char) {
+		emitter.start_line() << "ROOTNET::Utility::NetStringToConstCPP " << cpp_name << "(" << net_name << ");" << endl;
+	}
+	else {
+		emitter.start_line() << "ROOTNET::Utility::NetStringToConstCPP " << cpp_name << "_s(" << net_name << ");" << endl;
+		emitter.start_line() << "std::string " << cpp_name << "(" << cpp_name << "_s);" << endl;
+	}
 }
 
 ///
