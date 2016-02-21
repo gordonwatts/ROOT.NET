@@ -102,6 +102,7 @@
     <ClCompile Include="TArrayOfChar.cpp" />
     <ClCompile Include="TPointerSimpleType.cpp" />
     <ClCompile Include="translation_history.cpp" />
+    <ClCompile Include="TTChar.cpp" />
     <ClCompile Include="TTCPPString.cpp" />
     <ClCompile Include="TTROOTClass.cpp" />
     <ClCompile Include="TTROOTClassVector.cpp" />
@@ -142,6 +143,7 @@
     <ClInclude Include="TArrayOfChar.hpp" />
     <ClInclude Include="TPointerSimpleType.hpp" />
     <ClInclude Include="translation_history.hpp" />
+    <ClInclude Include="TTChar.hpp" />
     <ClInclude Include="TTCPPString.hpp" />
     <ClInclude Include="TTROOTClass.hpp" />
     <ClInclude Include="TTROOTClassVector.hpp" />

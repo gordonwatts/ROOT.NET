@@ -116,21 +116,16 @@ string CPPNetTypeMapper::normalize_type_reference (const string &in_name)
 string CPPNetTypeMapper::normalize_template_referece(const string &in_name)
 {
 	/// If this is a vector guy, then perhaps we can deal with it.
-	if (in_name.find("vector") == 0) {
+	auto loc_start = in_name.find("<");
+	auto loc_end = in_name.rfind(">");
+	auto template_definition = in_name.substr(0, loc_start);
+	if (template_definition.find("vector") != template_definition.npos) {
+		auto arg = in_name.substr(loc_start + 1, loc_end - loc_start - 1);
 
 		///
-		/// No ponters!
+		/// We can't deal with nestaed arguments or with an allocator.
 		///
 
-		if (in_name.find("*") != in_name.npos || in_name.find("&") != in_name.npos) {
-			return in_name;
-		}
-
-		///
-		/// Get the basic argument out. We can't deal with nested templates!
-		///
-
-		string arg = in_name.substr(7, in_name.size()-1-7);
 		if (arg.find(",") != arg.npos) {
 			arg = arg.substr(0, arg.find(","));
 		}
@@ -157,24 +152,25 @@ string CPPNetTypeMapper::normalize_template_referece(const string &in_name)
 		/// a new guy - but there may be something already up and going for it
 		///
 
+		auto template_postfix = in_name.substr(loc_end + 1);
 		if (dynamic_cast<const TTROOTClass*>(trans) == 0) {
-			return "vector<" + arg + ">";
+			return template_definition + "<" + trans->cpp_code_typename() + ">" + template_postfix;
 		}
 
 		// The Class Vector holder only works with TObject derived things,
 		// so we will have to watch for that.
 
-		auto info = RootClassInfoCollection::GetRootClassInfoPtr(in_name);
+		auto info = RootClassInfoCollection::GetRootClassInfoPtr(trans->cpp_core_typename());
 		if (info != 0 && !info->InheritsFromTObject()) {
-			return "vector<" + arg + ">";
+			return template_definition + "<" + trans->cpp_code_typename() + ">" + template_postfix;
 		}
 
 		///
-		/// Ok - this is a good guy. So now we need to "create" a
-		/// type translator if it dosen't already exist
+		/// This is a TObject inherrited object. We create a vector class translator on the fly
+		/// for that.
 		///
 
-		string normalized_name ("vector<" + arg + ">");
+		string normalized_name = template_definition + "<" + trans->cpp_code_typename() + ">" + template_postfix;
 
 		if (_cpp_translator_map.find(normalized_name) == _cpp_translator_map.end())
 		{

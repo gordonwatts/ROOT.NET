@@ -24,6 +24,9 @@
     <ClCompile Include="t_NonTObjectPointerTable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="StringTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">

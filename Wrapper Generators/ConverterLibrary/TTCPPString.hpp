@@ -7,10 +7,10 @@
 class TTCPPString : public CPPNetTypeMapper::TypeTranslator
 {
 public:
-	inline TTCPPString (const std::string &char_type = "const char*")
-	  : TypeTranslator ("::System::String ^", char_type), _char_type(char_type)
-	{
-	}
+	// is_char - true of if it is a "char", and otherwise a std::string.
+	// is_const - true if there is a "const" out in front.
+	// is_reference - true if there is a reference
+	TTCPPString(bool is_char, bool is_const, bool is_reference);
 
 	~TTCPPString(void);
 
@@ -22,5 +22,5 @@ public:
 	void translate_to_net (const std::string &net_name, const std::string &cpp_name, SourceEmitter &emitter, bool use_interface, bool is_static) const;
 
 private:
-	const std::string _char_type;
+	const bool _is_char;
 };

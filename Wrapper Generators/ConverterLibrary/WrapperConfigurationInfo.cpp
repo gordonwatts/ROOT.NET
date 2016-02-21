@@ -23,6 +23,7 @@
 #include "TArrayOfChar.hpp"
 #include "TVoidPointer.hpp"
 #include "TVectorArray.hpp"
+#include "TTChar.hpp"
 
 #include "TROOT.h"
 #include "TDataType.h"
@@ -403,11 +404,13 @@ void WrapperConfigurationInfo::InitTypeTranslators()
 	  CPPNetTypeMapper::instance()->AddTypeMapper (new TPointerSimpleType ("const " + simple_type, true));
 	  CPPNetTypeMapper::instance()->AddTypeMapper (new TTSimpleReference (simple_type));
 	  CPPNetTypeMapper::instance()->AddTypeMapper (new TTSimpleReference ("const " + simple_type, true));
-	  CPPNetTypeMapper::instance()->AddTypeMapper (new TVectorArray(simple_type));
+	  CPPNetTypeMapper::instance()->AddTypeMapper (new TVectorArray(simple_type, false, false));
+	  CPPNetTypeMapper::instance()->AddTypeMapper(new TVectorArray(simple_type, true, true));
 
 	  if (canbe_unsigned[i]) {
-		CPPNetTypeMapper::instance()->AddTypeMapper (new TVectorArray("unsigned " + simple_type));
-	    CPPNetTypeMapper::instance()->AddTypeMapper (new TTSimpleType ("unsigned " + simple_type, "unsigned " + simple_type));
+		CPPNetTypeMapper::instance()->AddTypeMapper (new TVectorArray("unsigned " + simple_type, false, false));
+		CPPNetTypeMapper::instance()->AddTypeMapper(new TVectorArray("unsigned " + simple_type, true, true));
+		CPPNetTypeMapper::instance()->AddTypeMapper (new TTSimpleType ("unsigned " + simple_type, "unsigned " + simple_type));
 	    CPPNetTypeMapper::instance()->AddTypeMapper (new TTSimpleType ("const unsigned " + simple_type, "const unsigned " + simple_type));
 	    CPPNetTypeMapper::instance()->AddTypeMapper (new TPointerSimpleType ("unsigned " + simple_type));
 	    CPPNetTypeMapper::instance()->AddTypeMapper (new TPointerSimpleType ("const unsigned " + simple_type, true));
@@ -427,19 +430,20 @@ void WrapperConfigurationInfo::InitTypeTranslators()
 	/// arrays back and forth. ;-) [Good way to piss people off!]
 	///
 
-	CPPNetTypeMapper::instance()->AddTypeMapper (new TTCPPString());
-	CPPNetTypeMapper::instance()->AddTypeMapper (new TTCPPString("char*"));
+	CPPNetTypeMapper::instance()->AddTypeMapper (new TTCPPString(true, true, false));
+	CPPNetTypeMapper::instance()->AddTypeMapper (new TTCPPString(true, false, false));
 
 	CPPNetTypeMapper::instance()->AddTypeMapper (new TArrayOfChar ("char**", false));
 	CPPNetTypeMapper::instance()->AddTypeMapper (new TTSimpleType ("unsigned char", "unsigned char"));
-	CPPNetTypeMapper::instance()->AddTypeMapper (new TTSimpleType ("char", "char"));
-	CPPNetTypeMapper::instance()->AddTypeMapper (new TTSimpleType ("const char", "const char"));
+	CPPNetTypeMapper::instance()->AddTypeMapper (new TTChar("char"));
+	CPPNetTypeMapper::instance()->AddTypeMapper (new TTChar("const char"));
 	CPPNetTypeMapper::instance()->AddTypeMapper (new TPointerSimpleType ("unsigned char"));
 	CPPNetTypeMapper::instance()->AddTypeMapper (new TPointerSimpleType ("const unsigned char", true));
 	CPPNetTypeMapper::instance()->AddTypeMapper (new TTSimpleReference ("char"));
 	CPPNetTypeMapper::instance()->AddTypeMapper (new TTSimpleReference ("unsigned char", false));
 
-	CPPNetTypeMapper::instance()->AddTypeMapper (new TVectorArray("char"));
+	CPPNetTypeMapper::instance()->AddTypeMapper (new TVectorArray("char", false, false));
+	CPPNetTypeMapper::instance()->AddTypeMapper (new TVectorArray("char", true, true));
 	CPPNetTypeMapper::instance()->AddTypeMapper (new TPointerSimpleType ("char", false, true));
 	CPPNetTypeMapper::instance()->AddTypeMapper (new TPointerSimpleType ("const char", true, true));
 

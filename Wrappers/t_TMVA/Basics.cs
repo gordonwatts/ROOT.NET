@@ -42,7 +42,7 @@ namespace t_TMVA
             a.AddSignalTree(signalTree, 1.0);
             a.AddBackgroundTree(backgroundTree, 1.0);
 
-            a.AddVariable(new NTString("nTracks"), new NTString("Number of Tracks"), new NTString(""));
+            a.AddVariable(new NTString("nTracks"), new NTString("Number of Tracks"), new NTString(""), 'F');
             a.AddVariable(new NTString("logR"), new NTString("CalRatio"), new NTString(""));
 
             //ROOTNET.NTMVA.NMethodBase;
