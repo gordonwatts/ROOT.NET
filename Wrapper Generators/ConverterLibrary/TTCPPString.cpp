@@ -12,7 +12,7 @@ namespace {
 			result += "const ";
 		}
 		if (is_char) {
-			result += "char *";
+			result += "char*";
 		}
 		else {
 			result += "std::string";
