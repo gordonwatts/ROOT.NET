@@ -136,6 +136,14 @@ filter parse-ftp-dirlisting ($rootPath)
 	return "$rootPath/$($info[8])"
 }
 
+# Given the lines of html that come in, extract any hrefs
+filter parse-html-dirlisting ($path)
+{
+    if ($_ -match '<a href="([^"]+)">') {
+        return $path + $Matches[1]
+    }
+}
+
 #
 # Returns all versions of root that are on the server currently.
 #
@@ -146,7 +154,6 @@ function Get-All-ROOT-Downloads ($htmlPath = "ftp://root.cern.ch/root")
 	#
 	
 	$ftp = [Net.WebRequest]::Create($htmlPath)
-	$ftp.Method = [Net.WebRequestMethods+Ftp]::ListDirectoryDetails
 	$response = $ftp.GetResponse()
 	$stream = $response.GetResponseStream()
 	$reader = New-Object IO.StreamReader $stream
@@ -158,7 +165,7 @@ function Get-All-ROOT-Downloads ($htmlPath = "ftp://root.cern.ch/root")
 	# Pull it into seperate objects that should allow us to easily go after things.
 	#
 	
-	$list = $links -split "\r\n" | parse-ftp-dirlisting $htmlPath
+	$list = $links -split "\n" | parse-html-dirlisting $htmlPath
 	return $list | ? {$_} | parse-root-filename
 }
 
