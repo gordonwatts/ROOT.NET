@@ -147,7 +147,7 @@ filter parse-html-dirlisting ($path)
 #
 # Returns all versions of root that are on the server currently.
 #
-function Get-All-ROOT-Downloads ($htmlPath = "ftp://root.cern.ch/root")
+function Get-All-ROOT-Downloads ($htmlPath = "https://root.cern.ch/download/")
 {
 	#
 	# Use ftp in .NET to download the listing.
