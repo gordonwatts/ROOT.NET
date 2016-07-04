@@ -147,7 +147,7 @@ namespace t_Translation
 			System::IO::Directory::CreateDirectory(".\\TestTranslateTArrayForMethods");
 			ClassTranslator *trans = new ClassTranslator(".\\TestTranslateTArrayForMethods");
 			CPPNetTypeMapper::instance()->AddTypeMapper(new TTSimpleType("int", "int"));
-			CPPNetTypeMapper::instance()->AddTypeMapper(new TTCPPString());
+			CPPNetTypeMapper::instance()->AddTypeMapper(new TTCPPString(false, true, false));
 			CPPNetTypeMapper::instance()->AddTypedefMapping("Int_t", "int");
 			trans->translate(RootClassInfo("TArray"));
 			Assert::IsTrue(FileUtilities::FindString(".\\TestTranslateTArrayForMethods\\NTArray.hpp", "DropObjectFromTables (void)"), "The method DropObjectFromTables was not there!");
@@ -163,7 +163,7 @@ namespace t_Translation
 			System::IO::Directory::CreateDirectory(".\\TestTranslateTArrayFForMethods");
 			ClassTranslator *trans = new ClassTranslator(".\\TestTranslateTArrayFForMethods");
 			CPPNetTypeMapper::instance()->AddTypeMapper(new TTSimpleType("int", "int"));
-			CPPNetTypeMapper::instance()->AddTypeMapper(new TTCPPString());
+			CPPNetTypeMapper::instance()->AddTypeMapper(new TTCPPString(false, true, false));
 			CPPNetTypeMapper::instance()->AddTypedefMapping("Int_t", "int");
 			trans->translate(RootClassInfo("TArrayF"));
 			Assert::IsTrue(FileUtilities::FindString(".\\TestTranslateTArrayFForMethods\\NTArrayF.hpp", "Set (int"), "The method Set (int n) was not there!");
@@ -191,7 +191,7 @@ namespace t_Translation
 			System::IO::Directory::CreateDirectory(".\\TestTranslateTNamedInherrit");
 			ClassTranslator *trans = new ClassTranslator(".\\TestTranslateTNamedInherrit");
 			CPPNetTypeMapper::instance()->AddTypeMapper(new TTSimpleType("int", "int"));
-			CPPNetTypeMapper::instance()->AddTypeMapper(new TTCPPString());
+			CPPNetTypeMapper::instance()->AddTypeMapper(new TTCPPString(false, true, false));
 			CPPNetTypeMapper::instance()->AddTypedefMapping("Int_t", "int");
 			AddInRootClass("TObject");
 			trans->translate(RootClassInfo("TNamed"));
@@ -209,7 +209,7 @@ namespace t_Translation
 			ClassTranslator *trans = new ClassTranslator(".\\TestTranslateTH1SourceMethodRightClass");
 			CPPNetTypeMapper::instance()->AddTypeMapper(new TTSimpleType("int", "int"));
 			CPPNetTypeMapper::instance()->AddTypeMapper(new TTSimpleType("short", "short"));
-			CPPNetTypeMapper::instance()->AddTypeMapper(new TTCPPString());
+			CPPNetTypeMapper::instance()->AddTypeMapper(new TTCPPString(false, true, false));
 			CPPNetTypeMapper::instance()->AddTypedefMapping("Int_t", "int");
 			CPPNetTypeMapper::instance()->AddTypedefMapping("Short_t", "short");
 			CPPNetTypeMapper::instance()->AddTypedefMapping("Width_t", "short");
@@ -229,7 +229,7 @@ namespace t_Translation
 
 			System::IO::Directory::CreateDirectory(".\\TestInterfaceStaticMethod");
 			ClassTranslator *trans = new ClassTranslator(".\\TestInterfaceStaticMethod");
-			CPPNetTypeMapper::instance()->AddTypeMapper(new TTCPPString());
+			CPPNetTypeMapper::instance()->AddTypeMapper(new TTCPPString(false, true, false));
 			trans->translate(RootClassInfo("TArray"));
 			Assert::IsFalse(FileUtilities::FindString(".\\TestInterfaceStaticMethod\\NTArray.cpp", "Class_name"), "The method Class_Name doesn't seem to be here!");
 			Assert::IsTrue(FileUtilities::FindString(".\\TestInterfaceStaticMethod\\NTArray.cpp", "namespace Interface {"), "The interface static impl for Class_Name is missing");
@@ -370,7 +370,7 @@ namespace t_Translation
 		[TestMethod]
 		void TestProtectedHiddenProperty()
 		{
-			CPPNetTypeMapper::instance()->AddTypeMapper(new TTCPPString());
+			CPPNetTypeMapper::instance()->AddTypeMapper(new TTCPPString(false, true, false));
 			CPPNetTypeMapper::instance()->AddTypedefMapping("Option_t*", "const char*");
 			CPPNetTypeMapper::instance()->AddTypeMapper(new TTROOTClass("TNamed", true));
 
@@ -387,7 +387,7 @@ namespace t_Translation
 			/// A non-const protected method has the same signature as a public const method. Make sure
 			/// the access occurs ok (since we loose the "const" moniker here in .NET).
 
-			CPPNetTypeMapper::instance()->AddTypeMapper(new TTCPPString());
+			CPPNetTypeMapper::instance()->AddTypeMapper(new TTCPPString(false, true, false));
 			CPPNetTypeMapper::instance()->AddTypeMapper(new TTROOTClass("TObject", true, "*"));
 
 			RootClassInfo cinfo ("TObject");

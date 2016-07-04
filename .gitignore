@@ -247,3 +247,5 @@ nuget/*
 # Everything from our builds.
 Wrappers/AAROOT/*
 Wrapper Generators/*.cpp
+*.db
+Wrappers/ROOTWrappersFromMSVC/*

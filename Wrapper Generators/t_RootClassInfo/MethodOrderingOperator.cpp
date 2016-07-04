@@ -157,7 +157,7 @@ namespace t_RootClassInfo
 	[TestMethod]
 	void TestLessThanOnArgTypes()
 	{
-	  CPPNetTypeMapper::instance()->AddTypeMapper(new TTCPPString());
+	  CPPNetTypeMapper::instance()->AddTypeMapper(new TTCPPString(false, true, false));
 	  CPPNetTypeMapper::instance()->AddTypeMapper(new TTSimpleType("int", "int"));
 	  CPPNetTypeMapper::instance()->AddTypeMapper(new TPointerSimpleType("int"));
 
