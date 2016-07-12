@@ -226,7 +226,7 @@ namespace t_MethodInherritance
 	  /// protected, it shouldn't show up in the method list. :-(
 
 	  CPPNetTypeMapper::instance()->AddTypeMapper(new TTROOTClass("TBuffer", true));
-	  CPPNetTypeMapper::instance()->AddTypeMapper(new TTCPPString());
+	  CPPNetTypeMapper::instance()->AddTypeMapper(new TTCPPString(false, true, false));
 
 	  RootClassInfo info ("TBuffer");
 	  vector<RootClassMethod> protos (info.GetAllPrototypesForThisClass(false));

@@ -344,7 +344,10 @@ set<string> WrapperConfigurationInfo::GetListOfBadMethods()
 	methods_to_skip.insert("ROOT::Math::GSLIntegrator::SetFunction");
 	methods_to_skip.insert("ROOT::Math::GSLMinimizer1D::SetFunction");
 	methods_to_skip.insert("ROOT::Math::GSLRootFinder::SetFunction");
-
+	methods_to_skip.insert("ROOT::Math::GSLMCIntegrator::SetFunction");
+	methods_to_skip.insert("ROOT::Math::GSLMCIntegrator::SetFunction");
+	methods_to_skip.insert("ROOT::Math::GSLRootFinderDeriv::SetFunction");
+	
 	// Bizare duplication of const and non-const functions that have only arguments by value.
 	methods_to_skip.insert("TMVA::kNN::Event::GetDist");
 	methods_to_skip.insert("TMVA::kNN::Event::GetTgt");

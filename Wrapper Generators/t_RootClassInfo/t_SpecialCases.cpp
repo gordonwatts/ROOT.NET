@@ -179,7 +179,7 @@ namespace t_RootClassInfo
 	[TestMethod]
 	void TestProtectedPropertyMarkedHidden()
 	{
-	  CPPNetTypeMapper::instance()->AddTypeMapper(new TTCPPString());
+	  CPPNetTypeMapper::instance()->AddTypeMapper(new TTCPPString(false, true, false));
 	  CPPNetTypeMapper::instance()->AddTypedefMapping("Option_t*", "const char*");
 	  CPPNetTypeMapper::instance()->AddTypeMapper(new TTROOTClass("TNamed", true));
 
@@ -201,7 +201,7 @@ namespace t_RootClassInfo
 	  /// argument is not something we can currently translate. From C++'s point of view, the method should
 	  /// be totally hidden! Ops! :(
 
-	  CPPNetTypeMapper::instance()->AddTypeMapper(new TTCPPString());
+	  CPPNetTypeMapper::instance()->AddTypeMapper(new TTCPPString(false, true, false));
 	  CPPNetTypeMapper::instance()->AddTypeMapper(new TTROOTClass("TSystem", true));
 	  CPPNetTypeMapper::instance()->AddTypeMapper(new TTROOTClass("TNetSystem", true));
 	  CPPNetTypeMapper::instance()->AddTypeMapper(new TTSimpleType("bool", "bool"));
@@ -330,7 +330,7 @@ namespace t_RootClassInfo
 	  CPPNetTypeMapper::instance()->AddTypedefMapping("Int_t", "int");
 	  CPPNetTypeMapper::instance()->AddTypeMapper(new TTSimpleType("double", "double"));
 	  CPPNetTypeMapper::instance()->AddTypedefMapping("Double_t", "double");
-	  CPPNetTypeMapper::instance()->AddTypeMapper(new TTCPPString());
+	  CPPNetTypeMapper::instance()->AddTypeMapper(new TTCPPString(false, true, false));
 
 
 	  RootClassInfo cinfo ("RooGrid");
